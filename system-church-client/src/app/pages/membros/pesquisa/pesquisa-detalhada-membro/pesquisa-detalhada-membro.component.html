@@ -1,0 +1,120 @@
+<div class="container-fluid">
+  <form class="example-form" [formGroup]="pesquisaPublicaForm">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field appearance="legacy" class="example-full-width">
+              <mat-label>Nome </mat-label>
+              <input matInput [formControl]="pesquisaPublicaForm.controls['nomeDocente']" name="nomeDocente" type="text">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>Sexo </mat-label>
+              <mat-select [formControl]="pesquisaPublicaForm.controls['areaAtuacao']" name="areaAtuacao"
+                (selectionChange)="onTemaChanged($event.value)" [(ngModel)]="temaClassificacaoValue">
+                <mat-option [value]="">(Selecione)</mat-option>
+                <mat-option *ngFor="let areaAtuacao of areaAtuacaoList" [value]="areaAtuacao.id">
+                  {{areaAtuacao.classificacao}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>Estado Civil</mat-label>
+              <mat-select [formControl]="pesquisaPublicaForm.controls['tema']" name="tema">
+                <mat-option *ngFor="let tema of temaAtuacaoList" [value]="tema.id">
+                  {{tema.descricao}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>País</mat-label>
+              <mat-select [formControl]="pesquisaPublicaForm.controls['titulacao']" name="titulacao">
+                <mat-option [value]="">(Selecione)</mat-option>
+                <mat-option *ngFor="let titulacao of titulacaoList" [value]="titulacao.valor1">
+                  {{titulacao.valor2}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button class="example-full-width" mat-raised-button (click)="pesquisar()">Pesquisar</button>
+          </div>
+        
+          <div class="col-md-6">
+            <button class="example-full-width" mat-raised-button type="reset">Limpar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <h4> Pesquisar Membros </h4>
+        <div class="bordas" *ngFor="let docente of docenteList">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="col-md-12">
+                <div class="foto-perfil-wrapper">
+                  <div class="foto-perfil">
+                      <img  [src]="docente.imgDocente">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <p class="text-center"><a [routerLink]="['/detalhar-docente/detalhar']"  [queryParams]="{id: docente.id}"> {{docente.nome | titlecase}}</a></p>
+                <p class="text-center"> {{docente.email}}</p>
+                <p class="text-center" *ngFor="let atuacoes of docente.atuacoes">
+                  <mat-icon>check</mat-icon>
+                  {{atuacoes | titlecase}}.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <h5> Formação Inicial</h5>
+              <br>
+              <p *ngFor="let formacaoInicial of docente.formacaoInicial">
+                <mat-icon>check_box</mat-icon>
+                {{formacaoInicial | titlecase}}.
+              </p>
+              <h5>Formação Continuada</h5>
+              <br>
+              <p *ngFor="let formacaoContinuada of docente.formacaoContinuada">
+                <mat-icon>check_box</mat-icon>
+                {{formacaoContinuada | titlecase}}.
+              </p>
+              <h5>Formação de Formadores</h5>
+              <br>
+              <p *ngFor="let formacaoDocentes of docente.formacaoDocente">
+                <mat-icon>check_box</mat-icon>
+                {{formacaoDocentes | titlecase}}.
+              </p>
+              <h5>Ingresso na Carreira da Magistratura</h5>
+              <br>
+              <p *ngFor="let ingressoCarreiraMagistratura of docente.ingressoCarreiraMagistratura">
+                <mat-icon>check_box</mat-icon>
+                {{ingressoCarreiraMagistratura | titlecase}}.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center" *ngIf="exibirMsgRegistro">
+          <br>
+          <h5>Pesquisa Não Retornou Registro</h5>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

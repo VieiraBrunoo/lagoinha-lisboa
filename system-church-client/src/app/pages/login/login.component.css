@@ -1,0 +1,39 @@
+.cardLogin {
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.container {
+    min-height: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-login {
+    padding: 9px 15px 7px 15px;
+}
+
+.icon {
+    padding: 0px 13px 0px 0px;
+    color: #00708d;
+}
+
+input.mat-input-element {
+    margin-top: 0.1125em;
+}
+
+.bot-login {
+    width: 100%;
+    background: #007390;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.bot-cadastrar {
+    width: 100%;
+}
+
+.container-fluid {
+    height: 100%;
+}

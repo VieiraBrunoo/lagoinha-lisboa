@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="container">
+        <form class="example-form">
+            <mat-card class="cardLogin">
+                <div class="input-login">
+                    <mat-form-field class="example-full-width">
+                        <mat-icon class="icon" matPrefix>person</mat-icon>
+                        <input name="login" maxLength="14" [formControl]="loginText" type="text" matInput placeholder="Login">
+                    </mat-form-field>
+                </div>
+                <div class="input-login">
+                    <mat-form-field class="example-full-width">
+                        <mat-icon class="icon" matPrefix>lock</mat-icon>
+                        <input type="password" [formControl]="senha" maxLength="50" matInput placeholder="Senha">
+                    </mat-form-field>
+                </div>
+                <button class="bot-login" (click)="login()" mat-button>Login</button>
+            </mat-card>
+        </form>
+    </div>
+</div>

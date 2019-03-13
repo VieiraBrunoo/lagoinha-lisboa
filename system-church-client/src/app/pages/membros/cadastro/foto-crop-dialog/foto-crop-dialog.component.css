@@ -1,0 +1,20 @@
+.image-wrapper {
+    max-width: 100%;
+    max-height: 80%;
+    overflow: hidden;
+}
+
+.image-wrapper-cropped {
+    width: 180px;
+    height: 180px;
+    border: 2px solid #a39c9c;
+    border-radius: 90px;
+    overflow: hidden;
+    background: beige url(../../../../../assets/img/perfil.png);
+    margin: 0 auto 15px auto;
+}
+
+.buttons {
+    text-align: center;
+    margin: 30px 0 0 0;
+}

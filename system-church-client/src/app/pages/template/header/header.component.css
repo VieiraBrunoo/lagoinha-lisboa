@@ -1,0 +1,180 @@
+header {
+    background: url(../../../../assets/img/background-topo.png) no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    position: relative;
+    display: table;
+    padding: 0 40px;
+    margin-bottom: 50px;
+}
+
+header a {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+header a:hover {
+    color: #c0c0c0;
+}
+
+.icon {
+    color: white;
+    font-size: 40px;
+    height: 36px;
+    width: 35px;
+}
+
+.menu {
+    min-width: 59px;
+    height: 44px;
+    margin-left: 20px;
+    outline: none;
+}
+
+.sair {
+    width: 10px;
+    color: white;
+}
+
+.sair div {
+    margin-top: 63px;
+}
+
+.user, .user-responsivo {
+    text-shadow:0px 1px 0px rgba(0,0,0,0.5);
+	color:#fff;
+    transition:color linear 0.15s;
+    font-size: 14px;
+}
+
+.logo-wrapper {
+    float: left
+}
+
+.logo-unicorp-wrapper {
+    float: right
+}
+
+.logos{
+    padding: 20px 20px 20px 20px;
+}
+
+.logo-wrapper img, .logo-unicorp-wrapper img {
+    width: 70%
+}
+
+.logo-unicorp-wrapper img {
+    float: right;
+}
+
+.menu-wrapper {
+    width: 100%;
+}
+
+.user {
+    float: right;
+    padding: 0 7px 0 0;
+    margin: -30px -50px 0 0;
+}
+
+.user-responsivo {
+    display: none;
+}
+
+.navbar-toggler {
+    position: absolute;
+    top: 25px;
+    right: 0;
+}
+
+
+@media (max-width: 575.98px) { 
+
+    .user-responsivo {
+        display: block;
+        margin: -30px 0 0 30px;
+        font-size: 11px
+    }
+
+    .menu .icon {
+        color: #fff;
+        margin-left: 30px;
+        font-size: 24px;
+    }
+
+    .menu {
+        margin-left: -54px
+    }
+
+    .user {
+        display: none;
+    }
+
+    .logo-unicorp-wrapper {
+        margin-top: 7px;
+        margin-right: 35px;
+        float: left
+    }
+
+    .logo-unicorp-wrapper img {
+        float: left;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+
+    .user-responsivo {
+        display: block;
+        margin: -30px 0 0 30px;
+        font-size: 11px
+    }
+
+    .menu .icon {
+        color: #fff;
+        margin-left: 30px;
+        font-size: 24px;
+    }
+
+    .menu {
+        margin-left: -54px
+    }
+
+    .user {
+        display: none;
+    }
+
+    .logo-unicorp-wrapper {
+        margin-right: 35px
+    }
+ }
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+    .user-responsivo {
+        display: block;
+        margin: -30px 0 0 30px;
+        font-size: 11px
+    }
+
+    .menu .icon {
+        color: #fff;
+        margin-left: 30px;
+        font-size: 24px;
+    }
+
+    .menu {
+        margin-left: -54px
+    }
+
+    .user {
+        display: none;
+    }
+
+    .logo-unicorp-wrapper {
+        margin-right: 35px
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {  }
+
+@media (min-width: 1200px) {  }

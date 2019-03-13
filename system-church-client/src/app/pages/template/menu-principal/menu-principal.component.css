@@ -1,0 +1,13 @@
+.nav-wrapper {
+	margin:  10px 0 0 0;
+	text-shadow:0px 1px 0px rgba(0,0,0,0.5);
+	color:#fff !important;
+	transition:color linear 0.15s;
+	font-size: 14px;
+}
+
+.nav-wrapper .icon {
+	color: #fff;
+	padding-right: 30px
+}
+

@@ -1,0 +1,21 @@
+FROM node:8.11-alpine
+
+RUN mkdir -p /tmp/banco-docentes
+
+WORKDIR /tmp/banco-docentes/
+
+COPY . ./
+
+RUN npm install
+
+RUN npm install --global @angular/cli
+
+ARG build_env
+
+RUN echo "sed -i -e '/\"version\":/ s/\"version\":[^,]*/\"version\":\"${build_env}\"/' package.json"
+
+RUN sed -i -e "/\"version\":/ s/\"version\":[^,]*/\"version\":\"${build_env}\"/" package.json
+
+RUN echo "ng build -c=prod"
+
+RUN ng build -c=prod

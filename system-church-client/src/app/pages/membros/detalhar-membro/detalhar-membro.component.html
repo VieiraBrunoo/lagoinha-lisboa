@@ -1,0 +1,110 @@
+<div class="container-fluid">
+  <form class="example-form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="bordas">
+          <div class="row">
+
+            <div class="col-md-12">
+              <h5 class="text-center">{{docente.nome}}</h5>
+              <br>
+              <div class="foto-perfil-wrapper" align="text-center">
+                <div class="foto-perfil">
+                  <img [src]="docente.imgDocente">
+                </div>
+              </div>
+
+              <div class="col-md-3" align="justify">
+                <h5>Titulação:</h5> 
+                <p> {{docente.titulacao}} </p>
+                <h5>Tribunal:</h5> 
+                <p> {{docente.tribunal}} </p>
+                <h5>E-Mail:</h5>  
+                <p> {{docente.email}} </p>
+                <h5>Atuação:</h5> 
+                <p *ngFor="let atuacao of docente.atuacao">
+                  <mat-icon>check</mat-icon>
+                  {{atuacao | titlecase}}.
+                </p>
+                <h5>Escola Atuação:</h5> 
+              <p> {{docente.escolaAtuacao}} </p>
+                <h5>Curriculo Lates:</h5>
+              <p> {{docente.curriculoLates}}</p>
+              </div>
+              <div class="col-md-12">
+                <h5 class="text-center">Curriculo Resumido</h5>
+                {{docente.curriculoResumido}}
+              </div>
+
+              <div class="col-md-12" align="center">
+                <div class="hr">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <h5 class="text-center">Área de Atuação</h5>
+                <p *ngFor="let areaAtuacao of docente.areaAtuacao">
+                  <mat-icon>check_box</mat-icon>
+                  {{areaAtuacao | titlecase}}.
+                </p>
+              </div>
+
+              <div class="col-md-12" align="center">
+                <div class="hr">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <h5 class="text-center">Curso de Aprofundamento Docente</h5>
+                <p *ngFor="let cd of docente.cursoDocente">
+                  <mat-icon>check_box</mat-icon>
+                 {{cd.nomeStr | titlecase}} - {{cd.descricao| titlecase}} - {{ cd.dataInicial | date:'dd/MM/yyyy'}} - {{ cd.dataFinal | date:'dd/MM/yyyy'}}
+                </p>
+              </div>
+
+              <div class="col-md-12" align="center">
+                <div class="hr">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <h5 class="text-center">Outros Curso como Aluno</h5>
+                <p *ngFor="let cursoComoAluno of docente.cursoComoAluno">
+                  <mat-icon>check_box</mat-icon>
+                  {{cursoComoAluno | titlecase}}.
+                </p>
+
+
+              </div>
+
+              <div class="col-md-12" align="center">
+                <div class="hr">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <h5 class="text-center">Experiência como Formador</h5>
+                <p *ngFor="let cf of docente.formador">
+                  <mat-icon>check_box</mat-icon>
+                 {{cf.nomeStr | titlecase}} - {{cf.descricao| titlecase}} - {{ cf.dataInicial | date:'dd/MM/yyyy'}} - {{ cf.dataFinal | date:'dd/MM/yyyy'}}
+                </p>
+              </div>
+
+              <div class="col-md-12" align="center">
+                <div class="hr">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <div class="text-center" *ngIf="exibirMsgRegistro">
+          <br>
+          <h5>Pesquisa Não Retornou Registro</h5>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

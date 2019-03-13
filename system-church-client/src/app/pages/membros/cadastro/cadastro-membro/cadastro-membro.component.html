@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper (selectionChange)="stepClick($event)">
+    <mat-step [stepControl]="dadosGeraisFormGroup"> 
+      <ng-template matStepLabel>Dados Pessoais</ng-template>
+      <app-dados-pessoais #dadosPessoais></app-dados-pessoais>
+    </mat-step>
+    <mat-step [stepControl]="dadosGeraisFormGroup" [optional]="isOptional">
+     <ng-template matStepLabel>Dados Familiares</ng-template>
+     <app-dados-familiares #dadosFamiliares></app-dados-familiares>
+    </mat-step>
+    <mat-step [stepControl]="dadosGeraisFormGroup" [optional]="isOptional">
+      <ng-template matStepLabel>Dados Batismo</ng-template>
+      <app-dados-batismos #dadosBatismos></app-dados-batismos>
+    </mat-step>
+    <mat-step [stepControl]="dadosGeraisFormGroup" [optional]="isOptional">
+      <ng-template matStepLabel>Dados GC</ng-template>
+      <app-dados-gc #dadosGc></app-dados-gc>
+    </mat-step>
+
+   <!-- <mat-step [stepControl]="dadosGeraisFormGroup" [optional]="isOptional">
+      <ng-template matStepLabel>Ações como Docente</ng-template>
+      <app-acoes-como-docente #acoesComoDocente></app-acoes-como-docente>
+    </mat-step>
+    <mat-step [stepControl]="dadosGeraisFormGroup" [optional]="isOptional">
+      <ng-template matStepLabel>Banco de Docentes</ng-template>
+      <app-banco-docente #bancoDocente></app-banco-docente>
+    </mat-step>  -->
+  </mat-horizontal-stepper>
+  <div class="container">
+    <div class="content-separator">
+      <button color="blue" mat-raised-button (click)="salvar()">Salvar</button>
+    </div>
+  </div>
+</div>

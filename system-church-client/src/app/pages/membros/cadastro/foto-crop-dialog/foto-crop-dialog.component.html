@@ -1,0 +1,26 @@
+<mat-dialog-content class="mat-typography" style="padding: 0;">
+  <div class="container">
+    <div style="display:inline-block; background-color:#00627C; color: #fff; width: 100%; padding: 13px 0 0 15px; margin: 0 0 31px 0;">
+      <p>Editar foto de perfil</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="image-wrapper">
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1"
+            [resizeToWidth]="200" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="image-wrapper-cropped">
+          <img [src]="croppedImage">
+        </div>
+        <div class="col-md-12">
+          <div class="buttons">
+            <button mat-button mat-dialog-close [mat-dialog-close]="data" cdkFocusInitial>Salvar</button>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
