@@ -20,7 +20,7 @@ export class DadosGcComponent implements OnInit {
   nomeArquivo: string;
   listDocumentos: Array<any>;
   showGrid: boolean = false;
-  nomeDocente: string;
+  nomeMembro:string;
   titulosColunas: string[] = ['nome', 'tipo', 'responsavel', 'acoes'];
   tipoDocumento: string;
   tipoDocumentoList: Array<Parametro>;
@@ -33,6 +33,7 @@ export class DadosGcComponent implements OnInit {
 
   arquivosMultipart: Array<any>;
   documentosMultipart: Array<Documento>;
+  gcList: Array<any>;
 
   selectedFiles: FileList;
   documento: File;
@@ -48,7 +49,7 @@ export class DadosGcComponent implements OnInit {
     this.documentosMultipart = new Array<Documento>();
    
     this.creatForm();
-    this.getListTiposDocumento();
+    this.getListOpcaoGc();
   }
 
   onFileChanged(event) {
@@ -120,4 +121,13 @@ export class DadosGcComponent implements OnInit {
       });
     })
   }
+
+  private getListOpcaoGc() {
+    this.gcList = new Array<any>();
+    this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.gcList.push(element);
+    });
+  });
+}
 }

@@ -3,20 +3,19 @@
     <div class="content-separator">
       <div class="row">
         <div class="col-md-12" align="center">
-          <p>{{nomeDocente}}</p>
+          <p>{{nomeMembro}}</p>
         </div>
       </div>
       <div class="content-separator">
         <div class="row">
           <div class="col-md-3">
             <mat-form-field class="example-full-width">
-              <mat-select placeholder="Participa de Algum GC? *" [formControl]="dadosAdministrativosForm.controls['tipoDocumento']"
-                [errorStateMatcher]="errorState" name="tipoDocumento" id="tipoDocumento" (selectionChange)="changeTipoDocumento($event.value)">
+              <mat-select placeholder="Participa de Algum GC?*" [formControl]="dadosAdministrativosForm.controls['tipoDocumento']"
+                [errorStateMatcher]="errorState" name="tipoDocumento" id="tipoDocumento" (selectionChange)="changeTipoDocumento($event.value)" 
+                name="gc">
                 <mat-option [value]="null">(Selecione)</mat-option>
-                <mat-option [value]="1">Sim</mat-option>
-                <mat-option [value]="2">Não</mat-option>
-                <mat-option *ngFor="let tipoDocumento of tipoDocumentoList" [value]="tipoDocumento">
-                  {{tipoDocumento.descricao}}
+                <mat-option *ngFor="let gc of gcList" [value]="gc.sigla">
+                  {{gc.descricao}}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="dadosAdministrativosForm.controls['tipoDocumento'].hasError('required')">{{preenchimentoObrigatorio}}</mat-error>
@@ -27,69 +26,15 @@
                <mat-select placeholder="GC" [formControl]="dadosAdministrativosForm.controls['tipoDocumento']"
             [errorStateMatcher]="errorState" name="tipoDocumento" id="tipoDocumento" (selectionChange)="changeTipoDocumento($event.value)">
             <mat-option [value]="null">(Selecione)</mat-option>
-            <mat-option [value]="1">Sim</mat-option>
-            <mat-option [value]="2">Não</mat-option>
-            <mat-option *ngFor="let tipoDocumento of tipoDocumentoList" [value]="tipoDocumento">
+             <mat-option *ngFor="let tipoDocumento of tipoDocumentoList" [value]="tipoDocumento">
               {{tipoDocumento.descricao}}
             </mat-option>
           </mat-select>  
         </mat-form-field>
-  
-          </div>
-          <div class="col-md-2">
-            <button color="blue" mat-raised-button (click)="fileInput.click()">Selecionar documento</button>
-          </div>
-          <div class="col-md-1">
-            <button color="blue" mat-raised-button (click)="adicionarArquivo()">Adicionar</button>
-          </div>
-        </div>
-        <ng-container *ngIf="showDescricao">
-          <div class="row">
-            <div class="col-md-3">
-              <mat-form-field class="example-full-width">
-                <input matInput name="descricaoOutros" type="text" placeholder="Descrição tipo do documento*" [formControl]="dadosAdministrativosForm.controls['descricaoOutros']">
-              </mat-form-field>
-            </div>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="showGrid">
-
-          <div class="row">
-            <div class="col-md-12">
-              <div class="mat-elevation-z8">
-                <mat-table [dataSource]="dataSource">
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="nome">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Nome </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.descricao || row.nomeArquivo}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="tipo">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.tipoDocumento}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="responsavel">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Anexado por </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.usuario}}</mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="acoes">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Ações </mat-header-cell>
-                    <mat-cell *matCellDef="let row">
-                      <button mat-mini-fab class="btn-small" matTooltip="Remover registro" matTooltipPosition="right" (click)="removerArquivo(row)">
-                        <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
-                          ng-reflect-hide-xs="" style="display: block; color: black;">delete</mat-icon>
-                      </button>
-                    </mat-cell>
-                  </ng-container>
-                  <mat-header-row *matHeaderRowDef="titulosColunas"></mat-header-row>
-                  <mat-row *matRowDef="let row; columns: titulosColunas;">
-                  </mat-row>
-                </mat-table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
-              </div>
-            </div>
-          </div>
-        </ng-container>
       </div>
     </div>
+  </div>
+</div>
+
   </form>
 </div>

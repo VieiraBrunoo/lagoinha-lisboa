@@ -26,10 +26,10 @@ import { Parametro } from 'src/app/models/parametro';
 export class CadastroMembroComponent implements OnInit {
 
   @ViewChild('stepper') stepper: MatStepper;
-  @ViewChild('dadosPessoais') dadosGerais: DadosPessoaisComponent;
-  @ViewChild('dadosBatismos') dadosBancarios: DadosBatimosComponent;
-  @ViewChild('dadosGc') dadosAdministrativos: DadosGcComponent;
-  @ViewChild('dadosFamiliares') acoesComoDiscente: DadosFamiliaresComponent;
+  @ViewChild('dadosPessoais') dadosPessoais: DadosPessoaisComponent;
+  @ViewChild('dadosFamiliares') dadosFamiliares: DadosFamiliaresComponent;
+  @ViewChild('dadosBatismos') dadosBatismos: DadosBatimosComponent;
+  @ViewChild('dadosGc') dadosGc: DadosGcComponent;
   @BlockUI() blockUI: NgBlockUI;
 
   private toasterService: ToasterService;
@@ -52,32 +52,36 @@ export class CadastroMembroComponent implements OnInit {
 
   stepClick(ev) {
 
-    if (ev.selectedIndex === 2) {
-      this.dadosAdministrativos.nomeDocente = this.dadosGerais.dadosGeraisForm.controls['nome'].value;
+    if (ev.selectedIndex === 1) {
+      this.dadosFamiliares.nomeMembro = this.dadosPessoais.dadosGeraisForm.controls['nome'].value;
     }
 
-    if (ev.selectedIndex === 3) {
+    if (ev.selectedIndex === 2) {
+      this.dadosBatismos.nomeMembro = this.dadosPessoais.dadosGeraisForm.controls['nome'].value;
+
     /*  
       this.acoesComoDiscente.nomeDocente = this.dadosGerais.dadosGeraisForm.controls['nome'].value;
       this.acoesComoDiscente.dataSourceCapacitacaoDiscente = new MatTableDataSource<any>(null);
       this.acoesComoDiscente.dataSourceCapacitacaoEnfam = new MatTableDataSource<any>(null);
   */
-      if(this.dadosGerais.capacitacaoDiscenteList && this.dadosGerais.capacitacaoDiscenteList.length > 0) {
-    /*    this.acoesComoDiscente.showCapacitacaoDiscente = true;
+    /*  if(this.dadosGerais.capacitacaoDiscenteList && this.dadosGerais.capacitacaoDiscenteList.length > 0) {
+        this.acoesComoDiscente.showCapacitacaoDiscente = true;
         this.acoesComoDiscente.capacitacaoDiscenteLength = this.dadosGerais.capacitacaoDiscenteList.length;
         this.acoesComoDiscente.dataSourceCapacitacaoDiscente = new MatTableDataSource<any>(this.dadosGerais.capacitacaoDiscenteList);
         this.acoesComoDiscente.dataSourceCapacitacaoDiscente.paginator = this.acoesComoDiscente.paginator.toArray()[0];
-      */}
+      }
   
       if(this.dadosGerais.capacitacaoDocenteList && this.dadosGerais.capacitacaoDocenteList.length > 0) {
         /*this.acoesComoDiscente.showCapacitacaoEnfam = true;
         this.acoesComoDiscente.capacitacaoEnfamLength = this.dadosGerais.capacitacaoEnfamList.length;
         this.acoesComoDiscente.dataSourceCapacitacaoEnfam = new MatTableDataSource<any>(this.dadosGerais.capacitacaoEnfamList);
-        this.acoesComoDiscente.dataSourceCapacitacaoEnfam.paginator = this.acoesComoDiscente.paginator.toArray()[1];*/
-      }
+        this.acoesComoDiscente.dataSourceCapacitacaoEnfam.paginator = this.acoesComoDiscente.paginator.toArray()[1];
+      }*/
     }
     
-    if (ev.selectedIndex === 4) {
+    if (ev.selectedIndex === 3) {
+      this.dadosGc.nomeMembro = this.dadosPessoais.dadosGeraisForm.controls['nome'].value;
+
       /*
       this.acoesComoDocente.nomeDocente = this.dadosGerais.dadosGeraisForm.controls['nome'].value;
       this.acoesComoDocente.dataSourceCapacitacaoDocente = new MatTableDataSource<any>(null);
@@ -98,7 +102,7 @@ export class CadastroMembroComponent implements OnInit {
       this.bancoDocente.validarCadastro(this.docente, this.documento);
     }*/
   }
-
+/*
   salvar() {
 
     if (this.dadosGerais.dadosGeraisForm.valid && this.dadosBancarios.dadosBancariosForm.valid && this.dadosAdministrativos.dadosAdministrativosForm.valid) {
@@ -125,7 +129,7 @@ export class CadastroMembroComponent implements OnInit {
               acoes.push(acao);
             });*/
 
-            this.acoesComoDiscente.acaoList.forEach(acao => {
+          /*  this.acoesComoDiscente.acaoList.forEach(acao => {
               acao.docente = idDocente;
               acoes.push(acao);
             });
@@ -192,7 +196,7 @@ export class CadastroMembroComponent implements OnInit {
       this.docente.docenteTemaAtuacaoList.push(docenteTemaAtuacao);
     }); */
   }
-
+/*
   private preencherDocenteAtuacaoList() {
 
     this.docente.docenteAtuacaoList = new Array<string>();
@@ -210,6 +214,6 @@ export class CadastroMembroComponent implements OnInit {
       //   ).aptidao
       // ) === true ? 'S' : 'N';
       this.docente.docenteAtuacaoList.push(element);
-    }); */
+    }); 
   }
-}
+}*/

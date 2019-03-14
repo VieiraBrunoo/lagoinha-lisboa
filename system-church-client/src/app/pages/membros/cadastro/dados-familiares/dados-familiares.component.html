@@ -1,18 +1,19 @@
 <div class="container">
+    <form class="example-form" [formGroup]="dadosFamiliaresForm" enctype="multipart/form-data">
   <div class="row">
     <div class="col-md-12" align="center">
-      <p>{{nomeDocente}}</p>
-    </div>
+        <p>{{nomeMembro}}</p>
+      </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="example-full-width">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Nome do Pai">
+        <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomePai']" placeholder="Nome do Pai">
       </mat-form-field>
     </div>
     <div class="col-md-6">
         <mat-form-field class="example-full-width">
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Nome da Mãe">
+          <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomeMae']" placeholder="Nome da Mãe">
         </mat-form-field>
       </div>
 
@@ -23,16 +24,11 @@
     <div class="col-md-6">
       
         <mat-form-field class="example-full-width">
-        <mat-select placeholder="Estado Civil" [errorStateMatcher]="matcher"
-        name="escola">
+        <mat-select placeholder="Estado Civil" [formControl]="dadosFamiliaresForm.controls['estadoCivil']" [errorStateMatcher]="matcher"
+        name="estadoCivil">
         <mat-option [value]="null">(Selecione)</mat-option>
-        <mat-option [value]="1">Solteiro(a)</mat-option>
-        <mat-option [value]="2">Casado(a)</mat-option>
-        <mat-option [value]="2">Divorciado(a)</mat-option>
-        <mat-option [value]="2">Viúvo(a)</mat-option>
-
-        <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-         
+         <mat-option *ngFor="let estadoCivil of estadoCivilList" [value]="estadoCivil.sigla">
+         {{estadoCivil.descricao}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -41,7 +37,7 @@
 
     <div class="col-md-6">
         <mat-form-field class="example-full-width">
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Nome do Cônjuge">
+          <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomeConjuge']" placeholder="Nome do Cônjuge">
         </mat-form-field>
       </div>
     </div>
@@ -50,43 +46,25 @@
   <div class="row">
     <div class="col-md-6">
         <mat-form-field class="example-full-width"> 
-            <input matInput [matDatepicker]="picker2" placeholder="Data do Casamento">
+            <input matInput [matDatepicker]="picker2" [formControl]="dadosFamiliaresForm.controls['dataCasamento']" placeholder="Data do Casamento">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
     </div>
-    <div class="col-md-6">
-        <mat-form-field class="example-full-width">
-                <mat-select placeholder="Tem Filhos?" [errorStateMatcher]="matcher"
-                name="escola">
-                <mat-option [value]="null">(Selecione)</mat-option>
-                <mat-option [value]="S">Sim</mat-option>
-                <mat-option [value]="N">Não</mat-option>
-                 <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-                </mat-option>
-              </mat-select>
-        </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
       <div class="col-md-6">
         <mat-form-field class="example-full-width">
-                <mat-select placeholder="Quantos Filhos?" [errorStateMatcher]="matcher"
+                <mat-select placeholder="Quantos Filhos?" [formControl]="dadosFamiliaresForm.controls['qtdFilhos']" [errorStateMatcher]="matcher"
                 name="escola">
                 <mat-option [value]="null">(Selecione)</mat-option>
                 <mat-option [value]="1">1</mat-option>
                 <mat-option [value]="2">2</mat-option>
                 <mat-option [value]="3">3</mat-option>
                 <mat-option [value]="4">4</mat-option>
-        
-                <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-                 
-                </mat-option>
               </mat-select>        
         </mat-form-field>
       </div>
     </div>
 
-  <ng-container *ngIf="showGrid">
-    </ng-container>
+ 
+</form>
 </div>

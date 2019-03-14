@@ -7,13 +7,13 @@ import { Parametro } from 'src/app/models/parametro';
 @Injectable()
 export class ParametroService extends GenericService {
 
-  private relativePath: string = 'api/parametro/';
+  private relativePath: string = 'parametro/';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   public findByNomeConstante(nomeConstante: string) : Observable<Parametro[]> {
-    return this.getMethod(this.relativePath+"findByNome/"+ nomeConstante);
+    return this.getMethod(this.relativePath+"findByNomeConstante/"+ nomeConstante);
   }
 }

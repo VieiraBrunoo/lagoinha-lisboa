@@ -1,6 +1,5 @@
 package pt.systemChurch.repository;
 
-import org.springframework.data.repository.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import pt.systemChurch.entity.UsuarioEntity;

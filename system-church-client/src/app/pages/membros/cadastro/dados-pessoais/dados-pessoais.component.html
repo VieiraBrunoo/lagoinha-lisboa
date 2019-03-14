@@ -17,22 +17,20 @@
 
             <mat-form-field class="example-full-width">
               <mat-select placeholder="Nacionalidade" [formControl]="dadosGeraisForm.controls['escola']" [errorStateMatcher]="matcher"
-                name="escola">
+                name="nacionalidade">
                 <mat-option [value]="null">(Selecione)</mat-option>
-                <mat-option [value]="1">Brasileiro</mat-option>
-                <mat-option [value]="2">Português</mat-option>
-                <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-                 
+                <mat-option *ngFor="let nacionalidade of nacionalidadeList" [value]="nacionalidade.sigla"> 
+                {{nacionalidade.descricao}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
               <mat-form-field class="example-full-width">
                   <mat-select placeholder="Sexo" [formControl]="dadosGeraisForm.controls['escola']" [errorStateMatcher]="matcher"
-                    name="escola">
+                    name="sexo">
                     <mat-option [value]="null">(Selecione)</mat-option>
-                    <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-                     
+                    <mat-option *ngFor="let sexo of sexoList" [value]="sexo.sigla">
+                     {{sexo.descricao}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -80,19 +78,22 @@
       <div class="row">
         <div class="col-md-6">
             <mat-form-field class="example-full-width">
-                <input matInput [formControl]="dadosGeraisForm.controls['contato2']" name="contato2" type="text"
-                  placeholder="Cidade" >
-              </mat-form-field>
+                <mat-select placeholder="Cidade" [formControl]="dadosGeraisForm.controls['escola']" [errorStateMatcher]="matcher"
+                  name="cidade">
+                  <mat-option [value]="null">(Selecione)</mat-option>
+                  <mat-option *ngFor="let cidade of cidadeList" [value]="cidade.sigla">
+                   {{cidade.descricao}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>  
         </div>
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <mat-select placeholder="País" [formControl]="dadosGeraisForm.controls['escola']" [errorStateMatcher]="matcher"
-              name="escola">
+              name="pais">
               <mat-option [value]="null">(Selecione)</mat-option>
-              <mat-option [value]="1">Brasil</mat-option>
-              <mat-option [value]="2">Portugal</mat-option>
-              <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-               
+              <mat-option *ngFor="let pais of paisList" [value]="pais.sigla">
+                  {{pais.descricao}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -103,12 +104,10 @@
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Zona" [formControl]="dadosGeraisForm.controls['escola']" [errorStateMatcher]="matcher"
-              name="escola">
+              name="zona">
               <mat-option [value]="null">(Selecione)</mat-option>
-              <mat-option [value]="1">Moscavide</mat-option>
-              <mat-option [value]="2">Oriente</mat-option>
-              <mat-option *ngFor="let escola of escolaList" [value]="escola.id">
-               
+              <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
+                  {{zona.descricao}}
               </mat-option>
             </mat-select>
           </mat-form-field>

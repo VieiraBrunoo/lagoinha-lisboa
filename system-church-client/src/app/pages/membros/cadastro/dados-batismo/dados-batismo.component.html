@@ -1,13 +1,17 @@
 <div class="container">
   <form class="example-form" [formGroup]="dadosBancariosForm" >
+          <div class="row">
+            <div class="col-md-12" align="center">
+                <p>{{nomeMembro}}</p>
+              </div>
+          </div>
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="example-full-width">
-          <mat-select name="banco" [errorStateMatcher]="matcher" [formControl]="dadosBancariosForm.controls['banco']" placeholder="Batizado?">
+          <mat-select name="batizado" [errorStateMatcher]="matcher" [formControl]="dadosBancariosForm.controls['banco']" placeholder="Batizado?">
             <mat-option [value]="null">(Selecione)</mat-option>
-            <mat-option [value]="1">Sim</mat-option>
-            <mat-option [value]="2">Não</mat-option>
-            <mat-option *ngFor="let banco of bancoList" [value]="banco.id">
+            <mat-option *ngFor="let batizado of batizadoList" [value]="batizado.sigla">
+              {{batizado.descricao}}
             </mat-option>
           </mat-select>
          </mat-form-field>

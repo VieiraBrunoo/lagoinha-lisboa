@@ -5,6 +5,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { MaterialErrorState } from '../../../util/material-error-state';
 import { Banco } from 'src/app/models/banco';
 import { Docente } from 'src/app/models/docente';
+import { ParametroService } from 'src/app/service/parametro/parametro.service';
 
 
 //#region Interfaces
@@ -29,6 +30,8 @@ export class DadosBatimosComponent implements OnInit {
   errorValidatorLetrasNumeros: string;
   regexStr = '^[a-zA-Z0-9_]*$';
   bancoList: Array<Banco>;
+  nomeMembro:string;
+  batizadoList:Array<any>;
 
   dadosBancariosForm: FormGroup;
   errorState: MaterialErrorState;
@@ -43,6 +46,8 @@ export class DadosBatimosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private el: ElementRef,
     private bancoService: BancoService,
+    private parametroService: ParametroService,
+
   ) { }
 
   ngOnInit() {
@@ -51,7 +56,7 @@ export class DadosBatimosComponent implements OnInit {
     this.errorValidatorLetrasNumeros = 'Apenas letras e números são permitidos';
 */
     this.creatForm();
-    this.getListBancos();
+    this.getListOpcaoBatizado();
   }
 
   //#region Metodos Privados
@@ -67,14 +72,14 @@ export class DadosBatimosComponent implements OnInit {
     });
   }
 
-  private getListBancos() {
-    this.bancoList = new Array<Banco>();
-    this.bancoService.findAll().subscribe(listaRetorno => {
-      listaRetorno.forEach(element => {
-        this.bancoList.push(element);
-      });
+  private getListOpcaoBatizado() {
+    this.batizadoList = new Array<any>();
+    this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.batizadoList.push(element);
     });
-  }
+  });
+}
   //#endregion
 
 
@@ -82,3 +87,4 @@ export class DadosBatimosComponent implements OnInit {
     return new RegExp(this.regexStr).test(event.key);
   }
 }
+

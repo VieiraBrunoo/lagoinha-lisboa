@@ -2,6 +2,9 @@ import { Acao } from '../../../../models/acao';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, PageEvent } from '@angular/material';
 import { SiecWsService } from 'src/app/service/siec-ws/siec.ws.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MaterialErrorState } from 'src/app/pages/util/material-error-state';
+import { ParametroService } from 'src/app/service/parametro/parametro.service';
 
 @Component({
   selector: 'app-dados-familiares',
@@ -13,7 +16,7 @@ export class DadosFamiliaresComponent implements OnInit {
   colunas: string[] = ['nomeStr', 'descricaoStr', 'acao', 'carga', 'dataInicial', 'dataFinal'];
   showGrid: boolean = false;
   acao: Acao;
-  nomeDocente: string;
+  nomeMembro:string;
   acaoList: Array<Acao>;
   dataSourceOutros: MatTableDataSource<any>;
   dataSourceCapacitacaoEnfam: MatTableDataSource<any>;
@@ -24,20 +27,28 @@ export class DadosFamiliaresComponent implements OnInit {
   capacitacaoDiscenteListLength: number;
   capacitacaoDiscenteEnfamListLength: number;
   cpfDocente: number;
+  dadosFamiliaresForm: FormGroup;
+  estadoCivilList: Array<any>;
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginatorCapacitacaoDocentes: MatPaginator;
   @ViewChild(MatPaginator) paginatorCapacitacaoEnfam: MatPaginator;
+  errorState: MaterialErrorState;
 
   constructor(
     public dialog: MatDialog,
-    private siecWsService: SiecWsService) {}
+    private siecWsService: SiecWsService,
+    private parametroService: ParametroService,
+    ) {}
 
   ngOnInit() {
     this.acao = new Acao();
     this.acaoList = new Array<Acao>();
     this.dataSourceCapacitacaoDocentes = new MatTableDataSource<any>(null);
     //this.dataSourceCapacitacaoDocentes.paginator = this.paginatorCapacitacaoDocentes;
+    this.creatForm();
+    this.getLisEstadoCivil();
   }
 
   ngAfterViewInit() {
@@ -48,6 +59,33 @@ export class DadosFamiliaresComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSourceOutros.filter = filterValue;
   }
+
+
+
+  private creatForm() {
+    this.errorState = new MaterialErrorState;
+    this.dadosFamiliaresForm = new FormGroup({
+      nomePai: new FormControl('', Validators.required),
+      nomeMae: new FormControl('',Validators.required),
+      estadoCivil:  new FormControl('',Validators.required),
+      nomeConjuge: new FormControl(''),
+      dataCasamento: new FormControl(''),
+      qtdFilhos: new FormControl('')
+    });
+  }
+
+
+  getLisEstadoCivil() {
+    this.estadoCivilList = new Array<any>();
+    this.parametroService.findByNomeConstante("ESTADO_CIVIL").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.estadoCivilList.push(element);
+      });
+    });
+  }
+
+
+
 /*
   abrirModal() {
     const dialogRef = this.dialog.open(AcoesDialogComponent, {
@@ -87,7 +125,7 @@ export class DadosFamiliaresComponent implements OnInit {
       }
     });
   }
-*/
+
   buscarUsuario(event) {
 
     let cpf = event.replace(/\./gi, "").replace(/\-/gi, "");
@@ -110,5 +148,5 @@ export class DadosFamiliaresComponent implements OnInit {
           this.dataSourceCapacitacaoDocentes.paginator = this.paginatorCapacitacaoDocentes;
       });
     }
-  }
+  } */
 }

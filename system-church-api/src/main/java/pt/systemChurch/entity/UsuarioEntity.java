@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="USUARIOS")
@@ -18,9 +19,11 @@ public class UsuarioEntity {
 	
 	
 	@Column(name="LOGIN")
+	@NotNull
 	private String login;
 	
 	@Column(name="SENHA")
+	@NotNull
 	private String  senha;
 
 	public long getId() {

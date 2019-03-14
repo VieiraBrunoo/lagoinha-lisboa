@@ -11,6 +11,7 @@ import { EscolaService } from '../../../../service/escola/escola.service';
 import { ParametroService } from '../../../../service/parametro/parametro.service';
 import { TribunalService } from '../../../../service/tribunal/tribunal.service';
 import { MaterialErrorState } from '../../../util/material-error-state';
+import { Parametro } from 'src/app/models/parametro';
 
 @Component({
   selector: 'app-dados-pessoais',
@@ -47,6 +48,11 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
   tipoImagem: string;
   ramo: any;
   flagValue: any;
+  nacionalidadeList: Array<any>;
+  sexoList: Array<any>;
+  zonaList: Array<any>;
+  cidadeList: Array<any>;
+  paisList: Array<any>;
 
   constructor(
     private escolaService: EscolaService,
@@ -62,12 +68,17 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.creatForm();
-    this.dadosGeraisForm.get('obterDadosDoSiec').setValue(false);
+    /*this.dadosGeraisForm.get('obterDadosDoSiec').setValue(false);
     this.getListCategorias();
     this.getListEscolas();
     this.getListRamos();
     this.getListTitulacoes();
-    this.alterarCategoria();
+    this.alterarCategoria();*/
+    this.getListNacionalidade();
+    this.getListSexo();
+    this.getListPais();
+    this.getListCidade();
+    this.getListZona();
   }
 
   private creatForm() {
@@ -103,116 +114,56 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  alterarCategoria() {
+  
 
-    const matriculaControl = this.dadosGeraisForm.get('matricula');
 
-    this.dadosGeraisForm.get('categoriaProfissional').valueChanges.subscribe(
-      (mode: string) => {
-        if (mode === 'JS') {
-          matriculaControl.setValidators([Validators.required]);
-          this.isServidor = true;
-        } else {
-          matriculaControl.clearValidators();
-          this.isServidor = false;
-        }
-        matriculaControl.updateValueAndValidity();
-      }
-    );
-  }
-
-  getListAtuacoes() {
-    this.atuacaoList = new Array<AtuacaoDTO>();
-   /* this.parametroService.findAtuacoes().subscribe(listRetorno => {
-      listRetorno.forEach(atuacao => {
-        if (this.docenteDTO && this.docenteDTO.id !== null && this.docenteDTO.atuacaoList.length > 0) {
-          this.docenteDTO.atuacaoList.find(k => k.valor1 === atuacao.valor1 ? atuacao.checked = true : atuacao.checked = false);
-        }
-        if (this.docenteDTO.id && this.docenteDTO.id !== null) {
-          atuacao.docente = this.docenteDTO.id;
-        }
-        this.atuacaoList.push(atuacao);
-      });
-    }) */
-  }
-
-  getListTemaAtuacoes() {
-
-    this.temaClassificacaoList = new Array<any>();
-    this.temaAtuacaoList = new Array<any>();
-    let temaAtuacaoListAuxiliar = new Array<TemaAtuacaoDTO>();
-
-    this.temaClassificacaoService.findAll().subscribe(listRetorno => {
-      listRetorno.forEach(temaClassificacao => {
-        this.temaClassificacaoList.push(temaClassificacao);
-        this.temaAtuacaoList[temaClassificacao.id] = [];
-        let index = 0;
-        this.temaAtuacaoService.findByTemaClassificacao(temaClassificacao.id).subscribe(listRetorno_ => {
-          listRetorno_.forEach(temaAtuacao => {
-            this.temaAtuacaoList[temaClassificacao.id][index] = temaAtuacao;
-            let x;
-
-      /*      if (this.docenteDTO && this.docenteDTO.id !== null && this.docenteDTO.temaAtuacaoList.length > 0) {
-              this.docenteDTO.temaAtuacaoList.find(k => k.classificacao === temaAtuacao.id ? x = true : x = false);
-              temaAtuacao.checked = x;
-              temaAtuacaoListAuxiliar.push(temaAtuacao);
-            }
-            index++;*/
-          });
-        });
-      });
-    });
-
-    if (temaAtuacaoListAuxiliar.length > 0) {
-      this.docenteDTO.temaAtuacaoList = temaAtuacaoListAuxiliar;
-    }
-  }
-
-  getListEscolas() {
-    this.escolaList = new Array<any>();
-    this.escolaService.findAll().subscribe(listaRetorno => {
-      listaRetorno.forEach(element => {
-        this.escolaList.push(element);
-      });
-    });
-  }
-
-  getListTribunais(ramo: string) {
-    this.docenteDTO.ramo = ramo;
-    this.tribunalList = new Array<any>();
-    this.tribunalService.findByRamo(ramo).subscribe(listaRetorno => {
-      listaRetorno.forEach(element => {
-        this.tribunalList.push(element);
-      });
-    });
-  }
-
-  getListTitulacoes() {
-    this.titulacaoList = new Array<any>();
-    this.parametroService.findByNomeConstante("TITULACAO").subscribe(listRetorno => {
+  getListNacionalidade() {
+    this.nacionalidadeList = new Array<any>();
+    this.parametroService.findByNomeConstante("NACIONALIDADE").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.titulacaoList.push(element);
+        this.nacionalidadeList.push(element);
       });
     });
   }
 
-  getListCategorias() {
-    this.categoriaList = new Array<any>();
-    this.parametroService.findByNomeConstante("CATEGORIA_PROFISSIONAL").subscribe(listRetorno => {
+
+  getListSexo() {
+    this.sexoList = new Array<any>();
+    this.parametroService.findByNomeConstante("SEXO").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.categoriaList.push(element);
+        this.sexoList.push(element);
       });
     });
   }
 
-  getListRamos() {
-    this.ramoList = new Array<any>();
-    this.parametroService.findByNomeConstante("RAMO").subscribe(listRetorno => {
+
+  getListZona() {
+    this.zonaList = new Array<any>();
+    this.parametroService.findByNomeConstante("ZONA ").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.ramoList.push(element);
+        this.zonaList.push(element);
       });
     });
   }
+
+  getListCidade() {
+    this.cidadeList = new Array<any>();
+    this.parametroService.findByNomeConstante("CIDADE").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.cidadeList.push(element);
+      });
+    });
+  }
+
+  getListPais() {
+    this.paisList = new Array<any>();
+    this.parametroService.findByNomeConstante("PAIS").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.paisList.push(element);
+      });
+    });
+  }
+
 
   /* ----------- EVENTOS ----------- */
   onFileChanged(event) {
