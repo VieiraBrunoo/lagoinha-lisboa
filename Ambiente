@@ -1,4 +1,3 @@
-
 #API
 Java 1.8
 Hibernate
@@ -7,8 +6,18 @@ Spring Boot
 #CLIENT
 NODE.JS
 ANGULAR 7
+HTML
+BOOTSTRAP
+CSS
 
 #FERRAMENTAS
-VISUAL STUDIO CODE
-MYSQL WORKBENCH
-STS-BUNDLE
+VISUAL STUDIO CODE 
+MYSQL WORKBENCH 
+STS-BUNDLE 
+
+#LINKS
+MYSQL WORKBENCH  - https://dev.mysql.com/downloads/windows/installer/5.7.html
+STS-BUNDLE - https://spring.io/tools3/sts/legacy
+VISUAL STUDIO CODE - https://code.visualstudio.com/download
+NODE JS - https://nodejs.org/en/download/
+JAVA 8 - https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 
