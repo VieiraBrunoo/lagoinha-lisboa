@@ -29,7 +29,7 @@ export class DadosFamiliaresComponent implements OnInit {
   cpfDocente: number;
   dadosFamiliaresForm: FormGroup;
   estadoCivilList: Array<any>;
-
+  exibirCampos:boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginatorCapacitacaoDocentes: MatPaginator;
@@ -49,6 +49,7 @@ export class DadosFamiliaresComponent implements OnInit {
     //this.dataSourceCapacitacaoDocentes.paginator = this.paginatorCapacitacaoDocentes;
     this.creatForm();
     this.getLisEstadoCivil();
+    this.habilitarCampos();
   }
 
   ngAfterViewInit() {
@@ -84,6 +85,20 @@ export class DadosFamiliaresComponent implements OnInit {
     });
   }
 
+
+  habilitarCampos(){
+
+    if(this.dadosFamiliaresForm.get('estadoCivil').value==='CAS'){
+
+      this.exibirCampos==true;
+    } else{
+
+      this.exibirCampos==false;
+
+    }
+
+
+  }
 
 
 /*

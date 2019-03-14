@@ -33,7 +33,7 @@ export class DadosBatimosComponent implements OnInit {
   nomeMembro:string;
   batizadoList:Array<any>;
 
-  dadosBancariosForm: FormGroup;
+  dadosBatismoForm: FormGroup;
   errorState: MaterialErrorState;
 
   tpContas: TpConta[] = [
@@ -63,12 +63,11 @@ export class DadosBatimosComponent implements OnInit {
   private creatForm() {
 
     this.errorState = new MaterialErrorState;
-    this.dadosBancariosForm = new FormGroup({
-      banco: new FormControl(''),
-      flTipoConta: new FormControl(''),
-      cdAgencia: new FormControl(''),
-      operacao: new FormControl(''),
-      numeroConta: new FormControl(''),
+    this.dadosBatismoForm = new FormGroup({
+      flagBatizado: new FormControl(''),
+      dataBatismo: new FormControl(''),
+      igrejaBatismo: new FormControl(''),
+    
     });
   }
 

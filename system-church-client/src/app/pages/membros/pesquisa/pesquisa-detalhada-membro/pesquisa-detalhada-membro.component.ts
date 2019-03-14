@@ -22,7 +22,9 @@ import { NgBlockUI, BlockUI } from 'ng-block-ui';
   styleUrls: ['./pesquisa-detalhada-membro.component.css']
 })
 export class PesquisaDetalhadaMembroComponent implements OnInit {
-  titulacaoList: Array<Parametro>;
+  sexoList: Array<any>;
+  estadoCivilList: Array<any>;
+  paisList: Array<any>;
   areaAtuacaoList:Array<TemaClassificacao>;
   statusDocenteList:Array<Parametro>;
   temaAtuacaoList:any[];
@@ -37,14 +39,10 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
   imageSrc: string;
   listImage:string[];
   @BlockUI() blockUI: NgBlockUI;
+  conjuge:boolean
 
 
   constructor(
-    private _formBuilder: FormBuilder,
-    private escolaService: EscolaService,
-    private tribunalService: TribunalService,
-    private temaClassificacaoService: TemaClassificacaoService,
-    private temaAtuacaoService: TemaAtuacaoService,
     private parametroService: ParametroService,
     private docenteService: DocenteService,
     public router: Router
@@ -55,10 +53,11 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
 
   ngOnInit() {
     this.creatForm();
-    this.getListTitulacoes();
-    this.getListAreaAtuacao();
-    this.getListStatusDocente();
-    this.exibirMsgRegistro=false;
+      this.exibirMsgRegistro=false;
+      this.getListSexo();
+      this.getListEstadoCivil();
+      this.getListPais();
+
       }
 
   private creatForm() {
@@ -72,65 +71,44 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
      });
    }
  
-   private getListTitulacoes() {
-     this.titulacaoList = new Array<Parametro>();
-     this.parametroService.findByNomeConstante("TITULACAO").subscribe(listRetorno => {
+   private getListSexo() {
+     this.sexoList = new Array<any>();
+     this.parametroService.findByNomeConstante("SEXO").subscribe(listRetorno => {
        listRetorno.forEach(element => {
-         this.titulacaoList.push(element);
+         this.sexoList.push(element);
        });
      })
    }
  
-   private getListAreaAtuacao() {
-     this.areaAtuacaoList= new Array<TemaClassificacao>();
-     this.temaClassificacaoService.findAll().subscribe(listRetorno => {
-       listRetorno.forEach(element => {
-         this.areaAtuacaoList.push(element);
-       });
-     })
-   }
- 
-   private getListStatusDocente() {
-     this.statusDocenteList = new Array<Parametro>();
-     this.parametroService.findByNomeConstante("STATUS_DOCENTE").subscribe(listRetorno => {
-       listRetorno.forEach(element => {
-         this.statusDocenteList.push(element);
-       });
-     })
-   }
- 
-   onAreaAtuacaoChanged(idAreaAtuacao: number) {
-     this.temaAtuacaoList = new Array<TemaAtuacao>();
-     this.temaAtuacaoService.findByTemaAtuacao(idAreaAtuacao).subscribe(listRetorno => {
-       this.temaAtuacaoList = [listRetorno.length];
-       let index = 0;
-       listRetorno.forEach(element => {
-         this.temaAtuacaoList[index] = {'id': element.id, 'descricao': element.descricao, 'temaClassificacao': element.temaClassificacao.id};
-         index++;
-       });
-     })
-   }
-   onTemaChanged(idTema: number) {
-     this.temaAtuacaoList = new Array<TemaAtuacao>();
-     this.temaAtuacaoService.findByTemaClassificacao(idTema).subscribe(listRetorno => {
-       this.temaAtuacaoList = [listRetorno.length];
-       let index = 0;
-       listRetorno.forEach(element => {
-         this.temaAtuacaoList[index] = {'id': element.id, 'descricao': element.descricao, 'temaClassificacao': element.temaClassificacao.id};
-         index++;
-       });
-     })
-   }
-
-
-
-   pesquisar(){
+   private getListEstadoCivil() {
+    this.estadoCivilList = new Array<any>();
+    this.parametroService.findByNomeConstante("ESTADO_CIVIL").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.estadoCivilList.push(element);
+      });
+    })
+  }
+  private getListPais() {
+    this.paisList = new Array<any>();
+    this.parametroService.findByNomeConstante("PAIS").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.paisList.push(element);
+      });
+    })
+  }
+      pesquisar(){
     this.obterFiltro();
     this.getDocentes();
     
   }
 
+ 
 
+
+    habilitarCampos(){
+
+
+    }
 
 
    private obterFiltro(){

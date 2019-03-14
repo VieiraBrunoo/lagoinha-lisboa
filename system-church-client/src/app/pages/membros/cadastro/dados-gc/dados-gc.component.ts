@@ -26,7 +26,7 @@ export class DadosGcComponent implements OnInit {
   tipoDocumentoList: Array<Parametro>;
   dataSource: MatTableDataSource<any>;
   errorState: MaterialErrorState;
-  dadosAdministrativosForm: FormGroup;
+  dadosGcForm: FormGroup;
   reader = new FileReader();
   url: any;
   preenchimentoObrigatorio: string = 'Preenchimento Obrigatório';
@@ -66,7 +66,7 @@ export class DadosGcComponent implements OnInit {
       this.documento = this.selectedFiles.item(0);
     }
   }
-
+/*
   adicionarArquivo() {
 
     let tipoArquivo: string = this.dadosAdministrativosForm.controls['tipoDocumento'].value;
@@ -81,7 +81,7 @@ export class DadosGcComponent implements OnInit {
     this.arquivosMultipart.push(this.documento);
     this.documentosMultipart.push(doc);
 
-    if(/*this.tipoDocumento != null && */this.nomeArquivo != null && this.nomeArquivo != '') {
+    if(this.tipoDocumento != null && this.nomeArquivo != null && this.nomeArquivo != '') {
       this.showGrid = true;
       this.listDocumentos.push({ 'nome': this.nomeArquivo, 'tipo': tipoArquivo, 'responsavel': responsavel });
       this.nomeArquivo = '';
@@ -89,7 +89,7 @@ export class DadosGcComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     }
   }
-
+*/
   removerArquivo(item) {
     const index: number = this.listDocumentos.indexOf(item.nome);
     this.listDocumentos.splice(index, 1);
@@ -106,11 +106,10 @@ export class DadosGcComponent implements OnInit {
 
   private creatForm() {
     this.errorState = new MaterialErrorState;
-    this.dadosAdministrativosForm = new FormGroup({
-      tipoDocumento: new FormControl('', Validators.required),
-      nomeArquivo: new FormControl(''),
-      position: new FormControl(this.positionOptions[0])
-    });
+    this.dadosGcForm = new FormGroup({
+      flagParticipaGc: new FormControl('', Validators.required),
+      GcId: new FormControl(''),
+         });
   }
 
   private getListTiposDocumento() {

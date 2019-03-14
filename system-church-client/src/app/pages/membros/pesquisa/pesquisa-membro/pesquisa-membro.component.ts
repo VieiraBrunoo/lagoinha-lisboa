@@ -35,7 +35,8 @@ export interface PeriodicElement {
 export class PesquisaMembroComponent implements OnInit {
   titulacaoList: Array<Parametro>;
   areaAtuacaoList:Array<TemaClassificacao>;
-  statusDocenteList:Array<Parametro>;
+  zonaList:Array<any>;
+  horarioGcList:Array<any>;
   temaAtuacaoList:any[];
   resultadoPesquisaDocente:ResultadoPesquisaDocente;
   displayedColumns: string[] = ['cpf', 'nome', 'ramo', 'tribunal','button'];
@@ -69,12 +70,11 @@ export class PesquisaMembroComponent implements OnInit {
 
   ngOnInit() {
     this.creatForm();
-    this.getListTitulacoes();
-    this.getListAreaAtuacao();
-    this.getListStatusDocente();
     this.resultadoPesquisaDocente = new ResultadoPesquisaDocente();
     this.docenteList = new Array<ResultadoPesquisaDocente>();
     this.dataSource.paginator = this.paginator;
+    this.getListZona();
+    this.getListHorarioGc();
 
   }
 
@@ -90,56 +90,29 @@ export class PesquisaMembroComponent implements OnInit {
     });
   }
 
-  private getListTitulacoes() {
-    this.titulacaoList = new Array<Parametro>();
-    this.parametroService.findByNomeConstante("TITULACAO").subscribe(listRetorno => {
-      listRetorno.forEach(element => {
-        this.titulacaoList.push(element);
-      });
-    })
-  }
-
-  private getListAreaAtuacao() {
-    this.areaAtuacaoList= new Array<TemaClassificacao>();
-    this.temaClassificacaoService.findAll().subscribe(listRetorno => {
-      listRetorno.forEach(element => {
-        this.areaAtuacaoList.push(element);
-      });
-    })
-  }
-
-  private getListStatusDocente() {
-    this.statusDocenteList = new Array<Parametro>();
-    this.parametroService.findByNomeConstante("STATUS_DOCENTE").subscribe(listRetorno => {
-      listRetorno.forEach(element => {
-        this.statusDocenteList.push(element);
-      });
-    })
-  }
-
-  onAreaAtuacaoChanged(idAreaAtuacao) {
-    this.temaAtuacaoList = new Array<TemaAtuacao>();
-    this.temaAtuacaoService.findByTemaAtuacao(idAreaAtuacao).subscribe(listRetorno => {
-      this.temaAtuacaoList = [listRetorno.length];
-      let index = 0;
-      listRetorno.forEach(element => {
-        this.temaAtuacaoList[index] = {'id': element.id, 'descricao': element.descricao, 'temaClassificacao': element.temaClassificacao.id};
-        index++;
-      });
-    })
-  }
-  onTemaChanged(idTema) {
-    this.temaAtuacaoList = new Array<TemaAtuacao>();
-    this.temaAtuacaoService.findByTemaClassificacao(idTema).subscribe(listRetorno => {
-      this.temaAtuacaoList = [listRetorno.length];
-      let index = 0;
-      listRetorno.forEach(element => {
-        this.temaAtuacaoList[index] = {'id': element.id, 'descricao': element.descricao, 'temaClassificacao': element.temaClassificacao.id};
-        index++;
-      });
-    })
-  }
   
+    private getListZona() {
+    this.zonaList = new Array<any>();
+    this.parametroService.findByNomeConstante("ZONA").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.zonaList.push(element);
+      });
+    })
+  }
+
+  
+  private getListHorarioGc() {
+    this.horarioGcList = new Array<any>();
+    this.parametroService.findByNomeConstante("HORARIO_GC").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.horarioGcList.push(element);
+      });
+    })
+  }
+
+
+  
+
   pesquisar(){
     this.obterFiltroDocentes();
     this.getDocentes();
