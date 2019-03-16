@@ -13,19 +13,19 @@
       <mat-icon class="icon">person</mat-icon>Membros
     </a>
   </li>
-
-  <li class="nav-item">
-    <a class="nav-link" routerLink="home" *ngIf="!listaPublica()">
-      <mat-icon class="icon">school</mat-icon>GC
-    </a>
-  </li>
-
+  
   <li class="nav-item">
     <a class="nav-link" routerLink="pesquisa/pesquisa-membro-detalhada" *ngIf="!listaPublica()">
       <mat-icon class="icon">search</mat-icon>Consulta Membros
     </a>
-    <a class="nav-link" routerLink="publica/pesquisa-publica" *ngIf="listaPublica()">
-      <mat-icon class="icon">search</mat-icon>Consulta GC
-    </a>
-  </li>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="home" *ngIf="!listaPublica()">
+        <mat-icon class="icon">school</mat-icon>GC
+      </a>
+    </li>
+
+    
+
 </ul>

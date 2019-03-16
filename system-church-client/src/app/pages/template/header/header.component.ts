@@ -5,6 +5,7 @@ import { IdentityStorage } from '../../../auth/_models/identity.storage';
 import { BaseComponent } from '../../base/base.component';
 import { AuthenticationService } from '../../../auth/_services';
 import { LocalStorageService } from 'angular-web-storage';
+import { LoginComponent } from '../../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements BaseComponent {
     public identityStorage: IdentityStorage,
     private authenticationService : AuthenticationService,
     private local: LocalStorageService,
+    public login:LoginComponent
   ) { }
   
   ngOnInit() {

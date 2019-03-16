@@ -8,12 +8,12 @@
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="example-full-width">
-        <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomePai']" placeholder="Nome do Pai">
+        <input matInput  [formControl]="dadosFamiliaresForm.controls['nomePai']" placeholder="Nome do Pai">
       </mat-form-field>
     </div>
     <div class="col-md-6">
         <mat-form-field class="example-full-width">
-          <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomeMae']" placeholder="Nome da Mãe">
+          <input matInput  [formControl]="dadosFamiliaresForm.controls['nomeMae']" placeholder="Nome da Mãe">
         </mat-form-field>
       </div>
 
@@ -32,7 +32,7 @@
       </mat-select>
     </mat-form-field>
     </div>
-    <div class="col-md-6" *ngIf="dadosFamiliaresForm.get('estadoCivil').value!=null">
+    <div class="col-md-6">
             <mat-form-field class="example-full-width">
                     <mat-select placeholder="Quantos Filhos?" [formControl]="dadosFamiliaresForm.controls['qtdFilhos']" [errorStateMatcher]="matcher"
                     name="escola">
@@ -50,7 +50,7 @@
           <ng-container *ngIf="dadosFamiliaresForm.get('estadoCivil').value==='CAS'">
               <div class="col-md-6">
                   <mat-form-field class="example-full-width">
-                    <input matInput (keyup)="applyFilter($event.target.value)" [formControl]="dadosFamiliaresForm.controls['nomeConjuge']" placeholder="Nome do Cônjuge">
+                    <input matInput  [formControl]="dadosFamiliaresForm.controls['nomeConjuge']" placeholder="Nome do Cônjuge">
                   </mat-form-field>
                 </div>  
 

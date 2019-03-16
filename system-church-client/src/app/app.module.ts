@@ -51,6 +51,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { FotoCropDialogComponent } from './pages/membros/cadastro/foto-crop-dialog/foto-crop-dialog.component';
 import { MenuPrincipalComponent } from './pages/template/menu-principal/menu-principal.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MembroService } from './service/membro/membro.service';
+import { GcService } from './service/gc/gc.service';
 
 
 
@@ -117,7 +119,10 @@ import { HomeComponent } from './pages/home/home.component';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy } ,
     { provide: RECAPTCHA_SETTINGS, useValue: globalSettings, },
-    { provide: MatPaginatorIntl, useClass: forwardRef(() => MatPaginatorIntlGerman), }
+    { provide: MatPaginatorIntl, useClass: forwardRef(() => MatPaginatorIntlGerman), },
+    LoginComponent,
+    MembroService,
+    GcService,
   ],
   entryComponents: [
     FotoCropDialogComponent

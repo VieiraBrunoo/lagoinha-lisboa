@@ -12,23 +12,22 @@
             <mat-form-field class="example-full-width">
               <mat-select placeholder="Participa de Algum GC?*" [formControl]="dadosGcForm.controls['flagParticipaGc']"
                 [errorStateMatcher]="errorState" name="flagParticipaGc" id="flagParticipaGc" (selectionChange)="changeTipoDocumento($event.value)" 
-                name="gc">
+                name="flagParticipaGc">
                 <mat-option [value]="null">(Selecione)</mat-option>
-                <mat-option *ngFor="let gc of gcList" [value]="gc.sigla">
-                  {{gc.descricao}}
+                <mat-option *ngFor="let resposta of gcRespostaList" [value]="resposta.sigla">
+                  {{resposta.descricao}}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="dadosGcForm.controls['flagParticipaGc'].hasError('required')">{{preenchimentoObrigatorio}}</mat-error>
             </mat-form-field>
           </div>
           <ng-container *ngIf="dadosGcForm.get('flagParticipaGc').value==='S'">
           <div class="col-md-6">
             <mat-form-field class="example-full-width">
-               <mat-select placeholder="GC" [formControl]="dadosGcForm.controls['GcId']"
-            [errorStateMatcher]="errorState" name="GcId" id="GcId" (selectionChange)="changeTipoDocumento($event.value)">
+               <mat-select placeholder="GC" [formControl]="dadosGcForm.controls['Gc']"
+            [errorStateMatcher]="errorState" name="Gc" id="Gc">
             <mat-option [value]="null">(Selecione)</mat-option>
-             <mat-option *ngFor="let tipoDocumento of tipoDocumentoList" [value]="tipoDocumento">
-              {{tipoDocumento.descricao}}
+             <mat-option *ngFor="let gc of GcList" [value]="gc.id_gc">
+              {{gc.nome}}
             </mat-option>
           </mat-select>  
         </mat-form-field>

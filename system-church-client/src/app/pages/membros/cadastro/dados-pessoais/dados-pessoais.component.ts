@@ -27,27 +27,12 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     { key: 'N', value: 'Não' }
   ];
 
-  dadosGeraisForm: FormGroup;
-  docenteDTO: DocenteDTO;
-  atuacaoList: Array<AtuacaoDTO>;
-  temaClassificacaoList: Array<any>;
-  escolaList: Array<any>;
-  tribunalList: Array<any>;
-  titulacaoList: Array<any>;
-  categoriaList: Array<any>;
-  ramoList: Array<any>;
-  cpfDesabilitado: boolean;
-  temaAtuacaoList: any[][];
+  dadosPessoaisForm: FormGroup;
   url: any;
-  isServidor: boolean;
   exibirBotaoRemover: boolean;
   fotoPerfil: File = null;
-  capacitacaoDocenteList: Array<Capacitacao>;
-  capacitacaoDiscenteList: Array<Capacitacao>;
   nomeImagem: string;
   tipoImagem: string;
-  ramo: any;
-  flagValue: any;
   nacionalidadeList: Array<any>;
   sexoList: Array<any>;
   zonaList: Array<any>;
@@ -83,35 +68,21 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
 
   private creatForm() {
 
-    this.dadosGeraisForm = new FormGroup({
-      flagEstrangeiro: new FormControl('', Validators.required),
-      cpf: new FormControl('', Validators.required),
+    this.dadosPessoaisForm = new FormGroup({
       nome: new FormControl('', Validators.required),
+      dtNascimento: new FormControl('', Validators.required),
+      nacionalidade: new FormControl('', Validators.required),
+      sexo: new FormControl('', Validators.required),
+      nrDocumento: new FormControl('', Validators.required),
+      dtValidadeDoc: new FormControl('', Validators.required),
+      enderecoResidencial: new FormControl('', Validators.required),
+      cidade: new FormControl('', Validators.required),
+      pais: new FormControl('', Validators.required),
+      zona: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      contato1: new FormControl('', Validators.required),
-      contato2: new FormControl(''),
-      escola: new FormControl('', Validators.required),
-      titulacao: new FormControl('', Validators.required),
-      curriculumLattes: new FormControl(''),
-      categoriaProfissional: new FormControl('', Validators.required),
-      ramo: new FormControl('', Validators.required),
-      tribunal: new FormControl('', Validators.required),
-      flagBancoDocentes: new FormControl('', Validators.required),
-      curriculoResumido: new FormControl('', Validators.required),
-      matricula: new FormControl(''),
 
-      contaCorrente: new FormControl(''),
-      numAgencia: new FormControl(''),
-      codBanco: new FormControl(''),
-      tipoAluno: new FormControl(''),
-      obterDadosDoSiec: new FormControl('')
-    });
+ });
 
-    if (!this.docenteDTO) {
-      this.docenteDTO = new DocenteDTO();
-      this.docenteDTO.atuacaoList = new Array<AtuacaoDTO>();
-      this.docenteDTO.temaAtuacaoList = new Array<TemaAtuacaoDTO>();
-    }
   }
 
   
@@ -181,38 +152,6 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onChangeFlagEstrangeiro(value) {
-    this.docenteDTO.flagEstrangeiro = value;
-  }
-
-  onChangeFlagBancoDocentes(value) {
-    this.docenteDTO.flagBancoDocentes = value;
-  }
-
-  onSelectAtuacao(event, atuacao) {
-
-    if (event.checked) {
-      atuacao.data = new Date();
-      atuacao.usuario = this.identityStorage.getIdentity().login;
-      atuacao.flagAptidao = 'N';
-
-      this.docenteDTO.atuacaoList.push(atuacao);
-    } else {
-      const index = this.docenteDTO.atuacaoList.findIndex(obj => obj.valor1 === atuacao.valor1);
-      this.docenteDTO.atuacaoList.splice(index, 1);
-    }
-  }
-
-  onSelectTemaAtuacao(event, temaAtuacao) {
-
-    if (event.checked) {
-      this.docenteDTO.temaAtuacaoList.push(temaAtuacao);
-    } else {
-      const index = this.docenteDTO.temaAtuacaoList.findIndex(obj => obj.id === temaAtuacao.id);
-      this.docenteDTO.temaAtuacaoList.splice(index, 1);
-    }
-  }
-
   removerFoto(event) {
     this.fotoPerfil = null;
     this.url = null;
@@ -220,47 +159,7 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     event.target.files = null;
     (<HTMLInputElement>document.getElementById('fotoPerfil')).value = '';
   }
-
-  buscarCursosComoDocente(event) {
-
-    const cpf = event.replace(/\./gi, "").replace(/\-/gi, "");
-
-    if (cpf !== '') {
-      this.capacitacaoDocenteList = new Array<Capacitacao>();
-      this.capacitacaoDiscenteList = new Array<Capacitacao>();
-
-      this.siecWsService.buscarAcoesComoDocente(cpf).subscribe(listRetorno => {
-        listRetorno.forEach(element => {
-          this.capacitacaoDocenteList.push(element);
-        });
-      });
-
-    /*  this.siecWsService.buscarAcoesComoDiscente(cpf).subscribe(listRetorno => {
-        listRetorno.forEach(element => {
-          this.capacitacaoDiscenteList.push(element);
-        });
-      });
-
-      if (this.docenteDTO.id === null) {
-      /*  this.siecWsService.buscarDocente(cpf).subscribe(retorno => {
-          const docenteSiecDto: DocenteSiecDto = retorno;
-          this.dadosGeraisForm.get('nome').setValue(docenteSiecDto.nome);
-          this.dadosGeraisForm.get('email').setValue(docenteSiecDto.email);
-          this.dadosGeraisForm.get('contato1').setValue(docenteSiecDto.celular);
-          this.dadosGeraisForm.get('contato2').setValue(docenteSiecDto.telefone);
-          this.dadosGeraisForm.get('matricula').setValue(docenteSiecDto.matricula);
-
-          this.dadosGeraisForm.get('contaCorrente').setValue(docenteSiecDto.contaCorrente);
-          this.dadosGeraisForm.get('numAgencia').setValue(docenteSiecDto.numAgencia);
-          this.dadosGeraisForm.get('codBanco').setValue(docenteSiecDto.codBanco);
-          this.dadosGeraisForm.get('tipoAluno').setValue(docenteSiecDto.tipoAluno);
-          this.dadosGeraisForm.get('obterDadosDoSiec').setValue(true);
-        
-      }*/
-    } 
-  }
-
-  abrirModal(event) {
+   abrirModal(event) {
 
     this.nomeImagem = event.target.files.item(0).name;
     this.tipoImagem = event.target.files.item(0).type;
@@ -298,80 +197,4 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
 }
 
 
-/*-------- OBJETOS ---------*/
-export class DocenteDTO {
 
-  id: number;
-  flagEstrangeiro: string;
-  cpf: string;
-  email: string;
-  nome: string;
-  contato1: string;
-  contato2: string;
-  fotoPerfil: File = null;
-  escola: number;
-  titulacao: string;
-  curriculumLattes: string;
-  curriculumResumido: string;
-  categoriaProfissional: string;
-  matricula: string;
-  ramo: string;
-  tribunal: number;
-  flagBancoDocentes: string;
-  status: string;
-
-  atuacaoList: Array<AtuacaoDTO>;
-  temaAtuacaoList: Array<TemaAtuacaoDTO>;
-
-  banco: number;
-  flagTipoConta: string;
-  codigoAgencia: string;
-  numeroConta: string;
-  operacao: string;
-
-  usuario: string;
-  dataCriacao: any;
-  dataValidacao: any;
-}
-
-export class AtuacaoDTO {
-  docente: number;
-  valor1: string; // Sigla
-  valor2: string; // Descrição
-  checked: boolean;
-  flagAptidao: string;
-  usuario: string;
-  data: any;
-}
-
-export class TemaAtuacaoDTO {
-  id: number;
-  docente: number;
-  classificacao: number;
-  descricao: string;
-  checked: boolean;
-}
-
-export class DocumentoDTO {
-  id: number;
-  docente: number;
-  tipoDocumento: string; // Descrição do tipo do documento
-  flagTipoDocumento: string;
-  usuario: string;
-  data: any;
-  descricao: string;
-  //arquivo: File = null;
-  arquivo: any = null;
-  nomeArquivo: string;
-}
-
-export class ArquivoDTO {
-  id: number;
-  arquivo: any;
-}
-
-export class TipoDocumentoDTO {
-  id: number;
-  sigla: string;
-  descricao: string;
-}

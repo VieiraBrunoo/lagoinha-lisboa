@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 import { FormControl } from '@angular/forms';
@@ -7,12 +7,14 @@ import { ToasterService } from 'angular2-toaster';
 import { AuthenticationService } from '../../auth/_services';
 import { MatDialog } from '@angular/material';
 import { UsuarioService } from 'src/app/service/usuario/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+@Injectable()
 export class LoginComponent implements OnInit {
 
   loginText = new FormControl('', []);
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  usuario:Usuario;
   
   constructor(
     public router: Router, 
@@ -39,6 +42,7 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
+    this.usuario = new Usuario();
     if(this.validarCampos()){
       var login = this.loginText.value;
       var senha = this.senha.value;
@@ -50,7 +54,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.autenticar(this.loginText.value, this.senha.value)
       .subscribe(
           result => {
-
+            this.usuario.login=result.login;
             if (result.id!=null) {
               console.log(result);
               this.blockUI.stop();
@@ -79,6 +83,10 @@ export class LoginComponent implements OnInit {
       retorno = false;
     }
     return retorno;
+  }
+
+  getLogin():string{
+    return this.usuario.login;
   }
 
 }

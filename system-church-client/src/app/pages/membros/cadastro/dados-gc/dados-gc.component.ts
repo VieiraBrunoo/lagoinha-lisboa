@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MaterialErrorState } from 'src/app/pages/util/material-error-state';
 import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { Documento } from 'src/app/models/documento';
+import { GcService } from 'src/app/service/gc/gc.service';
 
 @Component({
   selector: 'app-dados-gc',
@@ -33,6 +34,7 @@ export class DadosGcComponent implements OnInit {
 
   arquivosMultipart: Array<any>;
   documentosMultipart: Array<Documento>;
+  gcRespostaList: Array<any>;
   gcList: Array<any>;
 
   selectedFiles: FileList;
@@ -40,7 +42,8 @@ export class DadosGcComponent implements OnInit {
 
   constructor(
     private parametroService: ParametroService,
-    private identityStorage: IdentityStorage,) { }
+    private identityStorage: IdentityStorage,
+    private gcService:GcService) { }
 
   ngOnInit() {
 
@@ -50,6 +53,7 @@ export class DadosGcComponent implements OnInit {
    
     this.creatForm();
     this.getListOpcaoGc();
+    this.getGc();
   }
 
   onFileChanged(event) {
@@ -108,7 +112,7 @@ export class DadosGcComponent implements OnInit {
     this.errorState = new MaterialErrorState;
     this.dadosGcForm = new FormGroup({
       flagParticipaGc: new FormControl('', Validators.required),
-      GcId: new FormControl(''),
+      Gc: new FormControl(''),
          });
   }
 
@@ -122,11 +126,22 @@ export class DadosGcComponent implements OnInit {
   }
 
   private getListOpcaoGc() {
-    this.gcList = new Array<any>();
+    this.gcRespostaList = new Array<any>();
     this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.gcList.push(element);
+        this.gcRespostaList.push(element);
     });
   });
 }
+
+
+private getGc() {
+  this.gcList = new Array<any>();
+  this.gcService.buscarTodosGc().subscribe(listRetorno => {
+    listRetorno.forEach(element => {
+      this.gcList.push(element);
+  });
+});
+}
+
 }
