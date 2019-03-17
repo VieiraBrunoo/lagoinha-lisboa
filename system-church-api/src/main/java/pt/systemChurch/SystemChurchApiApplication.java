@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource(ignoreResourceNotFound = false, value = "classpath:application.properties")
-@ComponentScan(basePackages= {"pt.systemChurch.controller"})
+@ComponentScan(basePackages= {"pt.systemChurch"})
 public class SystemChurchApiApplication {
 
 	public static void main(String[] args) {

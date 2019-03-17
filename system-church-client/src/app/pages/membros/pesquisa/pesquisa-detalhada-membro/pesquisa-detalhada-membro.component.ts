@@ -14,6 +14,9 @@ import { PesquisaDocentes } from 'src/app/models/PesquisaDocentes';
 import { ImgSrcDirective } from '@angular/flex-layout';
 import { Router } from '@angular/router';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
+import { RequestPesquisaMembros } from 'src/app/models/request-pesquisa-membro';
+import { MembroService } from 'src/app/service/membro/membro.service';
+import { ResponsePesquisaDetalhadoMembros } from 'src/app/models/response-pesquisa-detalhado-membro';
 
 
 @Component({
@@ -24,15 +27,15 @@ import { NgBlockUI, BlockUI } from 'ng-block-ui';
 export class PesquisaDetalhadaMembroComponent implements OnInit {
   sexoList: Array<any>;
   estadoCivilList: Array<any>;
-  paisList: Array<any>;
+  zonaList: Array<any>;
   areaAtuacaoList:Array<TemaClassificacao>;
   statusDocenteList:Array<Parametro>;
   temaAtuacaoList:any[];
-  pesquisaPublicaForm: any;
+  pesquisaMembroDetalhadaForm: any;
   parametroAtuacaoList: any;
   resultadoPesquisaDocente: any[];
-  docenteList: Array<PesquisaPublica>;
-  pesquisaDocentes:PesquisaDocentes;
+  membroList: Array<ResponsePesquisaDetalhadoMembros>;
+  pesquisaMembros:RequestPesquisaMembros;
   pesquisaPublica:PesquisaPublica;
   formacaoInicialList:string[];
   exibirMsgRegistro:boolean;
@@ -45,7 +48,9 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
   constructor(
     private parametroService: ParametroService,
     private docenteService: DocenteService,
-    public router: Router
+    public router: Router,
+    private membroService:MembroService
+
   ) {
 
     
@@ -62,11 +67,11 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
 
   private creatForm() {
 
-    this.pesquisaPublicaForm = new FormGroup({
-    nomeDocente: new FormControl(''),
-    areaAtuacao: new FormControl(''),
-    tema: new FormControl(''),
-    titulacao: new FormControl('')
+    this.pesquisaMembroDetalhadaForm = new FormGroup({
+    nomeMembro: new FormControl(''),
+    estadoCivil: new FormControl(''),
+    sexo: new FormControl(''),
+    zona: new FormControl('')
     
      });
    }
@@ -89,69 +94,51 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     })
   }
   private getListPais() {
-    this.paisList = new Array<any>();
-    this.parametroService.findByNomeConstante("PAIS").subscribe(listRetorno => {
+    this.zonaList = new Array<any>();
+    this.parametroService.findByNomeConstante("ZONA").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.paisList.push(element);
+        this.zonaList.push(element);
       });
     })
   }
+
       pesquisar(){
     this.obterFiltro();
-    this.getDocentes();
+    this.getMembros();
     
   }
 
- 
-
-
-    habilitarCampos(){
-
-
-    }
-
-
    private obterFiltro(){
 
-    this.pesquisaDocentes = new PesquisaDocentes();
+    this.pesquisaMembros = new RequestPesquisaMembros();
 
-    this.pesquisaDocentes.nomeDocente= this.pesquisaPublicaForm.controls['nomeDocente'].value;
-    this.pesquisaDocentes.idAreaAtuacao=this.pesquisaPublicaForm.controls['areaAtuacao'].value;
-    this.pesquisaDocentes.idTema=this.pesquisaPublicaForm.controls['tema'].value;
-    this.pesquisaDocentes.idTitulacao=this.pesquisaPublicaForm.controls['titulacao'].value;
-    //this.pesquisaPublicaForm.idStatus=this.pesquisaPublicaForm.controls['status'].value;
+    this.pesquisaMembros.nomeMembro= this.pesquisaMembroDetalhadaForm.controls['nomeMembro'].value;
+    this.pesquisaMembros.estadoCivil=this.pesquisaMembroDetalhadaForm.controls['estadoCivil'].value;
+    this.pesquisaMembros.sexo=this.pesquisaMembroDetalhadaForm.controls['sexo'].value;
+    this.pesquisaMembros.zona=this.pesquisaMembroDetalhadaForm.controls['zona'].value;
+    //this.pesquisaMembroDetalhadaForm.idStatus=this.pesquisaPublicaForm.controls['status'].value;
 
   }
 
-  private getDocentes() {
-    this.docenteList = new Array<PesquisaPublica>();
-    this.listImage = new Array<string>();
-    this.pesquisaPublica  = new PesquisaPublica();
-    this.resultadoPesquisaDocente = new Array<any>();
+  
+  private getMembros() {
+    this.membroList = new Array<ResponsePesquisaDetalhadoMembros>();
     this.blockUI.start();
-    this.docenteService.pesquisaPublica(this.pesquisaDocentes).subscribe(listRetorno => {
-      listRetorno.forEach((element: PesquisaPublica) => {
-      if(element.imgDocente!=null){
-      element.imgDocente=('data:image/jpeg;base64,' + element.imgDocente)
-      }
-      this.docenteList.push(element);
-      });
+
+    this.membroService.findByMembroDetalhado(this.pesquisaMembros).subscribe(listRetorno => {
+      listRetorno.forEach((element:ResponsePesquisaDetalhadoMembros) => {
+        if (element.imgPerfil != null) {
+          element.imgPerfil = ('data:image/jpeg;base64,' + element.imgPerfil)
+        }
+        this.membroList.push(element);
+              });
+
       this.blockUI.stop();
 
-      if(this.docenteList.length == 0){
-
-        this.exibirMsgRegistro=true;
-       } else{
-         this.exibirMsgRegistro=false;
-       } 
-        })
-
-
-
-        
-
+    })
   }
 
+  
 
   private detalharDocente(id){
 

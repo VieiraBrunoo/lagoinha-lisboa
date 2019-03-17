@@ -2,20 +2,23 @@ package pt.systemChurch.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "MEMBRO")
-public class MembroEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class MembroEntity{
 	
 	
 	@Id
@@ -88,10 +91,10 @@ public class MembroEntity {
 	private String igrejaBatismo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_GC")
+	@JoinColumn(name = "GC")
 	private GcEntity gc;
 
-	public long getId() {
+		public long getId() {
 		return id;
 	}
 

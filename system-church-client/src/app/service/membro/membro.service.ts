@@ -8,6 +8,7 @@ import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { PesquisaDocentes } from 'src/app/models/PesquisaDocentes';
 import { Membro } from 'src/app/models/membro';
 import { MembroDto } from 'src/app/pages/membros/cadastro/cadastro-membro/cadastro-membro.component';
+import { RequestPesquisaMembros } from 'src/app/models/request-pesquisa-membro';
 
 
 @Injectable()
@@ -31,9 +32,17 @@ export class MembroService extends GenericService {
     return this.http.post(this.url + this.relativePath + "salvarMembro/", formData);
   }
 
-
   public findAll(): Observable<any> {
     return this.getMethod(this.relativePath + "findAllMembro/");
+  }
+ 
+  findByMembro( membro: RequestPesquisaMembros) : Observable<any> {
+    return this.http.post(this.url + this.relativePath+"pesquisarMembros", membro);
+  }
+
+
+  findByMembroDetalhado( membro: RequestPesquisaMembros) : Observable<any> {
+    return this.http.post(this.url + this.relativePath+"pesquisarMembrosDetalhado", membro);
   }
 
 }

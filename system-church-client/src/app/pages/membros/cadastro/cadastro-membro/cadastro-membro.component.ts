@@ -14,6 +14,8 @@ import { ToasterService } from 'angular2-toaster';
 import { Documento } from 'src/app/models/documento';
 import { Membro } from 'src/app/models/membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
+import { Gc } from 'src/app/models/gc-cadastro-membro';
+import { runInThisContext } from 'vm';
 
 
 @Component({
@@ -76,6 +78,8 @@ export class CadastroMembroComponent implements OnInit {
           this.blockUI.stop();
         }
 
+        this.toasterService.pop('success', 'Membro cadastrado com sucesso!');
+        this.blockUI.stop();
   });
    // }
   }
@@ -108,10 +112,12 @@ export class CadastroMembroComponent implements OnInit {
     this.membro.dtBatismo = this.dadosBatismos.dadosBatismoForm.controls['dataBatismo'].value;
     this.membro.igrejaBatismo = this.dadosBatismos.dadosBatismoForm.controls['igrejaBatismo'].value;
 
+
     //Dados GC
-    this.membro.Gc = this.dadosGc.dadosGcForm.controls['Gc'].value;
-    
-    
+    this.membro.gc = new Gc();
+    this.dadosGc.gc.id= this.dadosGc.dadosGcForm.controls['gc'].value;
+    console.log(this.membro.gc.id);
+    this.membro.gc = this.dadosGc.gc;    
     if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil !== null) {
     this.fotoPerfil = this.dadosPessoais.fotoPerfil;
     }
@@ -142,5 +148,5 @@ export class MembroDto {
   qtdFilhos: number;
   dtBatismo: Date;
   igrejaBatismo: string;
-  Gc: number;
+  gc: Gc;
 }

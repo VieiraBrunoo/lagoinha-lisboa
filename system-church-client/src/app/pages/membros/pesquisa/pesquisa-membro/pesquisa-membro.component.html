@@ -1,25 +1,24 @@
 <div class="container-fluid">
   <div class="row"></div>
-  <form class="example-form" [formGroup]="pesquisarDocentesForm">
+  <form class="example-form" [formGroup]="pesquisarMembrosForm">
     <div class="row">
       <div class="col-md-3">
         <div class="row">
           <div class="col-md-12">
             <mat-form-field appearance="legacy" class="example-full-width">
               <mat-label>Nome </mat-label>
-              <input matInput [formControl]="pesquisarDocentesForm.controls['nomeDocente']" name="nomeDocente" type="text">
+              <input matInput [formControl]="pesquisarMembrosForm.controls['nomeMembro']" name="nomeMembro" type="text">
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <mat-form-field class="example-full-width">
-              <mat-label>Zona </mat-label>
-              <mat-select [formControl]="pesquisarDocentesForm.controls['areaAtuacao']" name="zona"
-                (selectionChange)="onTemaChanged($event.value)">
-                <mat-option [value]="">(Selecione)</mat-option>
-                <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
-                  {{zona.descricao}} </mat-option>
+              <mat-label>Estado Civil </mat-label>
+              <mat-select [formControl]="pesquisarMembrosForm.controls['estadoCivil']" name="estadoCivil">
+                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option *ngFor="let estadoCivil of estadoCivilList" [value]="estadoCivil.sigla">
+                  {{estadoCivil.descricao}} </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -27,11 +26,23 @@
         <div class="row">
           <div class="col-md-12">
             <mat-form-field class="example-full-width">
-              <mat-label>Horario</mat-label>
-              <mat-select [formControl]="pesquisarDocentesForm.controls['tema']" name="horarioGc">
-                <mat-option *ngFor="let horarioGc of horarioGcList" [value]="horarioGc.sigla">
-                  {{horarioGc.descricao}}
-                </mat-option>
+              <mat-label>Sexo </mat-label>
+              <mat-select [formControl]="pesquisarMembrosForm.controls['sexo']" name="sexo">
+                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option *ngFor="let sexo of sexoList" [value]="sexo.sigla">
+                  {{sexo.descricao}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>Zona </mat-label>
+              <mat-select [formControl]="pesquisarMembrosForm.controls['zona']" name="zona" >
+                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
+                  {{zona.descricao}} </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -51,28 +62,28 @@
       <div class="col-md-9">
           <h4> Pesquisar Membros </h4>
         <table mat-table [dataSource]="dataSource">
-          <!-- CPF -->
-          <ng-container matColumnDef="cpf">
-            <th mat-header-cell *matHeaderCellDef> CPF</th>
-            <td mat-cell *matCellDef="let resultadoPesquisaDocente"> {{resultadoPesquisaDocente.cpf}} </td>
-          </ng-container>
-
           <!-- NOME -->
           <ng-container matColumnDef="nome">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
-            <td mat-cell *matCellDef="let resultadoPesquisaDocente"> {{resultadoPesquisaDocente.nome}} </td>
+            <th mat-header-cell *matHeaderCellDef> Nome</th>
+            <td mat-cell *matCellDef="let responsePesquisaMembros"> {{responsePesquisaMembros.nomeMembro}} </td>
           </ng-container>
 
-          <!-- RAMO -->
-          <ng-container matColumnDef="ramo">
-            <th mat-header-cell *matHeaderCellDef> Ramo </th>
-            <td mat-cell *matCellDef="let resultadoPesquisaDocente"> {{resultadoPesquisaDocente.ramo}} </td>
+          <!-- ESTADO CIVIL -->
+          <ng-container matColumnDef="estadoCivil">
+            <th mat-header-cell *matHeaderCellDef> Estado Civil </th>
+            <td mat-cell *matCellDef="let responsePesquisaMembros"> {{responsePesquisaMembros.estadoCivil}} </td>
           </ng-container>
 
-          <!-- TRIBUNAL -->
-          <ng-container matColumnDef="tribunal">
-            <th mat-header-cell *matHeaderCellDef> Tribunal </th>
-            <td mat-cell *matCellDef="let resultadoPesquisaDocente"> {{resultadoPesquisaDocente.tribunal}} </td>
+          <!-- SEXO -->
+          <ng-container matColumnDef="morada">
+            <th mat-header-cell *matHeaderCellDef> Morada </th>
+            <td mat-cell *matCellDef="let responsePesquisaMembros"> {{responsePesquisaMembros.morada}} </td>
+          </ng-container>
+
+          <!-- GC -->
+          <ng-container matColumnDef="gc">
+            <th mat-header-cell *matHeaderCellDef> GC </th>
+            <td mat-cell *matCellDef="let responsePesquisaMembros"> {{responsePesquisaMembros.nomeGc}} </td>
           </ng-container>
 
           <ng-container matColumnDef="button">
@@ -81,13 +92,12 @@
             <td mat-cell *matCellDef="let row">
               <button mat-mini-fab class="btn-small" matTooltip="Editar Registro" color="basic" style="margin: 10px 5px 10px 5px;">
                 <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
-                  ng-reflect-hide-xs="" style="display: block; color: #222;" (click)="editarDocente(row.id)">edit</mat-icon>
+                  ng-reflect-hide-xs="" style="display: block; color: #222;" (click)="editarDocente(row.idMembro)">edit</mat-icon>
               </button>
               <button mat-mini-fab class="btn-small" matTooltip="Detalhar Registro" color="basic" style="margin: 10px 5px 10px 5px;">
                 <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
                   ng-reflect-hide-xs style="display: block; color: #222;" (click)="detalharDocente(row.id)">info</mat-icon>
               </button>
-              <mat-slide-toggle [matTooltip]="row.status == 'A' ? 'Ativo' : 'Inativo'" [checked]="row.status == 'A'" [color]="color" (click)="obterToggleButton(row.id,row.status)"></mat-slide-toggle>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns">

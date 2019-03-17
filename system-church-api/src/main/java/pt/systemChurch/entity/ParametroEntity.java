@@ -8,8 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "PARAMETROS")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ParametroEntity {
 
 	@Id

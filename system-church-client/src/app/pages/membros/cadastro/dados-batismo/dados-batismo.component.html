@@ -9,7 +9,7 @@
         <div class="col-md-6">
         <mat-form-field class="example-full-width">
           <mat-select name="batizado" [errorStateMatcher]="matcher" [formControl]="dadosBatismoForm.controls['flagBatizado']" placeholder="Batizado?">
-            <mat-option [value]="null">(Selecione)</mat-option>
+            <mat-option [value]="''">(Selecione)</mat-option>
             <mat-option *ngFor="let batizado of batizadoList" [value]="batizado.sigla">
               {{batizado.descricao}}
             </mat-option>

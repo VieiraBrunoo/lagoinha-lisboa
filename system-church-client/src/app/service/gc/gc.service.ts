@@ -17,7 +17,6 @@ export class GcService extends GenericService {
     this.identityStorage = identityStorage;
   }
 
- 
   save(gc: Gc): Observable<any> {
     return this.http.post(this.url + this.relativePath + "salvarGc/", gc);
   }
