@@ -53,6 +53,12 @@ import { MenuPrincipalComponent } from './pages/template/menu-principal/menu-pri
 import { HomeComponent } from './pages/home/home.component';
 import { MembroService } from './service/membro/membro.service';
 import { GcService } from './service/gc/gc.service';
+import { PesquisaGcComponent } from './pages/gc/pesquisa/pesquisa-gc/pesquisa-gc.component';
+import { PesquisaDetalhadaGcComponent } from './pages/gc/pesquisa/pesquisa-detalhada-gc/pesquisa-detalhada-gc.component';
+import { CadastroGcComponent } from './pages/gc/cadastro/cadastro-gc/cadastro-gc.component';
+import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
+
+
 
 
 
@@ -74,7 +80,11 @@ import { GcService } from './service/gc/gc.service';
     DetalharMembroComponent,
     FotoCropDialogComponent,
     MenuPrincipalComponent,
-    HomeComponent
+    HomeComponent,
+    CadastroGcComponent,
+    DadosComponent,
+    PesquisaDetalhadaGcComponent,
+    PesquisaGcComponent
  ],
   imports: [
     MatSlideToggleModule,

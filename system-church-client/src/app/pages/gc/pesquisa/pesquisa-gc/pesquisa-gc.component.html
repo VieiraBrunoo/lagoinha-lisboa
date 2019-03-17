@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <form class="example-form" [formGroup]="pesquisaGcForm" enctype="multipart/form-data">
+    <div class="content-separator"></div>   
+    <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Nome </mat-label>
+              <input matInput [formControl]="pesquisaGcForm.controls['nome']" name="nome" type="text">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Endereço </mat-label>
+                  <input matInput [formControl]="pesquisaGcForm.controls['logradouro']" name="logradouro" type="text">
+                </mat-form-field>
+          </div>
+        </div>
+          <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Zona </mat-label>
+              <mat-select [formControl]="pesquisaGcForm.controls['zona']" name="zona"
+                (selectionChange)="onTemaChanged($event.value)">
+                <mat-option [value]="">(Selecione)</mat-option>
+                <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
+                  {{zona.descricao}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Horário</mat-label>
+              <mat-select [formControl]="pesquisaGcForm.controls['horario']" name="horarioGc">
+                <mat-option *ngFor="let horarioGc of horarioGcList" [value]="horarioGc.sigla">
+                  {{horarioGc.descricao}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          </div>
+
+          <div class="row">
+          <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <mat-label>Líder </mat-label>
+                <mat-select [formControl]="pesquisaGcForm.controls['idMembroResponsavel']" name="idMembroResponsavel"
+                  (selectionChange)="onTemaChanged($event.value)">
+                  <mat-option [value]="">(Selecione)</mat-option>
+                  <mat-option *ngFor="let membro of membroList" [value]="membro.id">
+                    {{membro.nome}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+            <div class="row">
+            <div class="col-md-1">
+            <button class="example-full-width" mat-raised-button (click)="pesquisar()">Pesquisar</button>
+          </div>
+          <div class="col-md-1">
+            <button class="example-full-width" mat-raised-button (click)="novo()">Novo</button>
+          </div>
+          <div class="col-md-1">
+            <button class="example-full-width" mat-raised-button type="reset">Limpar</button>
+          </div>
+          </div>
+        
+      
+      <div class="col-md-9">
+          <h4> Pesquisar Gcs </h4>
+        <table mat-table [dataSource]="dataSource">
+          <!-- NOME -->
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <td mat-cell *matCellDef="let resultadoPesquisaGc"> {{resultadoPesquisaGc.nome}} </td>
+          </ng-container>
+
+          <!-- ENDERECO -->
+          <ng-container matColumnDef="logradouro">
+            <th mat-header-cell *matHeaderCellDef> Endereço </th>
+            <td mat-cell *matCellDef="let resultadoPesquisaGc"> {{resultadoPesquisaGc.logradouro}} </td>
+          </ng-container>
+
+          <!-- ZONA -->
+          <ng-container matColumnDef="zona">
+            <th mat-header-cell *matHeaderCellDef> Zona </th>
+            <td mat-cell *matCellDef="let resultadoPesquisaGc"> {{resultadoPesquisaGc.zona}} </td>
+          </ng-container>
+
+          <!-- HORARIO -->
+          <ng-container matColumnDef="horario">
+            <th mat-header-cell *matHeaderCellDef> Horário </th>
+            <td mat-cell *matCellDef="let resultadoPesquisaGc"> {{resultadoPesquisaGc.horario}} </td>
+          </ng-container>
+
+          <!-- RESPONSAVEL -->
+          <ng-container matColumnDef="responsavel">
+            <th mat-header-cell *matHeaderCellDef> Líder </th>
+            <td mat-cell *matCellDef="let resultadoPesquisaGc"> {{resultadoPesquisaGc.idMembroResponsavel}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="button">
+            <th mat-header-cell *matHeaderCellDef>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-mini-fab class="btn-small" matTooltip="Editar" color="basic" style="margin: 10px 5px 10px 5px;">
+                <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
+                  ng-reflect-hide-xs="" style="display: block; color: #222;" (click)="editarGc(row.id)">edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="btn-small" matTooltip="Detalhar" color="basic" style="margin: 10px 5px 10px 5px;">
+                <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
+                  ng-reflect-hide-xs style="display: block; color: #222;" (click)="detalharGc(row.id)">info</mat-icon>
+              </button>
+              <mat-slide-toggle [matTooltip]="row.status == 'A' ? 'Ativo' : 'Inativo'" [checked]="row.status == 'A'" [color]="color" (click)="obterToggleButton(row.id,row.status)"></mat-slide-toggle>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="resultadoPesquisa" alig="center">
+          <mat-label class="example">Pesquisa Não Retornou Registro</mat-label>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+  </form>
+</div>

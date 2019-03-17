@@ -22,7 +22,7 @@ export class GenericService extends AbstractHttpService {
         return this.getMethod(relativePath);
     }
 
-    findOne(value: string, relativePath : string = '') {
+    findOne(value: number, relativePath : string = '') {
         return this.getMethod(relativePath + value);
     }
 

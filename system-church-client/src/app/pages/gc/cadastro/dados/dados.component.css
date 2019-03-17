@@ -1,0 +1,64 @@
+
+.foto-perfil-wrapper {
+    text-align: center;
+    color:rgba(0,0,0,.42);
+}
+
+.foto-perfil-wrapper button {
+    /*width: 150px;*/
+    color:rgba(0,0,0,.42);
+}
+
+.foto-perfil {
+    width: 180px;
+    height: 180px;
+    border: 2px solid #a39c9c;
+    border-radius: 90px;
+    overflow: hidden;
+    background: beige url(../../../../../assets/img/perfil.png);
+    margin: 0 auto 15px auto;
+}
+
+.foto-perfil p {
+    size: 8px;
+}
+
+.dualistbox-wrapper {
+   height: 400px;
+   overflow: hidden; 
+}
+
+.temas-container {
+    margin-top: 10px;
+    width: 100%;
+    height: 400px;
+    float: left;
+    overflow: scroll;
+    border: 1px solid #a39c9c;
+    border-radius: 5px;
+}
+
+.tema-wrapper {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.mat-selection-list .mat-list-option {
+    font-size: 12px;
+}
+
+.text-box {
+    width: 100%;
+    float: left;
+    border: 1px solid #777;
+    background-color: #ccc;
+    padding: 5px;
+    margin: 5px 0 20px 0;
+    border-radius: 4px;
+}
+
+.alert {
+    color: #818385;
+    font-size: 12px;
+    margin: 5px 0 5px 0;
+}

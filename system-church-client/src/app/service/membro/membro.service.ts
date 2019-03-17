@@ -31,4 +31,9 @@ export class MembroService extends GenericService {
     return this.http.post(this.url + this.relativePath + "salvarMembro/", formData);
   }
 
+
+  public findAll(): Observable<any> {
+    return this.getMethod(this.relativePath + "findAllMembro/");
+  }
+
 }

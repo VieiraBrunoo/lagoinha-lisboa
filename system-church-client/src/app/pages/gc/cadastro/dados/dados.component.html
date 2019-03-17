@@ -1,0 +1,75 @@
+<div class="container">
+  <form class="example-form" [formGroup]="dadosForm" enctype="multipart/form-data">
+    <div class="content-separator">
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput [formControl]="dadosForm.controls['nome']" [errorStateMatcher]="matcher" name="nome"
+              type="text" placeholder="Nome">
+            <mat-error *ngIf="dadosForm.controls['nome'].hasError('required')">{{preenchimentoObrigatorio}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Dia da Semana" [formControl]="dadosForm.controls['diaSemana']" [errorStateMatcher]="matcher"
+                name="diaSemana">
+                <mat-option [value]="null">Selecione</mat-option>
+                <mat-option [value]="Segunda">Segunda-Feira</mat-option>
+                <mat-option [value]="Terca">Terça-Feira</mat-option>
+                <mat-option [value]="Quarta">Quarta-Feira</mat-option>
+                <mat-option [value]="Quinta">Quinta-Feira</mat-option>
+                <mat-option [value]="Sexta">Sexta-Feira</mat-option>
+                <mat-option [value]="Sabado">Sábado</mat-option>
+                <mat-option [value]="Domingo">Domingo</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput [formControl]="dadosForm.controls['logradouro']" name="logradouro" type="text"
+              placeholder="Endereço" >
+          </mat-form-field>
+        </div>
+        
+      <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="Zona" [formControl]="dadosForm.controls['zona']" [errorStateMatcher]="matcher"
+              name="zona">
+              <mat-option [value]="null">Selecione</mat-option>
+              <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
+                  {{zona.descricao}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-select placeholder="Horário" [formControl]="dadosForm.controls['horario']" [errorStateMatcher]="matcher"
+                  name="horario">
+                  <mat-option [value]="null">Selecione</mat-option>
+                  <mat-option *ngFor="let horario of horarioList" [value]="horario.sigla">
+                      {{horario.descricao}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <mat-select placeholder="Líder" [formControl]="dadosForm.controls['idMembroResponsavel']" [errorStateMatcher]="matcher"
+              name="idMembroResponsavel">
+              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option *ngFor="let membro of membroList" [value]="membro.id">
+                  {{membro.nome}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
