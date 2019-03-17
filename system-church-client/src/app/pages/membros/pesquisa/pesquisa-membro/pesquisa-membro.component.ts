@@ -14,15 +14,18 @@ import { PesquisaDocentes } from 'src/app/models/PesquisaDocentes';
 import { DocenteService } from 'src/app/service/docente/docente.service';
 import { ResultadoPesquisaDocente } from 'src/app/models/resultado-pesquisa-docente';
 import { Router } from '@angular/router';
+import { RequestPesquisaMembros } from 'src/app/models/request-pesquisa-membro';
+import { MembroService } from 'src/app/service/membro/membro.service';
+import { ResponsePesquisaMembros } from 'src/app/models/response-pesquisa-membro';
 
 
 
 
 export interface PeriodicElement {
-  cpf: number;
-  nome:string;
-  ramo: string;
-  tribunal: string;
+  nome: string;
+  estadoCivil:string;
+  morada: string;
+  gc: string;
 }
 
 @Component({
@@ -39,8 +42,8 @@ export class PesquisaMembroComponent implements OnInit {
   horarioGcList:Array<any>;
   temaAtuacaoList:any[];
   resultadoPesquisaDocente:ResultadoPesquisaDocente;
-  displayedColumns: string[] = ['cpf', 'nome', 'ramo', 'tribunal','button'];
-  docenteList:Array<ResultadoPesquisaDocente>;
+  displayedColumns: string[] = ['nome', 'estadoCivil', 'morada', 'gc','button'];
+  membroList:Array<ResponsePesquisaMembros>;
   dataSource = new MatTableDataSource<any>();
   color = 'accent';
   checkedList:any[];
@@ -49,10 +52,12 @@ export class PesquisaMembroComponent implements OnInit {
   selection = new SelectionModel<ResultadoPesquisaDocente>(true, []);
    @ViewChild(MatPaginator) paginator: MatPaginator;
  // selection = new SelectionModel<PeriodicElement>(true, []);
-  pesquisarDocentesForm: any;
+ pesquisarMembrosForm: any;
   parametroAtuacaoList: any;
 
-  pesquisaDocentes:PesquisaDocentes;
+  pesquisaMembros:RequestPesquisaMembros;
+  estadoCivilList: Array<any>;
+  sexoList: Array<any>;
   constructor(
     private _formBuilder: FormBuilder,
     private escolaService: EscolaService,
@@ -62,6 +67,8 @@ export class PesquisaMembroComponent implements OnInit {
     private parametroService: ParametroService,
     private docenteService: DocenteService,
     public router: Router,
+    private membroService:MembroService
+
 
  ) { 
 
@@ -71,23 +78,21 @@ export class PesquisaMembroComponent implements OnInit {
   ngOnInit() {
     this.creatForm();
     this.resultadoPesquisaDocente = new ResultadoPesquisaDocente();
-    this.docenteList = new Array<ResultadoPesquisaDocente>();
+    this.membroList = new Array<ResponsePesquisaMembros>();
     this.dataSource.paginator = this.paginator;
     this.getListZona();
-    this.getListHorarioGc();
-
+    this.getListSexo();
+    this.getListEstadoCivil();
   }
 
   private creatForm() {
 
-   this.pesquisarDocentesForm = new FormGroup({
-   nomeDocente: new FormControl(''),
-   areaAtuacao: new FormControl(''),
-   tema: new FormControl(''),
-   titulacao: new FormControl(''),
-   status: new FormControl(''),
-   ativarDesativar: new FormControl
-    });
+   this.pesquisarMembrosForm = new FormGroup({
+   nomeMembro: new FormControl(''),
+   estadoCivil: new FormControl(''),
+   sexo: new FormControl(''),
+   zona: new FormControl(''),
+   });
   }
 
   
@@ -101,40 +106,42 @@ export class PesquisaMembroComponent implements OnInit {
   }
 
   
-  private getListHorarioGc() {
-    this.horarioGcList = new Array<any>();
-    this.parametroService.findByNomeConstante("HORARIO_GC").subscribe(listRetorno => {
+  private getListEstadoCivil() {
+    this.estadoCivilList = new Array<any>();
+    this.parametroService.findByNomeConstante("ESTADO_CIVIL").subscribe(listRetorno => {
       listRetorno.forEach(element => {
-        this.horarioGcList.push(element);
+        this.estadoCivilList.push(element);
       });
     })
   }
-
-
-  
-
+  private getListSexo() {
+    this.sexoList = new Array<any>();
+    this.parametroService.findByNomeConstante("SEXO").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.sexoList.push(element);
+      });
+    })
+  }
   pesquisar(){
-    this.obterFiltroDocentes();
-    this.getDocentes();
+    this.obterFiltroMembros();
+    this.getMembros();
   }
 
 
-  private obterFiltroDocentes(){
+  private obterFiltroMembros(){
 
-    this.pesquisaDocentes = new PesquisaDocentes();
+    this.pesquisaMembros = new RequestPesquisaMembros();
 
-    this.pesquisaDocentes.nomeDocente= this.pesquisarDocentesForm.controls['nomeDocente'].value;
-    this.pesquisaDocentes.idAreaAtuacao=this.pesquisarDocentesForm.controls['areaAtuacao'].value;
-    this.pesquisaDocentes.idTema=this.pesquisarDocentesForm.controls['tema'].value;
-    this.pesquisaDocentes.idTitulacao=this.pesquisarDocentesForm.controls['titulacao'].value;
-    this.pesquisaDocentes.idStatus=this.pesquisarDocentesForm.controls['status'].value;
-
+    this.pesquisaMembros.nomeMembro= this.pesquisarMembrosForm.controls['nomeMembro'].value;
+    this.pesquisaMembros.estadoCivil=this.pesquisarMembrosForm.controls['estadoCivil'].value;
+    this.pesquisaMembros.sexo=this.pesquisarMembrosForm.controls['sexo'].value;
+    this.pesquisaMembros.zona=this.pesquisarMembrosForm.controls['zona'].value;
   }
 
 
 
-  private getDocentes() {
-    this.docenteService.findByDocente(this.pesquisaDocentes).subscribe(listRetorno => {
+  private getMembros() {
+    this.membroService.findByMembro(this.pesquisaMembros).subscribe(listRetorno => {
       if(listRetorno.length==0){
         this.resultadoPesquisa=true;
          this.dataSource.data=[];
@@ -142,32 +149,11 @@ export class PesquisaMembroComponent implements OnInit {
         this.resultadoPesquisa=false;
       }
       listRetorno.forEach(element => {
-        this.docenteList= new Array<ResultadoPesquisaDocente>();
+        this.membroList= new Array<ResponsePesquisaMembros>();
         this.dataSource.data=listRetorno;
-        this.docenteList.push(element);
+        this.membroList.push(element);
               });
     })
-  }
-
-
-  private obterToggleButton(id,status){
-
-    if(status=='I'){
-
-      status='A';
-    } else{
-
-      status='I';
-    }
-  
-    this.docenteService.findById(id,status).subscribe(list => {
-      this.getDocentes();        
-       
-       
-  
-    });
-
-   
   }
 
   private detalharDocente(id){

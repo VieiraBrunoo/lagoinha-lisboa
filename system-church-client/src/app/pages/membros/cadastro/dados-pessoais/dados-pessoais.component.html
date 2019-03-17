@@ -18,7 +18,7 @@
             <mat-form-field class="example-full-width">
               <mat-select placeholder="Nacionalidade" [formControl]="dadosPessoaisForm.controls['nacionalidade']" [errorStateMatcher]="matcher"
                 name="nacionalidade">
-                <mat-option [value]="null">(Selecione)</mat-option>
+                <mat-option [value]="''">(Selecione)</mat-option>
                 <mat-option *ngFor="let nacionalidade of nacionalidadeList" [value]="nacionalidade.sigla"> 
                 {{nacionalidade.descricao}}
                 </mat-option>
@@ -28,7 +28,7 @@
               <mat-form-field class="example-full-width">
                   <mat-select placeholder="Sexo" [formControl]="dadosPessoaisForm.controls['sexo']" [errorStateMatcher]="matcher"
                     name="sexo">
-                    <mat-option [value]="null">(Selecione)</mat-option>
+                    <mat-option [value]="''">(Selecione)</mat-option>
                     <mat-option *ngFor="let sexo of sexoList" [value]="sexo.sigla">
                      {{sexo.descricao}}
                     </mat-option>
@@ -80,7 +80,7 @@
             <mat-form-field class="example-full-width">
                 <mat-select placeholder="Cidade" [formControl]="dadosPessoaisForm.controls['cidade']" [errorStateMatcher]="matcher"
                   name="cidade">
-                  <mat-option [value]="null">(Selecione)</mat-option>
+                  <mat-option [value]="''">(Selecione)</mat-option>
                   <mat-option *ngFor="let cidade of cidadeList" [value]="cidade.sigla">
                    {{cidade.descricao}}
                   </mat-option>
@@ -91,7 +91,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="País" [formControl]="dadosPessoaisForm.controls['pais']" [errorStateMatcher]="matcher"
               name="pais">
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="''">(Selecione)</mat-option>
               <mat-option *ngFor="let pais of paisList" [value]="pais.sigla">
                   {{pais.descricao}}
               </mat-option>
@@ -105,7 +105,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Zona" [formControl]="dadosPessoaisForm.controls['zona']" [errorStateMatcher]="matcher"
               name="zona">
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="''">(Selecione)</mat-option>
               <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
                   {{zona.descricao}}
               </mat-option>

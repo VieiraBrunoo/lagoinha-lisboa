@@ -7,6 +7,7 @@ import { MaterialErrorState } from 'src/app/pages/util/material-error-state';
 import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { Documento } from 'src/app/models/documento';
 import { GcService } from 'src/app/service/gc/gc.service';
+import { Gc } from 'src/app/models/gc';
 
 @Component({
   selector: 'app-dados-gc',
@@ -36,6 +37,7 @@ export class DadosGcComponent implements OnInit {
   documentosMultipart: Array<Documento>;
   gcRespostaList: Array<any>;
   gcList: Array<any>;
+  gc:Gc;
 
   selectedFiles: FileList;
   documento: File;
@@ -112,7 +114,7 @@ export class DadosGcComponent implements OnInit {
     this.errorState = new MaterialErrorState;
     this.dadosGcForm = new FormGroup({
       flagParticipaGc: new FormControl('', Validators.required),
-      Gc: new FormControl(''),
+      gc: new FormControl(''),
          });
   }
 
@@ -136,10 +138,11 @@ export class DadosGcComponent implements OnInit {
 
 
 private getGc() {
-  this.gcList = new Array<any>();
+  this.gcList = new Array<Gc>();
+  this.gc = new Gc();
   this.gcService.buscarTodosGc().subscribe(listRetorno => {
     listRetorno.forEach(element => {
-      this.gcList.push(element);
+       this.gcList.push(element);
   });
 });
 }

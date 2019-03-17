@@ -25,7 +25,7 @@
         <mat-form-field class="example-full-width">
         <mat-select placeholder="Estado Civil" [formControl]="dadosFamiliaresForm.controls['estadoCivil']" [errorStateMatcher]="matcher"
         name="estadoCivil">
-        <mat-option [value]="null">(Selecione)</mat-option>
+        <mat-option [value]="''">(Selecione)</mat-option>
          <mat-option *ngFor="let estadoCivil of estadoCivilList" [value]="estadoCivil.sigla">
          {{estadoCivil.descricao}}
         </mat-option>
@@ -36,7 +36,7 @@
             <mat-form-field class="example-full-width">
                     <mat-select placeholder="Quantos Filhos?" [formControl]="dadosFamiliaresForm.controls['qtdFilhos']" [errorStateMatcher]="matcher"
                     name="escola">
-                    <mat-option [value]="null">(Selecione)</mat-option>
+                    <mat-option [value]="''">(Selecione)</mat-option>
                     <mat-option [value]="0">0</mat-option>
                     <mat-option [value]="1">1</mat-option>
                     <mat-option [value]="2">2</mat-option>
