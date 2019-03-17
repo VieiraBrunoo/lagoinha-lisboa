@@ -1,0 +1,52 @@
+<div class="container-fluid">
+  <form class="example-form">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="bordas">
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <h5 class="text-center">{{gc.nome}}</h5>
+              </div>
+
+              <div class="col-md-6">
+                  <h5 class="text-center">{{gc.nomeMembroResponsavel}}</h5>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6" alig="justify">
+                  <h5>Dia da Semana:</h5> 
+                  <p> {{gc.diaSemana}} </p>
+                </div>
+
+                <div class="col-md-6" alig="justify">
+                  <h5>Horário:</h5> 
+                  <p> {{gc.horario}} </p>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-6" alig="justify">
+                    <h5>Endereco:</h5> 
+                    <p> {{gc.logradouro}} </p>
+                  </div>
+  
+                  <div class="col-md-6" alig="justify">
+                    <h5>Zona:</h5> 
+                    <p> {{gc.zona}} </p>
+                  </div>
+            </div>
+
+
+        </div>
+        <div class="text-center" *ngIf="exibirMsgRegistro">
+          <br>
+          <h5>Pesquisa Não Retornou Registro</h5>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

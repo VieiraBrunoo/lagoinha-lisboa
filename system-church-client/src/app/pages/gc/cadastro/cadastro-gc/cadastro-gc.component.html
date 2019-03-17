@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <mat-horizontal-stepper [linear]="isLinear" #stepper (selectionChange)="stepClick($event)">
+    <mat-step [stepControl]="dadosFormGroup"> 
+      <ng-template matStepLabel>Dados</ng-template>
+      <app-dados #dados></app-dados>
+    </mat-step>
+    
+  </mat-horizontal-stepper>
+  <div class="container">
+    <div class="content-separator">
+      <button color="blue" mat-raised-button (click)="salvar()">Salvar</button>
+    </div>
+  </div>
+</div>

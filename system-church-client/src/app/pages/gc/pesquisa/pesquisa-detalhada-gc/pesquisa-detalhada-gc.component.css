@@ -1,0 +1,34 @@
+.bordas{
+    border: 1px solid grey;
+    border-radius: 9px;
+    padding: 15px;
+  }
+  
+.foto-perfil-wrapper {
+    text-align: center;
+    color:rgba(0,0,0,.42);
+}
+
+.foto-perfil-wrapper button {
+    width: 150px;
+    color:rgba(0,0,0,.42);
+}
+
+.foto-perfil {
+    width: 180px;
+    height: 180px;
+    border: 2px solid #a39c9c;
+    border-radius: 90px;
+    overflow: hidden;
+    background: beige url(../../../../../assets/img/perfil.png);
+    margin: 0 auto 15px auto;
+}
+
+.foto-perfil p {
+    size: 8px;
+}
+
+.foto-perfil img {
+    width: 100%;
+    height: 100%;
+}

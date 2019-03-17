@@ -35,7 +35,7 @@ export class MembroService extends GenericService {
   public findAll(): Observable<any> {
     return this.getMethod(this.relativePath + "findAllMembro/");
   }
-
+ 
   findByMembro( membro: RequestPesquisaMembros) : Observable<any> {
     return this.http.post(this.url + this.relativePath+"pesquisarMembros", membro);
   }
@@ -44,7 +44,5 @@ export class MembroService extends GenericService {
   findByMembroDetalhado( membro: RequestPesquisaMembros) : Observable<any> {
     return this.http.post(this.url + this.relativePath+"pesquisarMembrosDetalhado", membro);
   }
-
-
 
 }

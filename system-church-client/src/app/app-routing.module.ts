@@ -7,6 +7,10 @@ import { PesquisaDetalhadaMembroComponent } from './pages/membros/pesquisa/pesqu
 import { PesquisaMembroComponent } from './pages/membros/pesquisa/pesquisa-membro/pesquisa-membro.component';
 import { DetalharMembroComponent } from './pages/membros/detalhar-membro/detalhar-membro.component';
 import { HomeComponent} from './pages/home/home.component';
+import { PesquisaGcComponent } from './pages/gc/pesquisa/pesquisa-gc/pesquisa-gc.component';
+import { PesquisaDetalhadaGcComponent } from './pages/gc/pesquisa/pesquisa-detalhada-gc/pesquisa-detalhada-gc.component';
+import { CadastroGcComponent } from './pages/gc/cadastro/cadastro-gc/cadastro-gc.component';
+import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
 
 const routes: Routes = [
   // Padrão para telas com base no perfil
@@ -16,6 +20,9 @@ const routes: Routes = [
   { path: 'pesquisa/pesquisa-membro', component: PesquisaMembroComponent},
   { path: 'pesquisa/pesquisa-membro-detalhada', component: PesquisaDetalhadaMembroComponent},
   { path: 'detalhar-membro/detalhar-membro', component: DetalharMembroComponent},
+  { path: 'cadastro-gc', component: CadastroGcComponent},
+  { path: 'pesquisa/pesquisa-gc', component: PesquisaGcComponent},
+  { path: 'pesquisa/pesquisa-gc-detalhada', component: PesquisaDetalhadaGcComponent},
   { path: '**', redirectTo: 'login' }
 ];
 
