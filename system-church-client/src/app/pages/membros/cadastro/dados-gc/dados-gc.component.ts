@@ -7,7 +7,7 @@ import { MaterialErrorState } from 'src/app/pages/util/material-error-state';
 import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { Documento } from 'src/app/models/documento';
 import { GcService } from 'src/app/service/gc/gc.service';
-import { Gc } from 'src/app/models/gc';
+import { Gc } from 'src/app/models/gc-cadastro-membro';
 
 @Component({
   selector: 'app-dados-gc',

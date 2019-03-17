@@ -14,7 +14,7 @@ import { ToasterService } from 'angular2-toaster';
 import { Documento } from 'src/app/models/documento';
 import { Membro } from 'src/app/models/membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
-import { Gc } from 'src/app/models/gc';
+import { Gc } from 'src/app/models/gc-cadastro-membro';
 import { runInThisContext } from 'vm';
 
 
