@@ -2,7 +2,35 @@
     border: 1px solid grey;
     border-radius: 9px;
     padding: 15px;
-  }
+    margin: 10px 0 10px 0;
+}
+
+.bordas h5 {
+    font-size: 20px;
+}
+
+.bordas ul li{
+    font-size: 14px;
+}
+
+.details {
+    font-size: 12px;
+}
+
+.details-docente {
+    margin: 3px;
+}
+
+.bordas ul li mat-icon {
+    height: 1px;
+    float: left;
+}
+
+.bordas .sub-lista {
+    margin-bottom: 20px;
+    font-size: 13px;
+    text-indent: -25px; 
+}
   
 .foto-perfil-wrapper {
     text-align: center;
@@ -31,4 +59,9 @@
 .foto-perfil img {
     width: 100%;
     height: 100%;
+}
+
+.list-text {
+    line-height: 5px;
+    
 }

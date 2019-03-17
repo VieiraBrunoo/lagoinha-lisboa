@@ -7,7 +7,7 @@ export class ResponsePesquisaMembros {
     sexo:string;
     estadoCivil:string;
     morada:string;
-   
+    status:string;
     
     }
     

@@ -10,6 +10,7 @@ public class ResponsePesquisaMembroDto {
 	private String sexo;
 	private String estadoCivil;
 	private String morada;
+	private String status;
 	
 	
 	public long getIdMembro() {
@@ -53,6 +54,12 @@ public class ResponsePesquisaMembroDto {
 	}
 	public void setMorada(String morada) {
 		this.morada = morada;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

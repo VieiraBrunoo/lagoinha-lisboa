@@ -4,7 +4,7 @@ export class RequestPesquisaMembros {
     sexo:string;
     estadoCivil:string;
     zona:string;
-   
-    
+    status:string;
+    flagLiderGc:string;
     }
     

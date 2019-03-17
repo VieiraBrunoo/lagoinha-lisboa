@@ -43,7 +43,7 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
   listImage:string[];
   @BlockUI() blockUI: NgBlockUI;
   conjuge:boolean
-
+  lidergcList:Array<any>;
 
   constructor(
     private parametroService: ParametroService,
@@ -62,6 +62,7 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
       this.getListSexo();
       this.getListEstadoCivil();
       this.getListPais();
+      this.getListOpcaoFlagLiderGc();
 
       }
 
@@ -71,7 +72,10 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     nomeMembro: new FormControl(''),
     estadoCivil: new FormControl(''),
     sexo: new FormControl(''),
-    zona: new FormControl('')
+    zona: new FormControl(''),
+    status: new FormControl(''),
+    flagLiderGc:new FormControl('')
+
     
      });
    }
@@ -116,6 +120,10 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     this.pesquisaMembros.estadoCivil=this.pesquisaMembroDetalhadaForm.controls['estadoCivil'].value;
     this.pesquisaMembros.sexo=this.pesquisaMembroDetalhadaForm.controls['sexo'].value;
     this.pesquisaMembros.zona=this.pesquisaMembroDetalhadaForm.controls['zona'].value;
+    this.pesquisaMembros.status=this.pesquisaMembroDetalhadaForm.controls['status'].value;
+    this.pesquisaMembros.flagLiderGc=this.pesquisaMembroDetalhadaForm.controls['flagLiderGc'].value;
+
+
     //this.pesquisaMembroDetalhadaForm.idStatus=this.pesquisaPublicaForm.controls['status'].value;
 
   }
@@ -145,7 +153,14 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     this.router.navigate(['detalhar-docente/detalhar'],{queryParams:{id}});
     }
   
-  
+    private getListOpcaoFlagLiderGc() {
+      this.lidergcList = new Array<any>();
+      this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+        listRetorno.forEach(element => {
+          this.lidergcList.push(element);
+      });
+    });
+  }
 
 
 }

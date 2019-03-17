@@ -7,6 +7,9 @@ public class RequestPesquisaMembroDto {
 	private String sexo;
 	private String estadoCivil;
 	private String zona;
+	private String status;
+	private String flagLiderGc;
+	
 	public String getNomeMembro() {
 		return nomeMembro;
 	}
@@ -30,6 +33,18 @@ public class RequestPesquisaMembroDto {
 	}
 	public void setZona(String zona) {
 		this.zona = zona;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getFlagLiderGc() {
+		return flagLiderGc;
+	}
+	public void setFlagLiderGc(String flagLiderGc) {
+		this.flagLiderGc = flagLiderGc;
 	}
 	
 	

@@ -94,6 +94,17 @@ public class MembroEntity{
 	@JoinColumn(name = "GC")
 	private GcEntity gc;
 
+	@Column(name = "CELULAR")
+	private String celular;
+	
+	@Column(name = "FLAG_LIDER_GC")
+	private String flagLiderGc;
+	
+	@Column(name = "STATUS")
+	@NotNull
+	private String status;
+	
+	
 		public long getId() {
 		return id;
 	}
@@ -260,6 +271,30 @@ public class MembroEntity{
 
 	public void setGc(GcEntity gc) {
 		this.gc = gc;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getFlagLiderGc() {
+		return flagLiderGc;
+	}
+
+	public void setFlagLiderGc(String flagLiderGc) {
+		this.flagLiderGc = flagLiderGc;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	
