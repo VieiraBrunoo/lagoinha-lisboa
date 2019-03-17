@@ -1,5 +1,6 @@
 package pt.systemChurch.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,10 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "GC")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GcEntity {
 	
 	@Id
@@ -38,12 +43,15 @@ public class GcEntity {
 	@NotNull
 	private String zona;
 	
+	@Transient
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_MEMBRO")
+	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
 	private MembroEntity membroResponsavel;
-	
-	@OneToMany(mappedBy = "gc", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+
+	@Transient
+	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MembroEntity> membrosGc;
+	
 
 	public long getId() {
 		return id;
