@@ -30,7 +30,7 @@ export class CadastroGcComponent implements OnInit {
   salvar() {
       this.blockUI.start();
       this.createGc();
-
+      
       this.gcService.save(this.gc).subscribe(data => {
 
         if (data == null) {
@@ -47,8 +47,9 @@ export class CadastroGcComponent implements OnInit {
     //Dados Pessoais
     this.gc.nome = this.dados.dadosForm.controls['nome'].value;
     this.gc.diaSemana = this.dados.dadosForm.controls['diaSemana'].value;
-    this.gc.zona = this.dados.dadosForm.controls['zona'].value;
     this.gc.logradouro = this.dados.dadosForm.controls['logradouro'].value;
+    this.gc.zona = this.dados.dadosForm.controls['zona'].value;
+    this.gc.horario = this.dados.dadosForm.controls['horario'].value;
     //Dados Lider GC
     this.gc.idMembroResponsavel = this.dados.dadosForm.controls['idMembroResponsavel'].value;
   }

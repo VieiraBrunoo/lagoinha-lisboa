@@ -14,13 +14,13 @@
               <mat-select placeholder="Dia da Semana" [formControl]="dadosForm.controls['diaSemana']" [errorStateMatcher]="matcher"
                 name="diaSemana">
                 <mat-option [value]="null">Selecione</mat-option>
-                <mat-option [value]="Segunda">Segunda-Feira</mat-option>
-                <mat-option [value]="Terca">Terça-Feira</mat-option>
-                <mat-option [value]="Quarta">Quarta-Feira</mat-option>
-                <mat-option [value]="Quinta">Quinta-Feira</mat-option>
-                <mat-option [value]="Sexta">Sexta-Feira</mat-option>
-                <mat-option [value]="Sabado">Sábado</mat-option>
-                <mat-option [value]="Domingo">Domingo</mat-option>
+                <mat-option [value]="'Segunda'">Segunda-Feira</mat-option>
+                <mat-option [value]="'Terca'">Terça-Feira</mat-option>
+                <mat-option [value]="'Quarta'">Quarta-Feira</mat-option>
+                <mat-option [value]="'Quinta'">Quinta-Feira</mat-option>
+                <mat-option [value]="'Sexta'">Sexta-Feira</mat-option>
+                <mat-option [value]="'Sabado'">Sábado</mat-option>
+                <mat-option [value]="'Domingo'">Domingo</mat-option>
               </mat-select>
             </mat-form-field>
         </div>
