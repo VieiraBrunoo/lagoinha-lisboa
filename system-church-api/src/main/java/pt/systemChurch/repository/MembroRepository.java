@@ -5,5 +5,5 @@ import pt.systemChurch.entity.MembroEntity;
 
 public interface MembroRepository extends JpaRepository<MembroEntity, Long> {
 	
-
+		MembroEntity findById(long id);
 }

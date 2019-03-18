@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ParametroService } from '../../../../service/parametro/parametro.service';
 import { MembroService } from 'src/app/service/membro/membro.service';
+import { Membro } from 'src/app/models/membro';
 
 @Component({
   selector: 'app-dados',
@@ -49,7 +50,7 @@ export class DadosComponent implements OnInit, AfterViewInit {
       logradouro: new FormControl('', Validators.required),
       zona: new FormControl('', Validators.required),
       horario: new FormControl('', Validators.required),
-      membro: new FormControl('', [Validators.required]),
+      idMembroResponsavel: new FormControl('', [Validators.required]),
 
  });
 
@@ -75,7 +76,7 @@ export class DadosComponent implements OnInit, AfterViewInit {
   }
 
   getListMembro() {
-    this.membroList = new Array<any>();
+    this.membroList = new Array<Membro>();
     this.membroService.findAll().subscribe(listRetorno => {
       listRetorno.forEach(element => {
         this.membroList.push(element);

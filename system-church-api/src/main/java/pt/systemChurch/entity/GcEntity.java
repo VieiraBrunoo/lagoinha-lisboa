@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class GcEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID_GC")
 	private long id;
 		
@@ -37,13 +36,15 @@ public class GcEntity {
 	
 	@Column(name = "LOGRADOURO")
 	@NotNull
-	private String enderecoResidencial;
+	private String logradouro;
 	
 	@Column(name = "ZONA")
 	@NotNull
 	private String zona;
 	
 	@Transient
+	private long idMembroResponsavel;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
 	private MembroEntity membroResponsavel;
@@ -77,12 +78,12 @@ public class GcEntity {
 		this.diaSemana = diaSemana;
 	}
 
-	public String getEnderecoResidencial() {
-		return enderecoResidencial;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public void setEnderecoResidencial(String enderecoResidencial) {
-		this.enderecoResidencial = enderecoResidencial;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
 	public String getZona() {
@@ -108,6 +109,14 @@ public class GcEntity {
 
 	public void setMembrosGc(List<MembroEntity> membrosGc) {
 		this.membrosGc = membrosGc;
+	}
+
+	public long getIdMembroResponsavel() {
+		return idMembroResponsavel;
+	}
+
+	public void setIdMembroResponsavel(long idMembroResponsavel) {
+		this.idMembroResponsavel = idMembroResponsavel;
 	}
 	
 	
