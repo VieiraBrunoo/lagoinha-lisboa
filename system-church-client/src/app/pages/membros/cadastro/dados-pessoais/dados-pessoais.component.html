@@ -81,7 +81,7 @@
                 <mat-select placeholder="Cidade" [formControl]="dadosPessoaisForm.controls['cidade']" [errorStateMatcher]="matcher"
                   name="cidade">
                   <mat-option [value]="''">(Selecione)</mat-option>
-                  <mat-option *ngFor="let cidade of cidadeList" [value]="cidade.sigla">
+                  <mat-option *ngFor="let cidade of cidadeList" [value]="cidade.descricao">
                    {{cidade.descricao}}
                   </mat-option>
                 </mat-select>
@@ -92,7 +92,7 @@
             <mat-select placeholder="País" [formControl]="dadosPessoaisForm.controls['pais']" [errorStateMatcher]="matcher"
               name="pais">
               <mat-option [value]="''">(Selecione)</mat-option>
-              <mat-option *ngFor="let pais of paisList" [value]="pais.sigla">
+              <mat-option *ngFor="let pais of paisList" [value]="pais.descricao">
                   {{pais.descricao}}
               </mat-option>
             </mat-select>
@@ -106,7 +106,7 @@
             <mat-select placeholder="Zona" [formControl]="dadosPessoaisForm.controls['zona']" [errorStateMatcher]="matcher"
               name="zona">
               <mat-option [value]="''">(Selecione)</mat-option>
-              <mat-option *ngFor="let zona of zonaList" [value]="zona.sigla">
+              <mat-option *ngFor="let zona of zonaList" [value]="zona.descricao">
                   {{zona.descricao}}
               </mat-option>
             </mat-select>
@@ -118,6 +118,27 @@
                 </mat-form-field>
             </div>
       </div>
+
+      <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <input matInput [formControl]="dadosPessoaisForm.controls['celular']" name="celular" type="text"
+                placeholder="Telemovel" mask="000 000 000">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-select name="flagLiderGc" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['flagLiderGc']" placeholder="Lider GC?">
+                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option *ngFor="let liderGc of liderGcList" [value]="liderGc.sigla">
+                    {{liderGc.descricao}}
+                  </mat-option>
+                </mat-select>
+               </mat-form-field>
+            </div>
+
+        </div>
 
        <!-- <div class="col-md-6">
           <mat-form-field class="example-full-width">

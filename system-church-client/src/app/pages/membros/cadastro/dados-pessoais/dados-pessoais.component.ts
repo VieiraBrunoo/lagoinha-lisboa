@@ -38,6 +38,8 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
   zonaList: Array<any>;
   cidadeList: Array<any>;
   paisList: Array<any>;
+  liderGcList: Array<any>;
+
 
   constructor(
     private escolaService: EscolaService,
@@ -64,6 +66,7 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     this.getListPais();
     this.getListCidade();
     this.getListZona();
+    this.getListOpcaoLiderGc();
   }
 
   private creatForm() {
@@ -80,6 +83,9 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
       pais: new FormControl('', Validators.required),
       zona: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
+      celular: new FormControl('', [Validators.required]),
+      flagLiderGc: new FormControl('', [Validators.required]),
+
 
  });
 
@@ -134,6 +140,17 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
       });
     });
   }
+
+
+  private getListOpcaoLiderGc() {
+    this.liderGcList = new Array<any>();
+    this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.liderGcList.push(element);
+    });
+  });
+}
+
 
 
   /* ----------- EVENTOS ----------- */

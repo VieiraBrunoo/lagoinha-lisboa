@@ -99,6 +99,9 @@ export class CadastroMembroComponent implements OnInit {
     this.membro.cidade = this.dadosPessoais.dadosPessoaisForm.controls['cidade'].value;
     this.membro.pais = this.dadosPessoais.dadosPessoaisForm.controls['pais'].value;
     this.membro.email = this.dadosPessoais.dadosPessoaisForm.controls['email'].value;
+    this.membro.celular = this.dadosPessoais.dadosPessoaisForm.controls['celular'].value
+    this.membro.flagLiderGc=this.dadosPessoais.dadosPessoaisForm.controls['flagLiderGc'].value;
+    this.membro.status='ATIVO'
    
     //Dados Familiares 
     this.membro.nomePai = this.dadosFamiliares.dadosFamiliaresForm.controls['nomePai'].value;
@@ -149,4 +152,7 @@ export class MembroDto {
   dtBatismo: Date;
   igrejaBatismo: string;
   gc: Gc;
+  celular:string;
+  flagLiderGc:string;
+  status:string;
 }

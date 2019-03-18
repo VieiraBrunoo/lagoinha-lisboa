@@ -39,7 +39,7 @@ export class PesquisaMembroComponent implements OnInit {
   titulacaoList: Array<Parametro>;
   areaAtuacaoList:Array<TemaClassificacao>;
   zonaList:Array<any>;
-  horarioGcList:Array<any>;
+  lidergcList:Array<any>;
   temaAtuacaoList:any[];
   resultadoPesquisaDocente:ResultadoPesquisaDocente;
   displayedColumns: string[] = ['nome', 'estadoCivil', 'morada', 'gc','button'];
@@ -83,6 +83,7 @@ export class PesquisaMembroComponent implements OnInit {
     this.getListZona();
     this.getListSexo();
     this.getListEstadoCivil();
+    this.getListOpcaoFlagLiderGc();
   }
 
   private creatForm() {
@@ -92,6 +93,9 @@ export class PesquisaMembroComponent implements OnInit {
    estadoCivil: new FormControl(''),
    sexo: new FormControl(''),
    zona: new FormControl(''),
+   status: new FormControl(''),
+   flagLiderGc: new FormControl(''),
+
    });
   }
 
@@ -136,6 +140,10 @@ export class PesquisaMembroComponent implements OnInit {
     this.pesquisaMembros.estadoCivil=this.pesquisarMembrosForm.controls['estadoCivil'].value;
     this.pesquisaMembros.sexo=this.pesquisarMembrosForm.controls['sexo'].value;
     this.pesquisaMembros.zona=this.pesquisarMembrosForm.controls['zona'].value;
+    this.pesquisaMembros.status=this.pesquisarMembrosForm.controls['status'].value;
+    this.pesquisaMembros.flagLiderGc=this.pesquisarMembrosForm.controls['flagLiderGc'].value;
+
+    
   }
 
 
@@ -166,5 +174,14 @@ export class PesquisaMembroComponent implements OnInit {
   novo() {
     this.router.navigate(['cadastro-membro']);
   }
+
+  private getListOpcaoFlagLiderGc() {
+    this.lidergcList = new Array<any>();
+    this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.lidergcList.push(element);
+    });
+  });
+}
 
  }

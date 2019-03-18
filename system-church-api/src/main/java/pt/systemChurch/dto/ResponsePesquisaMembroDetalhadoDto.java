@@ -24,7 +24,8 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String igrejaBatismo;
 	private String nacionalidade;
 	private String pais;
-	
+	private String status;
+	private String celular;
 
 	
 	
@@ -148,11 +149,23 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	public void setDtCasamento(Date dtCasamento) {
 		this.dtCasamento = dtCasamento;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getCelular() {
+		return celular;
+	}
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
 	
 	
 	
 
-
+	
 
 
 
