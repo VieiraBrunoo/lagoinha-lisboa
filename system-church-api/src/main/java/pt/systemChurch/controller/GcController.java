@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pt.systemChurch.entity.GcEntity;
+import pt.systemChurch.entity.MembroEntity;
 import pt.systemChurch.repository.GcRepository;
 import pt.systemChurch.repository.MembroRepository;
 
@@ -39,6 +40,8 @@ public class GcController {
 	@PostMapping(value = "/salvarGc/")
 	public ResponseEntity<GcEntity> save(@RequestBody GcEntity gc){
 		try {
+			MembroEntity membroResponsavel = membroRepository.findById(gc.getIdMembroResponsavel());
+			gc.setMembroResponsavel(membroResponsavel);
 			GcEntity retorno = gcRepository.save(gc);
 				return ResponseEntity.ok(retorno);
 			}
