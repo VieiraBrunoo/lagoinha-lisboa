@@ -104,6 +104,12 @@ public class MembroEntity{
 	@NotNull
 	private String status;
 	
+	@Column(name = "FUNCAO_MEMBRO")
+	private String funcaoMembro;
+	
+	@Column(name = "LEVITA_FUNCAO")
+	private String levitaFuncao;
+	
 	
 		public long getId() {
 		return id;
@@ -295,6 +301,22 @@ public class MembroEntity{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getFuncaoMembro() {
+		return funcaoMembro;
+	}
+
+	public void setFuncaoMembro(String funcaoMembro) {
+		this.funcaoMembro = funcaoMembro;
+	}
+
+	public String getLevitaFuncao() {
+		return levitaFuncao;
+	}
+
+	public void setLevitaFuncao(String levitaFuncao) {
+		this.levitaFuncao = levitaFuncao;
 	}
 	
 	

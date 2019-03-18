@@ -8,9 +8,7 @@ import { TemaClassificacaoService } from 'src/app/service/tema-classificacao/tem
 import { TemaAtuacaoService } from 'src/app/service/tema-atuacao/tema.atuacao.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Parametro } from 'src/app/models/parametro';
-import { TemaAtuacao } from 'src/app/models/temaAtuacao';
 import { TemaClassificacao } from 'src/app/models/temaClassificacao';
-import { PesquisaDocentes } from 'src/app/models/PesquisaDocentes';
 import { DocenteService } from 'src/app/service/docente/docente.service';
 import { ResultadoPesquisaDocente } from 'src/app/models/resultado-pesquisa-docente';
 import { Router } from '@angular/router';
@@ -36,12 +34,9 @@ export interface PeriodicElement {
 
 
 export class PesquisaMembroComponent implements OnInit {
-  titulacaoList: Array<Parametro>;
-  areaAtuacaoList:Array<TemaClassificacao>;
   zonaList:Array<any>;
   lidergcList:Array<any>;
   temaAtuacaoList:any[];
-  resultadoPesquisaDocente:ResultadoPesquisaDocente;
   displayedColumns: string[] = ['nome', 'estadoCivil', 'morada', 'gc','button'];
   membroList:Array<ResponsePesquisaMembros>;
   dataSource = new MatTableDataSource<any>();
@@ -59,13 +54,7 @@ export class PesquisaMembroComponent implements OnInit {
   estadoCivilList: Array<any>;
   sexoList: Array<any>;
   constructor(
-    private _formBuilder: FormBuilder,
-    private escolaService: EscolaService,
-    private tribunalService: TribunalService,
-    private temaClassificacaoService: TemaClassificacaoService,
-    private temaAtuacaoService: TemaAtuacaoService,
     private parametroService: ParametroService,
-    private docenteService: DocenteService,
     public router: Router,
     private membroService:MembroService
 
@@ -77,7 +66,6 @@ export class PesquisaMembroComponent implements OnInit {
 
   ngOnInit() {
     this.creatForm();
-    this.resultadoPesquisaDocente = new ResultadoPesquisaDocente();
     this.membroList = new Array<ResponsePesquisaMembros>();
     this.dataSource.paginator = this.paginator;
     this.getListZona();
@@ -164,9 +152,9 @@ export class PesquisaMembroComponent implements OnInit {
     })
   }
 
-  private detalharDocente(id){
+  private detalharMembro(id){
 
-  this.router.navigate(['detalhar-docente/detalhar'],{queryParams:{id}});
+  this.router.navigate(['detalhar-membro/detalhar-membro'],{queryParams:{id}});
   }
 
 

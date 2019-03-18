@@ -9,6 +9,7 @@ public class RequestPesquisaMembroDto {
 	private String zona;
 	private String status;
 	private String flagLiderGc;
+	private String funcaoMembro;
 	
 	public String getNomeMembro() {
 		return nomeMembro;
@@ -45,6 +46,12 @@ public class RequestPesquisaMembroDto {
 	}
 	public void setFlagLiderGc(String flagLiderGc) {
 		this.flagLiderGc = flagLiderGc;
+	}
+	public String getFuncaoMembro() {
+		return funcaoMembro;
+	}
+	public void setFuncaoMembro(String funcaoMembro) {
+		this.funcaoMembro = funcaoMembro;
 	}
 	
 	

@@ -44,6 +44,7 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
   conjuge:boolean
   lidergcList:Array<any>;
+  funcaoMembroList:Array<any>;
 
   constructor(
     private parametroService: ParametroService,
@@ -63,7 +64,7 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
       this.getListEstadoCivil();
       this.getListPais();
       this.getListOpcaoFlagLiderGc();
-
+      this.getListFuncaoMembro();
       }
 
   private creatForm() {
@@ -74,7 +75,8 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     sexo: new FormControl(''),
     zona: new FormControl(''),
     status: new FormControl(''),
-    flagLiderGc:new FormControl('')
+    flagLiderGc:new FormControl(''),
+    funcaoMembro:new FormControl('')
 
     
      });
@@ -120,8 +122,9 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     this.pesquisaMembros.estadoCivil=this.pesquisaMembroDetalhadaForm.controls['estadoCivil'].value;
     this.pesquisaMembros.sexo=this.pesquisaMembroDetalhadaForm.controls['sexo'].value;
     this.pesquisaMembros.zona=this.pesquisaMembroDetalhadaForm.controls['zona'].value;
-    this.pesquisaMembros.status=this.pesquisaMembroDetalhadaForm.controls['status'].value;
+    this.pesquisaMembros.funcaoMembro=this.pesquisaMembroDetalhadaForm.controls['funcaoMembro'].value;
     this.pesquisaMembros.flagLiderGc=this.pesquisaMembroDetalhadaForm.controls['flagLiderGc'].value;
+
 
 
     //this.pesquisaMembroDetalhadaForm.idStatus=this.pesquisaPublicaForm.controls['status'].value;
@@ -160,6 +163,15 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
           this.lidergcList.push(element);
       });
     });
+  }
+
+  private getListFuncaoMembro() {
+    this.funcaoMembroList = new Array<any>();
+    this.parametroService.findByNomeConstante("FUNCAO_MEMBRO").subscribe(listRetorno => {
+      listRetorno.forEach(element => {
+        this.funcaoMembroList.push(element);
+    });
+  });
   }
 
 

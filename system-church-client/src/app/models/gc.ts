@@ -1,3 +1,4 @@
+import { Membro } from "./membro";
 
 export class Gc {
     id: number;
@@ -6,5 +7,5 @@ export class Gc {
     zona: string;
     logradouro: string;
     horario: string;
-    idMembroResponsavel: number;
+    membroResponsavel: Membro;
 }

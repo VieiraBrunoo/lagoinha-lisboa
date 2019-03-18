@@ -39,6 +39,10 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
   cidadeList: Array<any>;
   paisList: Array<any>;
   liderGcList: Array<any>;
+  funcaoMembroList: Array<any>;
+  funcaoLevitaList: Array<any>;
+  funcaoList: Array<any>;
+
 
 
   constructor(
@@ -55,18 +59,15 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.creatForm();
-    /*this.dadosGeraisForm.get('obterDadosDoSiec').setValue(false);
-    this.getListCategorias();
-    this.getListEscolas();
-    this.getListRamos();
-    this.getListTitulacoes();
-    this.alterarCategoria();*/
     this.getListNacionalidade();
     this.getListSexo();
     this.getListPais();
     this.getListCidade();
     this.getListZona();
     this.getListOpcaoLiderGc();
+    this.getListOpcaoFuncao();
+    this.getListFuncaoMembro();
+    this.getListFuncaoLevita();
   }
 
   private creatForm() {
@@ -85,9 +86,10 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       celular: new FormControl('', [Validators.required]),
       flagLiderGc: new FormControl('', [Validators.required]),
-
-
- });
+      flagFuncao: new FormControl('', [Validators.required]),
+      funcaoMembro: new FormControl(''),
+      funcaoLevita: new FormControl(''),
+     });
 
   }
 
@@ -149,6 +151,33 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
         this.liderGcList.push(element);
     });
   });
+}
+
+private getListFuncaoMembro() {
+  this.funcaoMembroList = new Array<any>();
+  this.parametroService.findByNomeConstante("FUNCAO_MEMBRO").subscribe(listRetorno => {
+    listRetorno.forEach(element => {
+      this.funcaoMembroList.push(element);
+  });
+});
+}
+
+private getListFuncaoLevita() {
+  this.funcaoLevitaList = new Array<any>();
+  this.parametroService.findByNomeConstante("INSTRUMENTO").subscribe(listRetorno => {
+    listRetorno.forEach(element => {
+      this.funcaoLevitaList.push(element);
+  });
+});
+}
+
+private getListOpcaoFuncao() {
+  this.funcaoList = new Array<any>();
+  this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
+    listRetorno.forEach(element => {
+      this.funcaoList.push(element);
+  });
+});
 }
 
 

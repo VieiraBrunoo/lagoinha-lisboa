@@ -60,11 +60,11 @@
 
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
-            <mat-select placeholder="Líder" [formControl]="dadosForm.controls['idMembroResponsavel']" [errorStateMatcher]="matcher"
-              name="idMembroResponsavel">
+            <mat-select placeholder="Líder" [formControl]="dadosForm.controls['lider']" [errorStateMatcher]="matcher"
+              name="lider">
               <mat-option [value]="null">(Selecione)</mat-option>
-              <mat-option *ngFor="let membro of membroList" [value]="membro.id">
-                  {{membro.nome}}
+              <mat-option *ngFor="let lider of membroList" [value]="lider.id">
+                  {{lider.nome}}
               </mat-option>
             </mat-select>
           </mat-form-field>

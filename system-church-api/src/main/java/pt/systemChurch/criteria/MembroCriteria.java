@@ -119,8 +119,8 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			predicates.add(criteriaBuilder.equal(membroRoot.get("zona"), dto.getZona()));
 		}
 
-		if (!dto.getStatus().isEmpty() && dto.getStatus() != null) {
-			predicates.add(criteriaBuilder.equal(membroRoot.get("status"), dto.getStatus()));
+		if (!dto.getFuncaoMembro().isEmpty() && dto.getFuncaoMembro() != null) {
+			predicates.add(criteriaBuilder.equal(membroRoot.get("funcaoMembro"), dto.getFuncaoMembro()));
 		}
 		
 		if (!dto.getFlagLiderGc().isEmpty() && dto.getFlagLiderGc() != null) {

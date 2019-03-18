@@ -16,28 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuarios`
+-- Table structure for table `membro_gc`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
+DROP TABLE IF EXISTS `membro_gc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
-  `ID_USUARIO` int(11) NOT NULL,
-  `LOGIN` varchar(45) NOT NULL,
-  `SENHA` varchar(45) NOT NULL,
-  PRIMARY KEY (`ID_USUARIO`)
+CREATE TABLE `membro_gc` (
+  `ID_MEMBRO_GC` bigint(20) NOT NULL AUTO_INCREMENT,
+  `MEMBRO` bigint(20) NOT NULL,
+  `GC` bigint(20) NOT NULL,
+  PRIMARY KEY (`ID_MEMBRO_GC`),
+  KEY `FK_MEMBRO_MGC` (`MEMBRO`),
+  KEY `FK_GC_MGC` (`GC`),
+  CONSTRAINT `FK_GC_MGC` FOREIGN KEY (`GC`) REFERENCES `gc` (`ID_GC`),
+  CONSTRAINT `FK_MEMBRO_MGC` FOREIGN KEY (`MEMBRO`) REFERENCES `membro` (`ID_MEMBRO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuarios`
+-- Dumping data for table `membro_gc`
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'BRUNO','123456'),(2,'VIEIRA','BRUNO0986764');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+LOCK TABLES `membro_gc` WRITE;
+/*!40000 ALTER TABLE `membro_gc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `membro_gc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-14 18:45:20
+-- Dump completed on 2019-03-18 21:13:34
