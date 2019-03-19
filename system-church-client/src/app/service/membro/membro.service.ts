@@ -45,4 +45,9 @@ export class MembroService extends GenericService {
     return this.http.post(this.url + this.relativePath+"pesquisarMembrosDetalhado", membro);
   }
 
+  findByMembroId( id: number) : Observable<MembroDto> {
+    return this.getMethod(this.relativePath+"findByMembroId/"+id);
+  }
+
+
 }

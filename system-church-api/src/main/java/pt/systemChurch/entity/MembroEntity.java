@@ -90,7 +90,7 @@ public class MembroEntity{
 	@Column(name = "IGREJA_BATISMO")
 	private String igrejaBatismo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "GC")
 	private GcEntity gc;
 

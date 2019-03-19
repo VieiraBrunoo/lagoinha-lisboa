@@ -16,6 +16,7 @@ import { Membro } from 'src/app/models/membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
 import { Gc } from 'src/app/models/gc-cadastro-membro';
 import { runInThisContext } from 'vm';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -34,20 +35,38 @@ export class CadastroMembroComponent implements OnInit {
 
   private toasterService: ToasterService;
   isOptional = false;
-
+  idMembro:number;
   membro: MembroDto;
   fotoPerfil: File;
+  
 
   constructor(
     private acaoService: AcaoService,
     private membroService: MembroService,
     private documentoService: DocumentoService,
     private identityStorage: IdentityStorage,
+    private route: ActivatedRoute,
+
     toasterService: ToasterService, ) {
     this.toasterService = toasterService;
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+
+    this.route.queryParams.subscribe((queryParams: any) => { this.idMembro = queryParams['id']; });
+     if (this.idMembro && this.idMembro !== null) {
+
+      this.blockUI.start();
+      this.membroService.findByMembroId(this.idMembro).subscribe(retorno => {
+        this.carregarMembro(retorno);
+      });
+
+      this.blockUI.stop();
+
+    }
+
+
+  }
 
   stepClick(ev) {
 
@@ -129,11 +148,61 @@ export class CadastroMembroComponent implements OnInit {
 
 
   }
+
+  private carregarMembro(membro: MembroDto) {
+
+    this.membro = new MembroDto;
+   
+    // Dados Pessoais
+    this.dadosPessoais.dadosPessoaisForm.get('nome').setValue(membro.nome);
+    this.dadosPessoais.dadosPessoaisForm.get('nrDocumento').setValue(membro.nrDocumento);
+    this.dadosPessoais.dadosPessoaisForm.get('dtValidadeDoc').setValue(membro.dtValidadeDoc);
+    this.dadosPessoais.dadosPessoaisForm.get('nacionalidade').setValue(membro.nacionalidade);
+    this.dadosPessoais.dadosPessoaisForm.get('sexo').setValue(membro.sexo);
+    this.dadosPessoais.dadosPessoaisForm.get('enderecoResidencial').setValue(membro.enderecoResidencial);
+    this.dadosPessoais.dadosPessoaisForm.get('zona').setValue(membro.zona);
+    this.dadosPessoais.dadosPessoaisForm.get('cidade').setValue(membro.cidade);
+    this.dadosPessoais.dadosPessoaisForm.get('pais').setValue(membro.pais);
+    this.dadosPessoais.dadosPessoaisForm.get('email').setValue(membro.email);
+    this.dadosPessoais.dadosPessoaisForm.get('celular').setValue(membro.celular);
+    this.dadosPessoais.dadosPessoaisForm.get('flagLiderGc').setValue(membro.flagLiderGc);
+    this.dadosPessoais.dadosPessoaisForm.get('funcaoMembro').setValue(membro.funcaoMembro);
+    this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(membro.levitaFuncao);
+    if (membro.fotoPerfil!=null) {
+      this.dadosPessoais.url = ('data:image/jpeg;base64,' + membro.fotoPerfil);
+      this.dadosPessoais.exibirBotaoRemover = true;
+    }
+
+    // Dados Familiares
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomePai').setValue(membro.nomePai);
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomeMae').setValue(membro.nomeMae);
+    this.dadosFamiliares.dadosFamiliaresForm.get('estadoCivil').setValue(membro.estadoCivil);
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomeConjuge').setValue(membro.nomeConjuge);
+    this.dadosFamiliares.dadosFamiliaresForm.get('dataCasamento').setValue(membro.dtCasamento);
+    this.dadosFamiliares.dadosFamiliaresForm.get('qtdFilhos').setValue(membro.qtdFilhos);
+    
+    // Dados Batismo
+    this.dadosBatismos.dadosBatismoForm.get['dataBatismo'].setValue(membro.dtBatismo);
+    this.dadosBatismos.dadosBatismoForm.get['igrejaBatismo'].setValue(membro.igrejaBatismo);
+
+    //Dados GC{
+    if(membro.gc.id!= null){
+     this.membro.gc = new Gc();
+     this.dadosGc.dadosGcForm.get['flagParticipaGc'].setValue('S');
+    this.dadosGc.dadosGcForm.controls['gc'].setValue(membro.gc.nome);
+  }
+
+
+  }
+
+
+
+
 }
 
 
 export class MembroDto {
-
+  id:number;
   nome: string;
   nrDocumento: string;
   dtValidadeDoc: Date;

@@ -7,11 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +76,13 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	@RequestMapping(value="/findAllMembro/", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public Iterable<MembroEntity> findAllMembro(){
 	return membroRepository.findAll();
+	}
+	
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping(value="/findByMembroId/{id}", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public MembroEntity findByIdMembro(@PathVariable("id") long id){
+			return membroRepository.findById(id);
 	}
 	
 }

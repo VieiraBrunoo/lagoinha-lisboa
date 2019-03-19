@@ -116,11 +116,11 @@
             <td mat-cell *matCellDef="let row">
               <button mat-mini-fab class="btn-small" matTooltip="Editar Registro" color="basic" style="margin: 10px 5px 10px 5px;">
                 <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
-                  ng-reflect-hide-xs="" style="display: block; color: #222;" (click)="editarDocente(row.idMembro)">edit</mat-icon>
+                  ng-reflect-hide-xs="" style="display: block; color: #222;" (click)="editarMembro(row.idMembro)">edit</mat-icon>
               </button>
               <button mat-mini-fab class="btn-small" matTooltip="Detalhar Registro" color="basic" style="margin: 10px 5px 10px 5px;">
                 <mat-icon class="mat-icon mat-list-icon material-icons ng-star-inserted" role="img" aria-hidden="true"
-                  ng-reflect-hide-xs style="display: block; color: #222;" (click)="detalharDocente(row.id)">info</mat-icon>
+                  ng-reflect-hide-xs style="display: block; color: #222;" (click)="detalharMembro(row.id)">info</mat-icon>
               </button>
               <mat-slide-toggle [matTooltip]="row.status == 'ATIVO' ? 'Ativo' : 'Inativo'" [checked]="row.status == 'ATIVO'" [color]="color" (click)="obterToggleButton(row.id,row.status)"></mat-slide-toggle>
             </td>

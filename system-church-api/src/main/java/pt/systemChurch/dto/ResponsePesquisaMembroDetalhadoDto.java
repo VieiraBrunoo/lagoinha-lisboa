@@ -26,6 +26,11 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String pais;
 	private String status;
 	private String celular;
+	private String flagLiderGc;
+	private String funcaoMembro;
+	private String levitaFuncao;
+	
+
 
 	
 	
@@ -160,6 +165,24 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	}
 	public void setCelular(String celular) {
 		this.celular = celular;
+	}
+	public String getFlagLiderGc() {
+		return flagLiderGc;
+	}
+	public void setFlagLiderGc(String flagLiderGc) {
+		this.flagLiderGc = flagLiderGc;
+	}
+	public String getFuncaoMembro() {
+		return funcaoMembro;
+	}
+	public void setFuncaoMembro(String funcaoMembro) {
+		this.funcaoMembro = funcaoMembro;
+	}
+	public String getLevitaFuncao() {
+		return levitaFuncao;
+	}
+	public void setLevitaFuncao(String levitaFuncao) {
+		this.levitaFuncao = levitaFuncao;
 	}
 	
 	

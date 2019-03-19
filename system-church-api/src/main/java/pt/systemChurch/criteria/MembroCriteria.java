@@ -244,4 +244,72 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
             return value;
         }
     }
+	 
+	 
+	 
+	 static ResponsePesquisaMembroDetalhadoDto pesquisarMembroPorId(long id, EntityManager entityManager) {
+		 	CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
+			Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			criteriaQuery.distinct(true);
+
+			if (id!= 0) {
+				predicates.add(criteriaBuilder.equal(membroRoot.get("id"),id));
+			}
+			
+			TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
+			List<MembroEntity> resultQuery = query.getResultList();
+			ResponsePesquisaMembroDetalhadoDto mem = new ResponsePesquisaMembroDetalhadoDto();
+
+
+			for (MembroEntity membro : resultQuery) {
+
+				mem.setIdMembro(membro.getId());
+				mem.setNomeMembro(membro.getNome());
+				mem.setIdGc(membro.getGc().getId());
+				if (membro.getFlagLiderGc() != null) {
+					if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
+						mem.setNomeGc("Líder - " + membro.getGc().getNome());
+				}
+				} else {
+					mem.setNomeGc(membro.getGc().getNome());
+				}
+				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
+				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
+				mem.setSexo(descricaoSexo(membro.getSexo()));
+				if (membro.getFotoPerfil() != null) {
+					mem.setImgPerfil(membro.getFotoPerfil());
+				}
+				mem.setPais(membro.getPais());
+				mem.setQtdFilhos(membro.getQtdFilhos());
+				mem.setNomePai(membro.getNomePai());
+				mem.setNomeMae(membro.getNomeMae());
+				if (membro.getNomeConjuge() != null) {
+					mem.setNomeConjuge(membro.getNomeConjuge());
+				}
+				if (membro.getDtCasamento() != null) {
+					mem.setDtCasamento(membro.getDtCasamento());
+				}
+				if (membro.getEmail() != null) {
+					mem.setEmail(membro.getEmail());
+				}
+				mem.setNrDoc(membro.getNrDocumento());
+				if (membro.getDtBatismo() != null) {
+					mem.setDtBatismo(membro.getDtBatismo());
+				}
+				mem.setIgrejaBatismo(membro.getIgrejaBatismo());
+				mem.setNacionalidade(membro.getNacionalidade());
+				mem.setStatus(membro.getStatus());
+				mem.setCelular(formatarNumeroCelular(membro.getCelular()));
+				mem.setFlagLiderGc(membro.getFlagLiderGc());
+				mem.setFuncaoMembro(membro.getFuncaoMembro());
+				mem.setLevitaFuncao(membro.getLevitaFuncao());
+
+			}
+			return mem;
+
+						
+
+	 }
 }

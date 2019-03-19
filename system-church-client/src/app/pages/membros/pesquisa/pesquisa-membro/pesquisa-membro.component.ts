@@ -172,4 +172,9 @@ export class PesquisaMembroComponent implements OnInit {
   });
 }
 
+
+private editarMembro(id) {
+  this.router.navigate(['cadastro-membro'], { queryParams: { id } });
+}
+
  }
