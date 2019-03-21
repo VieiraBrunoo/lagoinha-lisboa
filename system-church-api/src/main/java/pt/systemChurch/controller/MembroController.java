@@ -1,5 +1,6 @@
 package pt.systemChurch.controller;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,16 +75,16 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	}
 	
 	@CrossOrigin
-	@RequestMapping(value="/findAllMembro/", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/findAllMembro/")
 	public Iterable<MembroEntity> findAllMembro(){
 	return membroRepository.findAll();
 	}
 	
 	@CrossOrigin
-	@ResponseBody
-	@RequestMapping(value="/findByMembroId/{id}", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/findByMembroId/{id}")
 	public MembroEntity findByIdMembro(@PathVariable("id") long id){
-			return membroRepository.findById(id);
+		MembroEntity m = membroRepository.findById(id);
+		return m;
 	}
 	
 }

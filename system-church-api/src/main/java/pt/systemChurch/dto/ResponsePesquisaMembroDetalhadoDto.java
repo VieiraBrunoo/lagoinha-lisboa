@@ -29,7 +29,7 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String flagLiderGc;
 	private String funcaoMembro;
 	private String levitaFuncao;
-	
+	private String foto;
 
 
 	
@@ -183,6 +183,12 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	}
 	public void setLevitaFuncao(String levitaFuncao) {
 		this.levitaFuncao = levitaFuncao;
+	}
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 	
 	

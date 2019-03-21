@@ -247,7 +247,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 	 
 	 
 	 
-	 static ResponsePesquisaMembroDetalhadoDto pesquisarMembroPorId(long id, EntityManager entityManager) {
+	 static MembroEntity pesquisarMembroPorId(long id, EntityManager entityManager) {
 		 	CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
 			Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
@@ -260,26 +260,26 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			
 			TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
 			List<MembroEntity> resultQuery = query.getResultList();
-			ResponsePesquisaMembroDetalhadoDto mem = new ResponsePesquisaMembroDetalhadoDto();
+			MembroEntity mem = new MembroEntity();
 
 
 			for (MembroEntity membro : resultQuery) {
 
-				mem.setIdMembro(membro.getId());
-				mem.setNomeMembro(membro.getNome());
-				mem.setIdGc(membro.getGc().getId());
+				mem.setId(membro.getId());
+				mem.setNome(membro.getNome());
+				mem.getGc().setId(membro.getGc().getId());
 				if (membro.getFlagLiderGc() != null) {
 					if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
-						mem.setNomeGc("Líder - " + membro.getGc().getNome());
+						mem.getGc().setNome("Líder - " + membro.getGc().getNome());
 				}
 				} else {
-					mem.setNomeGc(membro.getGc().getNome());
+					mem.getGc().setNome(membro.getGc().getNome());
 				}
 				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
-				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
+				mem.setEnderecoResidencial(membro.getEnderecoResidencial() + " - " + membro.getZona());
 				mem.setSexo(descricaoSexo(membro.getSexo()));
 				if (membro.getFotoPerfil() != null) {
-					mem.setImgPerfil(membro.getFotoPerfil());
+					mem.setFotoPerfil(membro.getFotoPerfil());
 				}
 				mem.setPais(membro.getPais());
 				mem.setQtdFilhos(membro.getQtdFilhos());
@@ -294,7 +294,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 				if (membro.getEmail() != null) {
 					mem.setEmail(membro.getEmail());
 				}
-				mem.setNrDoc(membro.getNrDocumento());
+				mem.setNrDocumento(membro.getNrDocumento());
 				if (membro.getDtBatismo() != null) {
 					mem.setDtBatismo(membro.getDtBatismo());
 				}

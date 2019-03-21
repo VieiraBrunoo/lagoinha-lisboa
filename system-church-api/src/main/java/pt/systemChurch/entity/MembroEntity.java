@@ -318,7 +318,8 @@ public class MembroEntity{
 	public void setLevitaFuncao(String levitaFuncao) {
 		this.levitaFuncao = levitaFuncao;
 	}
-	
+
+
 	
 	
 	

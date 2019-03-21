@@ -46,10 +46,10 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		return MembroCriteria.pesquisarMembroDetalhado(dto, this.entityManager);
 	}
 	
-	public ResponsePesquisaMembroDetalhadoDto pesquisarMembroPorId(long id ){
-
-		return MembroCriteria.pesquisarMembroPorId(id,this.entityManager);
-	}
 	
-
+	public MembroEntity pesquisarMembroPorId(long id) {
+		return MembroCriteria.pesquisarMembroPorId(id, this.entityManager);
+		
+		
+	}
 }
