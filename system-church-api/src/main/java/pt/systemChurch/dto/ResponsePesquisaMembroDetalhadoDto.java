@@ -1,5 +1,6 @@
 package pt.systemChurch.dto;
 
+import java.net.URI;
 import java.sql.Date;
 
 public class ResponsePesquisaMembroDetalhadoDto {
@@ -26,10 +27,14 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String pais;
 	private String status;
 	private String celular;
+	private Date dtValidadeDoc;
+	private String enderecoResidencial;
+	private String zona;
+	private String cidade;
 	private String flagLiderGc;
 	private String funcaoMembro;
 	private String levitaFuncao;
-	private String foto;
+	private Date dtNasc;
 
 
 	
@@ -184,12 +189,37 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	public void setLevitaFuncao(String levitaFuncao) {
 		this.levitaFuncao = levitaFuncao;
 	}
-	public String getFoto() {
-		return foto;
+	public Date getDtValidadeDoc() {
+		return dtValidadeDoc;
 	}
-	public void setFoto(String foto) {
-		this.foto = foto;
+	public void setDtValidadeDoc(Date dtValidadeDoc) {
+		this.dtValidadeDoc = dtValidadeDoc;
 	}
+	public String getEnderecoResidencial() {
+		return enderecoResidencial;
+	}
+	public void setEnderecoResidencial(String enderecoResidencial) {
+		this.enderecoResidencial = enderecoResidencial;
+	}
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	public Date getDtNasc() {
+		return dtNasc;
+	}
+	public void setDtNasc(Date dtNasc) {
+		this.dtNasc = dtNasc;
+	}
+	
 	
 	
 	

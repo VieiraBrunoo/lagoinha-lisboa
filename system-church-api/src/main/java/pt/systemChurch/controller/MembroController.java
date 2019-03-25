@@ -1,5 +1,7 @@
 package pt.systemChurch.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.Base64;
 import java.util.List;
 
@@ -19,38 +21,48 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import pt.systemChurch.base.BaseController;
 import pt.systemChurch.dto.RequestPesquisaMembroDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
+import pt.systemChurch.repository.GcRepository;
 import pt.systemChurch.repository.MembroRepository;
 import pt.systemChurch.service.MembroService;
 
 @RestController
 @RequestMapping(path="lagoinha-api/membro",produces = {MediaType.APPLICATION_JSON_VALUE })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MembroController extends BaseController<MembroEntity, MembroService> {
 
 	@Autowired
 	private MembroRepository membroRepository;
 	
+	@Autowired
+	private GcRepository gcRepository;
 	
 	@CrossOrigin
 	@PostMapping(value = "/salvarMembro/")
-	public ResponseEntity<MembroEntity> save(
-			@RequestPart("fotoPerfil") MultipartFile foto,
-			@RequestPart("membro") MembroEntity membro)
+	public ResponseEntity<MembroEntity> save(@RequestBody MembroEntity membro)
 		 {
 
 		try {
-			byte[] arrayFoto = foto.getBytes();
-			membro.setFotoPerfil(arrayFoto);
-			GcEntity gc = new GcEntity();
-			gc.setId(membro.getGc().getId());
+			if(membro.getId()==0) {
+			GcEntity gc = gcRepository.findById(membro.getIdGc());
 			membro.setGc(gc);
 			MembroEntity retorno = membroRepository.save(membro);
 			return ResponseEntity.ok(retorno);
+			
+			} else {
+				GcEntity gc = gcRepository.findById(membro.getIdGc());
+				membro.setGc(gc);
+				MembroEntity retorno = this.getService().atualizarMembro(membro);
+				return ResponseEntity.ok(retorno);
+				
+			}
 			}
 		 catch (Exception ex) {
 			String errorMessage;
@@ -82,9 +94,10 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	
 	@CrossOrigin
 	@RequestMapping(value="/findByMembroId/{id}")
-	public MembroEntity findByIdMembro(@PathVariable("id") long id){
-		MembroEntity m = membroRepository.findById(id);
-		return m;
+	public ResponsePesquisaMembroDetalhadoDto findByIdMembro(@PathVariable("id") long id) throws UnsupportedEncodingException{
+	ResponsePesquisaMembroDetalhadoDto membro = this.getService().pesquisarMembroPorId(id);
+			
+	return membro;
 	}
 	
 }

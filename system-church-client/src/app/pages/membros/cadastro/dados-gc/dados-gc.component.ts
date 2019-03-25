@@ -8,6 +8,7 @@ import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { Documento } from 'src/app/models/documento';
 import { GcService } from 'src/app/service/gc/gc.service';
 import { Gc } from 'src/app/models/gc-cadastro-membro';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dados-gc',
@@ -38,25 +39,30 @@ export class DadosGcComponent implements OnInit {
   gcRespostaList: Array<any>;
   gcList: Array<any>;
   gc:Gc;
-
+  idMembro:number;
   selectedFiles: FileList;
   documento: File;
 
   constructor(
     private parametroService: ParametroService,
     private identityStorage: IdentityStorage,
-    private gcService:GcService) { }
+    private gcService:GcService,
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit() {
 
     this.listDocumentos = new Array<any>();
     this.arquivosMultipart = new Array<File>();
     this.documentosMultipart = new Array<Documento>();
-   
     this.creatForm();
-    this.getListOpcaoGc();
-    this.getGc();
-  }
+     this.getListOpcaoGc();
+     this.getGc();
+    
+   }
+
+
+  
 
   onFileChanged(event) {
 
@@ -118,16 +124,7 @@ export class DadosGcComponent implements OnInit {
          });
   }
 
-  private getListTiposDocumento() {
-    this.tipoDocumentoList = new Array<Parametro>();
-    this.parametroService.findByNomeConstante("TIPO_DOCUMENTO").subscribe(listRetorno => {
-      listRetorno.forEach(element => {
-        this.tipoDocumentoList.push(element);
-      });
-    })
-  }
-
-  private getListOpcaoGc() {
+   private getListOpcaoGc() {
     this.gcRespostaList = new Array<any>();
     this.parametroService.findByNomeConstante("RESPOSTA").subscribe(listRetorno => {
       listRetorno.forEach(element => {
@@ -138,7 +135,7 @@ export class DadosGcComponent implements OnInit {
 
 
 private getGc() {
-  this.gcList = new Array<Gc>();
+  this.gcList = new Array<any>();
   this.gc = new Gc();
   this.gcService.buscarTodosGc().subscribe(listRetorno => {
     listRetorno.forEach(element => {

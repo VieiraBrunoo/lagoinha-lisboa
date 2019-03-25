@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -90,7 +91,7 @@ public class MembroEntity{
 	@Column(name = "IGREJA_BATISMO")
 	private String igrejaBatismo;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GC")
 	private GcEntity gc;
 
@@ -110,6 +111,11 @@ public class MembroEntity{
 	@Column(name = "LEVITA_FUNCAO")
 	private String levitaFuncao;
 	
+	@Column(name = "DATA_NASCIMENTO")
+	private Date dtNascimento;
+	
+	@Transient
+	private long idGc;
 	
 		public long getId() {
 		return id;
@@ -318,6 +324,24 @@ public class MembroEntity{
 	public void setLevitaFuncao(String levitaFuncao) {
 		this.levitaFuncao = levitaFuncao;
 	}
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
+
+	public long getIdGc() {
+		return idGc;
+	}
+
+	public void setIdGc(long idGc) {
+		this.idGc = idGc;
+	}
+
+	
 
 
 	

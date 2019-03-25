@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -50,6 +51,7 @@ public class GcEntity {
 	private MembroEntity membroResponsavel;
 
 	@Transient
+	@JsonIgnore
 	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MembroEntity> membrosGc;
 	
