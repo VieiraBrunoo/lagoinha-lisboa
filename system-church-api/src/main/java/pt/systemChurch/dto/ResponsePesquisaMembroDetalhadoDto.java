@@ -1,6 +1,7 @@
 package pt.systemChurch.dto;
 
-import java.net.URI;
+import java.io.File;
+import java.sql.Blob;
 import java.sql.Date;
 
 public class ResponsePesquisaMembroDetalhadoDto {

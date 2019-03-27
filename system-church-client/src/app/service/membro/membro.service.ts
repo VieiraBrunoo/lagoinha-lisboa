@@ -23,8 +23,12 @@ export class MembroService extends GenericService {
   }
 
  
-  saveDocente( membro: MembroDto): Observable<any> {
-    return this.http.post(this.url + this.relativePath + "salvarMembro/", membro);
+  saveMembro( membro: MembroDto,arquivo:File): Observable<any> {
+    const formData: any = new FormData();
+
+    formData.append('fotoPerfil', arquivo);
+    formData.append('membro', new Blob([JSON.stringify(membro)], {type: "application/json"}));
+      return this.http.post(this.url + this.relativePath + "salvarMembro/", formData );
   }
 
   public findAll(): Observable<any> {

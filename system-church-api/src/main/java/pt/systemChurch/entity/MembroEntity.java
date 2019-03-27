@@ -1,8 +1,9 @@
 package pt.systemChurch.entity;
 
+import java.io.File;
+import java.sql.Blob;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "MEMBRO")
@@ -116,6 +118,9 @@ public class MembroEntity{
 	
 	@Transient
 	private long idGc;
+	
+	@Transient
+	private File foto;
 	
 		public long getId() {
 		return id;
@@ -340,12 +345,5 @@ public class MembroEntity{
 	public void setIdGc(long idGc) {
 		this.idGc = idGc;
 	}
-
-	
-
-
-	
-	
-	
 
 }

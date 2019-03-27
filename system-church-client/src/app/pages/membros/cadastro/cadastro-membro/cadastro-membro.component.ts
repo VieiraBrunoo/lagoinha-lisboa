@@ -89,13 +89,17 @@ export class CadastroMembroComponent implements OnInit {
       this.blockUI.start();
       this.createMembro();
 
-      this.membroService.saveDocente(this.membro).subscribe(data => {
+      this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
         if(this.membro.id && this.membro.id !== null) {
           this.toasterService.pop('success', 'Membro editado com sucesso!');
+          this.blockUI.stop();
         } else {
           this.toasterService.pop('success', 'Membro cadastrado com sucesso!');
+          this.blockUI.stop();
+
         }
         this.blockUI.stop();
+
   });
    // }
   }
@@ -106,10 +110,11 @@ export class CadastroMembroComponent implements OnInit {
 
     //Dados Pessoais
        
-    if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil !== null) {
+    if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil != null) {
       this.fotoPerfil = this.dadosPessoais.fotoPerfil;
+      } else{
+        this.fotoPerfil=null;
       }
-    this.membro.fotoPerfil=this.fotoPerfil;
     this.membro.nome = this.dadosPessoais.dadosPessoaisForm.controls['nome'].value;
     this.membro.dtNascimento = this.dadosPessoais.dadosPessoaisForm.controls['dtNascimento'].value;
     this.membro.nrDocumento = this.dadosPessoais.dadosPessoaisForm.controls['nrDocumento'].value;
@@ -229,7 +234,6 @@ export class MembroDto {
   cidade: string;
   pais: string;
   email: string;
-  fotoPerfil: File=null;
   nomePai: string;
   nomeMae: string;
   estadoCivil: string;
