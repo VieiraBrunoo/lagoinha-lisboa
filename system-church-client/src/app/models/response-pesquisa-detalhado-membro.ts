@@ -7,7 +7,7 @@ export class ResponsePesquisaDetalhadoMembros {
     sexo:string;
     estadoCivil:string;
     morada:string;
-    imgPerfil:string;
+    imgPerfil:File;
     pais:string;
     qtdFilhos:number;
     nomePai:string;
@@ -28,6 +28,7 @@ export class ResponsePesquisaDetalhadoMembros {
     celular:string;
     flagLiderGc:string;
     dtNasc:Date;
+    fotoUrl:string;
     
 }
     

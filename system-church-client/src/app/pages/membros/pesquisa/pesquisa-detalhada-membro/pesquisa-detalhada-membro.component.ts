@@ -134,12 +134,13 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
   
   private getMembros() {
     this.membroList = new Array<ResponsePesquisaDetalhadoMembros>();
+    url:String;
     this.blockUI.start();
 
     this.membroService.findByMembroDetalhado(this.pesquisaMembros).subscribe(listRetorno => {
       listRetorno.forEach((element:ResponsePesquisaDetalhadoMembros) => {
         if (element.imgPerfil != null) {
-          element.imgPerfil = ('data:image/jpeg;base64,' + element.imgPerfil)
+          element.fotoUrl = ('data:image/jpeg;base64,' + element.imgPerfil)
         }
         this.membroList.push(element);
               });

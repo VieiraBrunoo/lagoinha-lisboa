@@ -41,6 +41,7 @@ export class CadastroMembroComponent implements OnInit {
   membro: MembroDto;
   fotoPerfil: File;
   responseMembro:ResponsePesquisaDetalhadoMembros;
+  router: any;
   
 
   constructor(
@@ -90,17 +91,12 @@ export class CadastroMembroComponent implements OnInit {
       this.createMembro();
 
       this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
-        if(this.membro.id && this.membro.id !== null) {
           this.toasterService.pop('success', 'Membro editado com sucesso!');
-          this.blockUI.stop();
-        } else {
-          this.toasterService.pop('success', 'Membro cadastrado com sucesso!');
-          this.blockUI.stop();
-
-        }
         this.blockUI.stop();
-
-  });
+      }, error => {
+        this.toasterService.pop('error', error.error);
+        this.blockUI.stop();
+      });
    // }
   }
 
@@ -148,7 +144,6 @@ export class CadastroMembroComponent implements OnInit {
     //Dados GC
     this.membro.gc = new Gc();
     this.dadosGc.gc.id= this.dadosGc.dadosGcForm.controls['gc'].value;
-    console.log(this.membro.gc.id);
     this.membro.gc = this.dadosGc.gc;
     this.membro.idGc=this.dadosGc.dadosGcForm.controls['gc'].value;
      
@@ -177,6 +172,7 @@ export class CadastroMembroComponent implements OnInit {
     this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(responseMembro.levitaFuncao);
     if (responseMembro.imgPerfil!=null) {
       this.dadosPessoais.url = ('data:image/jpeg;base64,' + responseMembro.imgPerfil);
+      this.dadosPessoais.fotoPerfil=responseMembro.imgPerfil;
       this.dadosPessoais.exibirBotaoRemover = true;
     }
     this.dadosPessoais.dadosPessoaisForm.get('dtNascimento').setValue(responseMembro.dtNasc);
