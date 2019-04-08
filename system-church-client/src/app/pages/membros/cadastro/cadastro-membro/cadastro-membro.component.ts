@@ -89,14 +89,31 @@ export class CadastroMembroComponent implements OnInit {
 //    if (this.dadosPessoais.dadosPessoaisForm.valid && this.dadosBatismos.dadosBatismoForm.valid && this.dadosFamiliares.dadosFamiliaresForm.valid && this.dadosGc.dadosGcForm.valid) {
       this.blockUI.start();
       this.createMembro();
-
+      if(this.membro.id==0 || this.membro.id==null){
       this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
-          this.toasterService.pop('success', 'Membro editado com sucesso!');
-        this.blockUI.stop();
+          if (data==false){
+            this.toasterService.pop('error','O GC associado já possui um Lider!');
+            this.blockUI.stop();
+          } if(data==true){
+          this.toasterService.pop('success', 'Membro Cadastrado com Sucesso!');
+          this.blockUI.stop();
+      } 
       }, error => {
         this.toasterService.pop('error', error.error);
         this.blockUI.stop();
       });
+    } else{
+      this.membroService.updateMembro(this.membro,this.fotoPerfil).subscribe(data => {
+      if(data==true){
+        this.toasterService.pop('success', 'Membro Alterado com Sucesso!');
+       this.blockUI.stop();
+      }
+      }, error => {
+      this.toasterService.pop('error', error.error);
+      this.blockUI.stop();
+    });
+
+    }
    // }
   }
 

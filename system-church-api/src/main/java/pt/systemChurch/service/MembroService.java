@@ -54,9 +54,14 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		
 	}
 	
-	public MembroEntity atualizarMembro(MembroEntity membro) {
-		return MembroCriteria.atualizarMembro(membro, this.entityManager);
+	public boolean cadastrarMembro(MembroEntity membro) {
+		return MembroCriteria.salvarMembro(membro, entityManager);
 		
+	}
+	
+	
+	public boolean atualizarMembro(MembroEntity membro) {
+		return MembroCriteria.atualizarMembro(membro, this.entityManager);
 		
 	}
 	

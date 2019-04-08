@@ -48,5 +48,11 @@ export class MembroService extends GenericService {
     return this.getMethod(this.relativePath+"findByMembroId/"+id);
   }
 
+  updateMembro( membro: MembroDto,arquivo:File): Observable<any> {
+    const formData: any = new FormData();
 
+    formData.append('fotoPerfil', arquivo);
+    formData.append('membro', new Blob([JSON.stringify(membro)], {type: "application/json"}));
+      return this.http.post(this.url + this.relativePath + "atualizarMembro/", formData );
+  }
 }

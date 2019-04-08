@@ -29,6 +29,8 @@ export class ResponsePesquisaDetalhadoMembros {
     flagLiderGc:string;
     dtNasc:Date;
     fotoUrl:string;
+    diaGc:string;
+    liderGc:string;
     
 }
     

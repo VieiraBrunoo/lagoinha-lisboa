@@ -75,7 +75,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 			mem.setIdMembro(membro.getId());
 			mem.setNomeMembro(membro.getNome());
-			if(membro.getGc().getId()!=0) {
+			if(membro.getGc()!=null && membro.getGc().getId()!=0) {
 			mem.setIdGc(membro.getGc().getId());
 			}
 			if (membro.getFlagLiderGc() != null) {
@@ -148,6 +148,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 			mem.setIdMembro(membro.getId());
 			mem.setNomeMembro(membro.getNome());
+			if(membro.getGc()!=null && membro.getGc().getId()!=0) {
 			mem.setIdGc(membro.getGc().getId());
 			if (membro.getFlagLiderGc() != null) {
 				if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
@@ -156,7 +157,8 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			else {
 				mem.setNomeGc(membro.getGc().getNome());
 				}
-			} 
+			}
+			}
 			mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 			mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
 			mem.setSexo(descricaoSexo(membro.getSexo()));
@@ -281,11 +283,13 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 				if(membro.getGc().getId()!=0) {
 				mem.setIdGc(membro.getGc().getId());
 				mem.setNomeGc(membro.getGc().getNome());
+				mem.setDiaGc(membro.getGc().getDiaSemana());
+				mem.setLiderGc(membro.getGc().getMembroResponsavel().getNome());
 				}
 				membro.getFlagLiderGc().equalsIgnoreCase("S");
-				mem.setEstadoCivil(membro.getEstadoCivil());
+				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
-				mem.setSexo(membro.getSexo());
+				mem.setSexo(descricaoSexo(membro.getSexo()));
 				if (membro.getFotoPerfil() != null) {
 					mem.setImgPerfil(membro.getFotoPerfil());
 				}
@@ -296,7 +300,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 				if (membro.getDtCasamento() != null) {
 					mem.setDtCasamento(membro.getDtCasamento());
 					mem.setNomeConjuge(membro.getNomeConjuge());
-				}
+				} 
 				if (membro.getEmail() != null) {
 					mem.setEmail(membro.getEmail());
 				}
@@ -318,18 +322,35 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 				mem.setDtNasc(membro.getDtNascimento());
 				if(membro.getFuncaoMembro()!=null) {
 				mem.setFuncaoMembro(membro.getFuncaoMembro());
-				}
+				} 
 				if(membro.getLevitaFuncao()!=null) {
 				mem.setLevitaFuncao(membro.getLevitaFuncao());
-				}
+				} 
 			}
 			return mem;
 
 	 }
 	 
-	 
-	 public static MembroEntity atualizarMembro(MembroEntity membro,EntityManager entityManager) {
-		 
-		 return entityManager.merge(membro);
+	 public static boolean salvarMembro(MembroEntity membro,EntityManager entityManager) {
+		 try {
+			 entityManager.persist(membro);
+			 return true;
+			
+		} catch (Exception e) {
+			 return false;
+	}
 	 }
+	 
+	 
+	 public static boolean atualizarMembro(MembroEntity membro,EntityManager entityManager) {
+		 try {
+			 entityManager.merge(membro);
+			 return true;
+			
+		} catch (Exception e) {
+			 return false;
+	}
+	 }
+	 
+	 
 }

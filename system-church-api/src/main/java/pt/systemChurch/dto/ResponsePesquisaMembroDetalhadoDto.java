@@ -36,6 +36,9 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String funcaoMembro;
 	private String levitaFuncao;
 	private Date dtNasc;
+	private String liderGc;
+	private String diaGc;
+	
 
 
 	
@@ -219,6 +222,18 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	}
 	public void setDtNasc(Date dtNasc) {
 		this.dtNasc = dtNasc;
+	}
+	public String getLiderGc() {
+		return liderGc;
+	}
+	public void setLiderGc(String liderGc) {
+		this.liderGc = liderGc;
+	}
+	public String getDiaGc() {
+		return diaGc;
+	}
+	public void setDiaGc(String diaGc) {
+		this.diaGc = diaGc;
 	}
 	
 	
