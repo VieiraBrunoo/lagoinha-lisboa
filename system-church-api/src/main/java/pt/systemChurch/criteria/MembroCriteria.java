@@ -23,6 +23,7 @@ import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
+import pt.systemChurch.repository.MembroRepository;
 
 @Repository
 public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
@@ -352,5 +353,26 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 	}
 	 }
 	 
+	 
+	 
+	 public static String ativarDesativarMembro(long id, String status, EntityManager entityManager,MembroRepository membroRepository) {
+		 		MembroEntity membro = membroRepository.findById(id);
+			String retorno;
+			try {
+				membro.setStatus(status);
+				entityManager.merge(membro);
+				retorno = membro.getStatus();
+				return retorno;
+			} catch (Exception e) {
+				System.err.println("ERROR = " + e.getMessage());
+				String errorMessage;
+				errorMessage = e + " <== error";
+				retorno = membro.getStatus();
+			}
+
+			return retorno;
+
+		}
+
 	 
 }

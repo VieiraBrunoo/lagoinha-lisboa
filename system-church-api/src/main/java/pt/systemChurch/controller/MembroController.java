@@ -1,15 +1,29 @@
 package pt.systemChurch.controller;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Transport;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +63,9 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	private GcRepository gcRepository;
 	
     @Autowired private JavaMailSender mailSender;
+    
+    @Autowired
+    private JavaMailSender emailSender;
 
 
 	@CrossOrigin
@@ -126,23 +143,38 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	}
 	
     @RequestMapping(path = "/email-send", method = RequestMethod.GET)
-	 public String sendMail() {
+	 public String sendMail() throws URISyntaxException {
+    	    	   	
 	        try {
-	            MimeMessage mail = mailSender.createMimeMessage();
+	            MimeMessage message = emailSender.createMimeMessage();
+	        	 MimeMessageHelper helper = new MimeMessageHelper(message,true);
+	        	        //Enviar Arquivo Anexo
+	                   /*  MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+	                     StandardCharsets.UTF_8.name());*/
+	        	   helper.setTo("bruno.vieira@widescope.pt");
+		             helper.setFrom("Igreja Lagoinha Lisboa <geral@lagoinhalisboa.pt>");
 
-	            MimeMessageHelper helper = new MimeMessageHelper(mail);
-	            helper.setFrom("Igreja Lagoinha Lisboa <geral@lagoinhalisboa.pt>");
-	            helper.setTo( "bruno.vieira@widescope.pt" );
-	            helper.setSubject( "Teste Envio de e-mail" );
-	            helper.setText("<p>Hello from Spring Boot Application</p>", true);
-	            mailSender.send(mail);
-
-	            return "OK";
+	             helper.addAttachment("lagoinhai.png", new ClassPathResource("lagoinhai.png"));
+	             helper.setSubject("PNG");
+	             helper.setText("<html><body>TESTE ENVIO EMAIL COM FOTO<br>:<img src='cid:picture' /></body></html>",true);
+	             
+	             FileSystemResource file = new FileSystemResource(new File("src/main/resources/lagoinhai.png"));
+	             helper.addInline("picture", file);
+	          
+	             emailSender.send(message);
+	        	return "OK";
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            return "Erro ao enviar e-mail";
 	        }
 	    }
+    
+    
+    @RequestMapping(value = "/ativarDesativarMembro/{id}/{status}", method = RequestMethod.GET)
+	public String ativarDesativarMembro(@PathVariable("id") long id,@PathVariable("status") String status) {
+		 String retorno = getService().ativarDesativarMembro(id, status);
+		 return retorno;
+	}
 	
 	
 }

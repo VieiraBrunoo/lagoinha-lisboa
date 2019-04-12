@@ -65,5 +65,11 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		
 	}
 	
+	
+	public String ativarDesativarMembro(long id, String status) {
+
+		return MembroCriteria.ativarDesativarMembro(id, status, this.entityManager, this.membroRepository);
+	}
+	
 
 }

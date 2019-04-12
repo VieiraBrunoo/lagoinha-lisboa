@@ -72,16 +72,15 @@
                 <div class="hr">
                 </div>
               </div>
-
+              <ng-container *ngIf="membro.idGc!=0">
               <div class="col-md-12">
-                <h5 class="text-center">Dados GC</h5>
+                <h5 class="text-center">Grupos de Crescimento</h5>
                 <br>
                 <p class="text-center"> <b>GC:</b> {{membro.nomeGc | titlecase}}</p>
                 <p class="text-center"> <b>Líder:</b> {{membro.liderGc | titlecase}}</p>
                 <p class="text-center"> <b>Dia:</b> {{membro.diaGc | titlecase}}</p>
-
-
               </div>
+            </ng-container>
 
 
 

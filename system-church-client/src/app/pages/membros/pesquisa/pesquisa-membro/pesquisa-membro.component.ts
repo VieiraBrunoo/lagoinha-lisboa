@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { RequestPesquisaMembros } from 'src/app/models/request-pesquisa-membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
 import { ResponsePesquisaMembros } from 'src/app/models/response-pesquisa-membro';
+import { ToasterService } from 'angular2-toaster';
 
 
 
@@ -53,15 +54,15 @@ export class PesquisaMembroComponent implements OnInit {
   pesquisaMembros:RequestPesquisaMembros;
   estadoCivilList: Array<any>;
   sexoList: Array<any>;
+  private toasterService: ToasterService;
+
   constructor(
     private parametroService: ParametroService,
     public router: Router,
-    private membroService:MembroService
-
-
- ) { 
-
-    
+    private membroService:MembroService,
+     toasterService: ToasterService) {
+       
+  this.toasterService = toasterService;
   }
 
   ngOnInit() {
@@ -175,6 +176,27 @@ export class PesquisaMembroComponent implements OnInit {
 
 private editarMembro(id) {
   this.router.navigate(['cadastro-membro'], { queryParams: { id } });
+}
+
+
+private obterToggleButton(id, status) {
+
+  if (status == 'INATIVO') {
+    status = 'ATIVO';
+  } else {
+    status = 'INATIVO';
+  }
+
+  this.membroService.ativarDesativarMembro(id, status).subscribe(list => {
+  });
+  this.getMembros();
+  if(status=='INATIVO') {
+  this.toasterService.pop('error', 'Membro Inativado com Sucesso!');
+} else {
+  this.toasterService.pop('success', 'Membro Ativado com Sucesso!');
+
+
+}
 }
 
  }

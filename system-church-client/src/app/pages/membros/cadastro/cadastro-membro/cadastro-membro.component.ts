@@ -141,7 +141,7 @@ export class CadastroMembroComponent implements OnInit {
     this.membro.email = this.dadosPessoais.dadosPessoaisForm.controls['email'].value;
     this.membro.celular = this.dadosPessoais.dadosPessoaisForm.controls['celular'].value
     this.membro.flagLiderGc=this.dadosPessoais.dadosPessoaisForm.controls['flagLiderGc'].value;
-    this.membro.status='ATIVO';
+    this.membro.status='A';
     this.membro.funcaoMembro=this.dadosPessoais.dadosPessoaisForm.controls['funcaoMembro'].value;
     this.membro.levitaFuncao=this.dadosPessoais.dadosPessoaisForm.controls['funcaoLevita'].value;
     this.membro.id=this.idMembro;

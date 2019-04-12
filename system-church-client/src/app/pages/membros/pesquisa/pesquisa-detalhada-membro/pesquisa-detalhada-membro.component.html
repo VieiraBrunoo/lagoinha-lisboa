@@ -15,7 +15,7 @@
               <mat-form-field class="example-full-width">
                 <mat-label>Estado Civil</mat-label>
                 <mat-select [formControl]=" pesquisaMembroDetalhadaForm.controls['estadoCivil']" name="estadoCivil">
-                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option [value]="''">Selecione</mat-option>
                   <mat-option *ngFor="let estadoCivil of estadoCivilList" [value]="estadoCivil.sigla">
                   {{estadoCivil.descricao}}
                   </mat-option>
@@ -29,7 +29,7 @@
             <mat-form-field class="example-full-width">
               <mat-label>Sexo </mat-label>
               <mat-select [formControl]=" pesquisaMembroDetalhadaForm.controls['sexo']" name="sexo">
-                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option [value]="''">Selecione</mat-option>
                 <mat-option *ngFor="let sexo of sexoList" [value]="sexo.sigla">
                   {{sexo.descricao}} </mat-option>
               </mat-select>
@@ -41,7 +41,7 @@
             <mat-form-field class="example-full-width">
               <mat-label>Zona</mat-label>
               <mat-select [formControl]=" pesquisaMembroDetalhadaForm.controls['zona']" name="zona">
-                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option [value]="''">Selecione</mat-option>
                 <mat-option *ngFor="let zona of zonaList" [value]="zona.descricao">
                   {{zona.descricao}}
                 </mat-option>
@@ -54,7 +54,7 @@
               <mat-form-field class="example-full-width">
                 <mat-label>Status</mat-label>
                 <mat-select [formControl]="pesquisaMembroDetalhadaForm.controls['funcaoMembro']" name="funcaoMembro">
-                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option [value]="''">Selecione</mat-option>
                   <mat-option *ngFor="let funcaoMembro of funcaoMembroList" [value]="funcaoMembro.sigla">
                       {{funcaoMembro.descricao}} </mat-option>
                 </mat-select>
@@ -66,7 +66,7 @@
               <mat-form-field class="example-full-width">
                 <mat-label>Lider GC</mat-label>
                 <mat-select [formControl]="pesquisaMembroDetalhadaForm.controls['flagLiderGc']" name="flagLiderGc">
-                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option [value]="''">Selecione</mat-option>
                   <mat-option *ngFor="let flagLiderGc of lidergcList" [value]="flagLiderGc.sigla">
                       {{flagLiderGc.descricao}} </mat-option>
                 </mat-select>
@@ -118,7 +118,7 @@
               <p>{{membro.dtBatismo | date:"dd/MM/yyyy"}}</p>
               <p>{{membro.igrejaBatismo | titlecase}}</p>
 
-              <h5>Dados GC</h5>
+              <h5>Grupos de Crescimento</h5>
               <p>{{membro.nomeGc | titlecase}}</p>
 
             </div>

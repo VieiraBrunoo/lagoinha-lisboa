@@ -55,4 +55,8 @@ export class MembroService extends GenericService {
     formData.append('membro', new Blob([JSON.stringify(membro)], {type: "application/json"}));
       return this.http.post(this.url + this.relativePath + "atualizarMembro/", formData );
   }
+
+  ativarDesativarMembro(id:number, status:string) : Observable<any> {
+    return this.http.get(this.url + this.relativePath+"ativarDesativarMembro/"+ id + "/" + status);
+  }
 }
