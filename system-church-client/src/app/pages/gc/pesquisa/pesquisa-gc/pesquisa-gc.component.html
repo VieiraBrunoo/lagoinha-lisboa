@@ -45,11 +45,11 @@
           <div class="col-md-3">
               <mat-form-field class="example-full-width">
                 <mat-label>Líder </mat-label>
-                <mat-select [formControl]="pesquisaGcForm.controls['idMembroResponsavel']" name="idMembroResponsavel"
-                  (selectionChange)="onTemaChanged($event.value)">
+                <mat-select [formControl]="pesquisaGcForm.controls['idMembroResponsavel']" name="idMembroResponsavel">
                   <mat-option [value]="">(Selecione)</mat-option>
                   <mat-option *ngFor="let membro of membroList" [value]="membro.id">
-                    {{membro.nome}} </mat-option>
+                    {{membro.nome}}
+                </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

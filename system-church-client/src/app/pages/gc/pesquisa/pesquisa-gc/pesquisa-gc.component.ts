@@ -8,6 +8,7 @@ import { GcService } from 'src/app/service/gc/gc.service';
 import { MembroService } from 'src/app/service/membro/membro.service';
 import { Gc } from 'src/app/models/gc';
 import { Router } from '@angular/router';
+import { Membro } from 'src/app/models/membro';
 
 @Component({
   selector: 'app-pesquisa-gc',
@@ -90,7 +91,7 @@ export class PesquisaGcComponent implements OnInit {
   }
 
   private getListMembro() {
-    this.membroList = new Array<any>();
+    this.membroList = new Array<Membro>();
     this.membroService.findAll().subscribe(listRetorno => {
       listRetorno.forEach(element => {
         this.horarioGcList.push(element);
@@ -119,7 +120,7 @@ export class PesquisaGcComponent implements OnInit {
 
 
   private getGc() {
-    this.gcService.findById(this.pesquisaGc.id).subscribe(listRetorno => {
+    this.gcService.findGcByParams(this.pesquisaGc).subscribe(listRetorno => {
       if(listRetorno.length==0){
         this.resultadoPesquisa=true;
          this.dataSource.data=[];
