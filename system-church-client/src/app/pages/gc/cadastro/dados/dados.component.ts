@@ -27,6 +27,7 @@ export class DadosComponent implements OnInit, AfterViewInit {
   horarioList: Array<any>;
   membroList: Array<any>;
   
+  
   constructor(
     private parametroService: ParametroService,
     private membroService: MembroService,

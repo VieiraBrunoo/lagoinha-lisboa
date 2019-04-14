@@ -6,34 +6,37 @@
           <div class="row">
 
             <div class="col-md-12">
-              <h5 class="text-center">{{docente.nome}}</h5>
-              <br>
-              <div class="foto-perfil-wrapper" align="text-center">
+                <div class="foto-perfil-wrapper" align="text-center">
                 <div class="foto-perfil">
-                  <img [src]="docente.imgDocente">
+                  <img [src]="membro.fotoUrl">
+                </div>
+              </div>
+              <h5 class="text-center"><a [routerLink]="['/detalhar-membro/detalhar-membro']"  [queryParams]="{id: membro.idMembro}"> {{membro.nomeMembro | titlecase}}</a></h5>
+               
+              <div class="col-md-12" align="center">
+                <div class="hr">
                 </div>
               </div>
 
-              <div class="col-md-3" align="justify">
-                <h5>Titulação:</h5> 
-                <p> {{docente.titulacao}} </p>
-                <h5>Tribunal:</h5> 
-                <p> {{docente.tribunal}} </p>
-                <h5>E-Mail:</h5>  
-                <p> {{docente.email}} </p>
-                <h5>Atuação:</h5> 
-                <p *ngFor="let atuacao of docente.atuacao">
-                  <mat-icon>check</mat-icon>
-                  {{atuacao | titlecase}}.
-                </p>
-                <h5>Escola Atuação:</h5> 
-              <p> {{docente.escolaAtuacao}} </p>
-                <h5>Curriculo Lates:</h5>
-              <p> {{docente.curriculoLates}}</p>
-              </div>
               <div class="col-md-12">
-                <h5 class="text-center">Curriculo Resumido</h5>
-                {{docente.curriculoResumido}}
+                <h5 class="text-center">Dados Pessoais</h5>
+                <br>
+                <p class="text-center"> <b>Estado Civil:</b> {{membro.estadoCivil | titlecase}}</p>
+                <p class="text-center"> <b>Sexo:</b> {{membro.sexo | titlecase}}</p>
+                <p class="text-center"> <b>Data de Nascimento:</b> {{membro.dtNasc | date:"dd/MM/yyyy"}}</p>
+                <p class="text-center"> <b>Telemóvel:</b> {{membro.celular}}</p>
+                <p class="text-center"> <b>Email:</b> {{membro.email}}</p>
+                <p class="text-center"> <b>Nacionalidade:</b> {{membro.nacionalidade | titlecase}}</p>
+                <p class="text-center"> <b>País:</b> {{membro.pais | titlecase}}</p>
+                <p class="text-center"> <b>Cidade:</b> {{membro.cidade | titlecase}}</p>
+                <p class="text-center"> <b>Morada:</b> {{membro.morada | titlecase}}</p>
+                   
+                <ng-container *ngIf="membro.funcaoMembro!=null">
+                <p class="text-center"> <b>Função Membro:</b> {{membro.funcaoMembro | titlecase}}</p>
+                </ng-container>
+                <ng-container *ngIf="membro.levitaFuncao!=null">
+                <p class="text-center"> <b>Levita:</b> {{membro.levitaFuncao | titlecase}}</p>
+                </ng-container>
               </div>
 
               <div class="col-md-12" align="center">
@@ -42,52 +45,44 @@
               </div>
 
               <div class="col-md-12">
-                <h5 class="text-center">Área de Atuação</h5>
-                <p *ngFor="let areaAtuacao of docente.areaAtuacao">
-                  <mat-icon>check_box</mat-icon>
-                  {{areaAtuacao | titlecase}}.
-                </p>
+                <h5 class="text-center">Dados Familiares</h5>
+                <br>
+                <p class="text-center"> <b>Pai:</b> {{membro.nomePai | titlecase}}</p>
+                <p class="text-center"> <b>Mãe:</b> {{membro.nomeMae | titlecase}}</p>
+                <ng-container *ngIf="membro.dtCasamento!=null">
+                <p class="text-center"> <b>Cônjuge:</b> {{membro.nomeConjuge | titlecase}}</p>
+                <p class="text-center"> <b>Data do Casamento:</b> {{membro.dtCasamento | date:"dd/MM/yyyy"}}</p>
+                </ng-container>
+                <p class="text-center"> <b>Quantidade de filhos:</b> {{membro.qtdFilhos | titlecase}}</p>
               </div>
 
               <div class="col-md-12" align="center">
                 <div class="hr">
                 </div>
               </div>
-
+              <ng-container *ngIf="membro.dtBatismo!=null">
               <div class="col-md-12">
-                <h5 class="text-center">Curso de Aprofundamento Docente</h5>
-                <p *ngFor="let cd of docente.cursoDocente">
-                  <mat-icon>check_box</mat-icon>
-                 {{cd.nomeStr | titlecase}} - {{cd.descricao| titlecase}} - {{ cd.dataInicial | date:'dd/MM/yyyy'}} - {{ cd.dataFinal | date:'dd/MM/yyyy'}}
-                </p>
-              </div>
-
+                <h5 class="text-center">Dados do Batismo</h5>
+                <br>
+                <p class="text-center"> <b>Data do Batimos:</b> {{membro.dtBatismo | date:"dd/MM/yyyy"}}</p>
+                <p class="text-center"> <b>Igreja de Batismo:</b> {{membro.igrejaBatismo | titlecase}}</p>
+             </div>
+              </ng-container>
               <div class="col-md-12" align="center">
                 <div class="hr">
                 </div>
               </div>
-
+              <ng-container *ngIf="membro.idGc!=0">
               <div class="col-md-12">
-                <h5 class="text-center">Outros Curso como Aluno</h5>
-                <p *ngFor="let cursoComoAluno of docente.cursoComoAluno">
-                  <mat-icon>check_box</mat-icon>
-                  {{cursoComoAluno | titlecase}}.
-                </p>
+                <h5 class="text-center">Grupos de Crescimento</h5>
+                <br>
+                <p class="text-center"> <b>GC:</b> {{membro.nomeGc | titlecase}}</p>
+                <p class="text-center"> <b>Líder:</b> {{membro.liderGc | titlecase}}</p>
+                <p class="text-center"> <b>Dia:</b> {{membro.diaGc | titlecase}}</p>
+              </div>
+            </ng-container>
 
 
-              </div>
-
-              <div class="col-md-12" align="center">
-                <div class="hr">
-                </div>
-              </div>
-              <div class="col-md-12">
-                <h5 class="text-center">Experiência como Formador</h5>
-                <p *ngFor="let cf of docente.formador">
-                  <mat-icon>check_box</mat-icon>
-                 {{cf.nomeStr | titlecase}} - {{cf.descricao| titlecase}} - {{ cf.dataInicial | date:'dd/MM/yyyy'}} - {{ cf.dataFinal | date:'dd/MM/yyyy'}}
-                </p>
-              </div>
 
               <div class="col-md-12" align="center">
                 <div class="hr">

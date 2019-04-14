@@ -1,8 +1,9 @@
 package pt.systemChurch.entity;
 
+import java.io.File;
+import java.sql.Blob;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "MEMBRO")
@@ -104,6 +107,20 @@ public class MembroEntity{
 	@NotNull
 	private String status;
 	
+	@Column(name = "FUNCAO_MEMBRO")
+	private String funcaoMembro;
+	
+	@Column(name = "LEVITA_FUNCAO")
+	private String levitaFuncao;
+	
+	@Column(name = "DATA_NASCIMENTO")
+	private Date dtNascimento;
+	
+	@Transient
+	private long idGc;
+	
+	@Transient
+	private File foto;
 	
 		public long getId() {
 		return id;
@@ -296,9 +313,37 @@ public class MembroEntity{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-	
-	
+
+	public String getFuncaoMembro() {
+		return funcaoMembro;
+	}
+
+	public void setFuncaoMembro(String funcaoMembro) {
+		this.funcaoMembro = funcaoMembro;
+	}
+
+	public String getLevitaFuncao() {
+		return levitaFuncao;
+	}
+
+	public void setLevitaFuncao(String levitaFuncao) {
+		this.levitaFuncao = levitaFuncao;
+	}
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
+
+	public long getIdGc() {
+		return idGc;
+	}
+
+	public void setIdGc(long idGc) {
+		this.idGc = idGc;
+	}
 
 }

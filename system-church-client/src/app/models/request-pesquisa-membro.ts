@@ -6,5 +6,6 @@ export class RequestPesquisaMembros {
     zona:string;
     status:string;
     flagLiderGc:string;
+    funcaoMembro:string;
     }
     

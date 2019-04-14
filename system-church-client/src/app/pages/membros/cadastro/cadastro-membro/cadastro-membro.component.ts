@@ -16,6 +16,9 @@ import { Membro } from 'src/app/models/membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
 import { Gc } from 'src/app/models/gc-cadastro-membro';
 import { runInThisContext } from 'vm';
+import { ActivatedRoute } from '@angular/router';
+import { ResponsePesquisaDetalhadoMembros } from 'src/app/models/response-pesquisa-detalhado-membro';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -34,20 +37,37 @@ export class CadastroMembroComponent implements OnInit {
 
   private toasterService: ToasterService;
   isOptional = false;
-
+  idMembro:number;
   membro: MembroDto;
   fotoPerfil: File;
+  responseMembro:ResponsePesquisaDetalhadoMembros;
+  router: any;
+  
 
   constructor(
     private acaoService: AcaoService,
     private membroService: MembroService,
     private documentoService: DocumentoService,
     private identityStorage: IdentityStorage,
+    private route: ActivatedRoute,
+
     toasterService: ToasterService, ) {
     this.toasterService = toasterService;
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+
+    this.route.queryParams.subscribe((queryParams: any) => { this.idMembro = queryParams['id']; });
+     if (this.idMembro && this.idMembro !== null) {
+        this.blockUI.start();
+        this.membroService.findByMembroId(this.idMembro).subscribe(retorno => {
+        this.carregarMembro(retorno);
+      });
+      this.blockUI.stop();
+    }
+
+
+  }
 
   stepClick(ev) {
 
@@ -67,20 +87,33 @@ export class CadastroMembroComponent implements OnInit {
 
   salvar() {
 //    if (this.dadosPessoais.dadosPessoaisForm.valid && this.dadosBatismos.dadosBatismoForm.valid && this.dadosFamiliares.dadosFamiliaresForm.valid && this.dadosGc.dadosGcForm.valid) {
-
       this.blockUI.start();
       this.createMembro();
-
-      this.membroService.saveDocente(this.fotoPerfil, this.membro).subscribe(data => {
-
-        if (data == null) {
-//   console.log("NULL");
+      if(this.membro.id==0 || this.membro.id==null){
+      this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
+          if (data==false){
+            this.toasterService.pop('error','O GC associado já possui um Lider!');
+            this.blockUI.stop();
+          } if(data==true){
+          this.toasterService.pop('success', 'Membro Cadastrado com Sucesso!');
           this.blockUI.stop();
-        }
-
-        this.toasterService.pop('success', 'Membro cadastrado com sucesso!');
+      } 
+      }, error => {
+        this.toasterService.pop('error', error.error);
         this.blockUI.stop();
-  });
+      });
+    } else{
+      this.membroService.updateMembro(this.membro,this.fotoPerfil).subscribe(data => {
+      if(data==true){
+        this.toasterService.pop('success', 'Membro Alterado com Sucesso!');
+       this.blockUI.stop();
+      }
+      }, error => {
+      this.toasterService.pop('error', error.error);
+      this.blockUI.stop();
+    });
+
+    }
    // }
   }
 
@@ -89,7 +122,14 @@ export class CadastroMembroComponent implements OnInit {
     this.membro = new MembroDto();
 
     //Dados Pessoais
+       
+    if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil != null) {
+      this.fotoPerfil = this.dadosPessoais.fotoPerfil;
+      } else{
+        this.fotoPerfil=null;
+      }
     this.membro.nome = this.dadosPessoais.dadosPessoaisForm.controls['nome'].value;
+    this.membro.dtNascimento = this.dadosPessoais.dadosPessoaisForm.controls['dtNascimento'].value;
     this.membro.nrDocumento = this.dadosPessoais.dadosPessoaisForm.controls['nrDocumento'].value;
     this.membro.dtValidadeDoc = this.dadosPessoais.dadosPessoaisForm.controls['dtValidadeDoc'].value;
     this.membro.nacionalidade = this.dadosPessoais.dadosPessoaisForm.controls['nacionalidade'].value;
@@ -101,8 +141,10 @@ export class CadastroMembroComponent implements OnInit {
     this.membro.email = this.dadosPessoais.dadosPessoaisForm.controls['email'].value;
     this.membro.celular = this.dadosPessoais.dadosPessoaisForm.controls['celular'].value
     this.membro.flagLiderGc=this.dadosPessoais.dadosPessoaisForm.controls['flagLiderGc'].value;
-    this.membro.status='ATIVO'
-   
+    this.membro.status='A';
+    this.membro.funcaoMembro=this.dadosPessoais.dadosPessoaisForm.controls['funcaoMembro'].value;
+    this.membro.levitaFuncao=this.dadosPessoais.dadosPessoaisForm.controls['funcaoLevita'].value;
+    this.membro.id=this.idMembro;
     //Dados Familiares 
     this.membro.nomePai = this.dadosFamiliares.dadosFamiliaresForm.controls['nomePai'].value;
     this.membro.nomeMae = this.dadosFamiliares.dadosFamiliaresForm.controls['nomeMae'].value;
@@ -119,19 +161,82 @@ export class CadastroMembroComponent implements OnInit {
     //Dados GC
     this.membro.gc = new Gc();
     this.dadosGc.gc.id= this.dadosGc.dadosGcForm.controls['gc'].value;
-    console.log(this.membro.gc.id);
-    this.membro.gc = this.dadosGc.gc;    
-    if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil !== null) {
-    this.fotoPerfil = this.dadosPessoais.fotoPerfil;
+    this.membro.gc = this.dadosGc.gc;
+    this.membro.idGc=this.dadosGc.dadosGcForm.controls['gc'].value;
+     
+
+  }
+
+  private carregarMembro(responseMembro: ResponsePesquisaDetalhadoMembros) {
+
+    this.responseMembro = new ResponsePesquisaDetalhadoMembros;
+   
+    // Dados Pessoais
+    this.idMembro=responseMembro.idMembro;
+    this.dadosPessoais.dadosPessoaisForm.get('nome').setValue(responseMembro.nomeMembro);
+    this.dadosPessoais.dadosPessoaisForm.get('nrDocumento').setValue(responseMembro.nrDoc);
+    this.dadosPessoais.dadosPessoaisForm.get('dtValidadeDoc').setValue(responseMembro.dtValidadeDoc);
+    this.dadosPessoais.dadosPessoaisForm.get('nacionalidade').setValue(responseMembro.nacionalidade);
+    this.dadosPessoais.dadosPessoaisForm.get('sexo').setValue(responseMembro.sexo);
+    this.dadosPessoais.dadosPessoaisForm.get('enderecoResidencial').setValue(responseMembro.enderecoResidencial);
+    this.dadosPessoais.dadosPessoaisForm.get('zona').setValue(responseMembro.zona);
+    this.dadosPessoais.dadosPessoaisForm.get('cidade').setValue(responseMembro.cidade);
+    this.dadosPessoais.dadosPessoaisForm.get('pais').setValue(responseMembro.pais);
+    this.dadosPessoais.dadosPessoaisForm.get('email').setValue(responseMembro.email);
+    this.dadosPessoais.dadosPessoaisForm.get('celular').setValue(responseMembro.celular);
+    this.dadosPessoais.dadosPessoaisForm.get('flagLiderGc').setValue(responseMembro.flagLiderGc);
+    this.dadosPessoais.dadosPessoaisForm.get('funcaoMembro').setValue(responseMembro.funcaoMembro);
+    this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(responseMembro.levitaFuncao);
+    if (responseMembro.imgPerfil!=null) {
+      this.dadosPessoais.url = ('data:image/jpeg;base64,' + responseMembro.imgPerfil);
+      this.dadosPessoais.fotoPerfil=responseMembro.imgPerfil;
+      this.dadosPessoais.exibirBotaoRemover = true;
     }
+    this.dadosPessoais.dadosPessoaisForm.get('dtNascimento').setValue(responseMembro.dtNasc);
+    if(responseMembro.funcaoMembro!=null){
+      this.dadosPessoais.dadosPessoaisForm.get('flagFuncao').setValue('S');
+      this.dadosPessoais.dadosPessoaisForm.get('funcaoMembro').setValue(responseMembro.funcaoMembro);
+      this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(responseMembro.levitaFuncao);
+    } else{
+
+      this.dadosPessoais.dadosPessoaisForm.get('flagFuncao').setValue('N');
+
+    }
+
+    // Dados Familiares
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomePai').setValue(responseMembro.nomePai);
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomeMae').setValue(responseMembro.nomeMae);
+    this.dadosFamiliares.dadosFamiliaresForm.get('estadoCivil').setValue(responseMembro.estadoCivil);
+    this.dadosFamiliares.dadosFamiliaresForm.get('nomeConjuge').setValue(responseMembro.nomeConjuge);
+    this.dadosFamiliares.dadosFamiliaresForm.get('dataCasamento').setValue(responseMembro.dtCasamento);
+    this.dadosFamiliares.dadosFamiliaresForm.get('qtdFilhos').setValue(responseMembro.qtdFilhos);
+    
+    // Dados Batismo
+    if(responseMembro.dtBatismo!=null && responseMembro.igrejaBatismo!=null){
+    this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('S')}
+    else{
+      this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('N')}
+  
+    this.dadosBatismos.dadosBatismoForm.get('dataBatismo').setValue(responseMembro.dtBatismo);
+    this.dadosBatismos.dadosBatismoForm.get('igrejaBatismo').setValue(responseMembro.igrejaBatismo);
+
+    //Dados GC{
+    if(responseMembro.idGc!= null){
+     this.dadosGc.dadosGcForm.get('flagParticipaGc').setValue('S');
+    this.dadosGc.dadosGcForm.get('gc').setValue(responseMembro.idGc);
+  }
 
 
   }
+  
+
+
+
 }
 
 
 export class MembroDto {
-
+  id:number;
   nome: string;
   nrDocumento: string;
   dtValidadeDoc: Date;
@@ -142,7 +247,6 @@ export class MembroDto {
   cidade: string;
   pais: string;
   email: string;
-  fotoPerfil: File;
   nomePai: string;
   nomeMae: string;
   estadoCivil: string;
@@ -155,4 +259,9 @@ export class MembroDto {
   celular:string;
   flagLiderGc:string;
   status:string;
+  funcaoMembro:string;
+  levitaFuncao:string;
+  dtNascimento:Date;
+  idGc:number;
 }
+

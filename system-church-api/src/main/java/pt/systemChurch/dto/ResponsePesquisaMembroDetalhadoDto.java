@@ -1,5 +1,7 @@
 package pt.systemChurch.dto;
 
+import java.io.File;
+import java.sql.Blob;
 import java.sql.Date;
 
 public class ResponsePesquisaMembroDetalhadoDto {
@@ -26,6 +28,18 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	private String pais;
 	private String status;
 	private String celular;
+	private Date dtValidadeDoc;
+	private String enderecoResidencial;
+	private String zona;
+	private String cidade;
+	private String flagLiderGc;
+	private String funcaoMembro;
+	private String levitaFuncao;
+	private Date dtNasc;
+	private String liderGc;
+	private String diaGc;
+	
+
 
 	
 	
@@ -161,6 +175,67 @@ public class ResponsePesquisaMembroDetalhadoDto {
 	public void setCelular(String celular) {
 		this.celular = celular;
 	}
+	public String getFlagLiderGc() {
+		return flagLiderGc;
+	}
+	public void setFlagLiderGc(String flagLiderGc) {
+		this.flagLiderGc = flagLiderGc;
+	}
+	public String getFuncaoMembro() {
+		return funcaoMembro;
+	}
+	public void setFuncaoMembro(String funcaoMembro) {
+		this.funcaoMembro = funcaoMembro;
+	}
+	public String getLevitaFuncao() {
+		return levitaFuncao;
+	}
+	public void setLevitaFuncao(String levitaFuncao) {
+		this.levitaFuncao = levitaFuncao;
+	}
+	public Date getDtValidadeDoc() {
+		return dtValidadeDoc;
+	}
+	public void setDtValidadeDoc(Date dtValidadeDoc) {
+		this.dtValidadeDoc = dtValidadeDoc;
+	}
+	public String getEnderecoResidencial() {
+		return enderecoResidencial;
+	}
+	public void setEnderecoResidencial(String enderecoResidencial) {
+		this.enderecoResidencial = enderecoResidencial;
+	}
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	public Date getDtNasc() {
+		return dtNasc;
+	}
+	public void setDtNasc(Date dtNasc) {
+		this.dtNasc = dtNasc;
+	}
+	public String getLiderGc() {
+		return liderGc;
+	}
+	public void setLiderGc(String liderGc) {
+		this.liderGc = liderGc;
+	}
+	public String getDiaGc() {
+		return diaGc;
+	}
+	public void setDiaGc(String diaGc) {
+		this.diaGc = diaGc;
+	}
+	
 	
 	
 	

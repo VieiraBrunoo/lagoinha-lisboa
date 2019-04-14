@@ -140,6 +140,47 @@
 
         </div>
 
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-select name="flagFuncao" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['flagFuncao']" placeholder="Exerce Alguma Funcção na Igreja??">
+                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option *ngFor="let flagFuncao of funcaoList" [value]="flagFuncao.sigla">
+                      {{flagFuncao.descricao}}
+                    </mat-option>
+                  </mat-select>
+                 </mat-form-field>
+              </div>
+              <ng-container *ngIf="dadosPessoaisForm.get('flagFuncao').value==='S'">
+                  <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-select name="funcaoMembro" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['funcaoMembro']" placeholder="Função?">
+                          <mat-option [value]="''">(Selecione)</mat-option>
+                          <mat-option *ngFor="let funcaoMembro of funcaoMembroList" [value]="funcaoMembro.sigla">
+                            {{funcaoMembro.descricao}}
+                          </mat-option>
+                        </mat-select>
+                       </mat-form-field>
+                    </div>
+             </ng-container>
+            </div>
+
+            <div class="row">
+         <ng-container *ngIf="dadosPessoaisForm.get('funcaoMembro').value==='LEVITA'">
+            <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-select name="funcaoLevita" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['funcaoLevita']" placeholder="Instrumento">
+                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option *ngFor="let funcaoLevita of funcaoLevitaList" [value]="funcaoLevita.sigla">
+                      {{funcaoLevita.descricao}}
+                    </mat-option>
+                  </mat-select>
+                 </mat-form-field>
+              </div>
+            </ng-container>
+
+          </div>
+
        <!-- <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Titulação" [formControl]="dadosPessoaisForm.controls['titulacao']" name="titulacao"

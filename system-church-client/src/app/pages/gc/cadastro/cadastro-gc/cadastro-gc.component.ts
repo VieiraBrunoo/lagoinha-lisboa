@@ -55,8 +55,8 @@ export class CadastroGcComponent implements OnInit {
     this.gc.diaSemana = this.dados.dadosForm.controls['diaSemana'].value;
     this.gc.logradouro = this.dados.dadosForm.controls['logradouro'].value;
     this.gc.zona = this.dados.dadosForm.controls['zona'].value;
-    this.gc.horario = this.dados.dadosForm.controls['horario'].value;
+    //this.gc.horario = this.dados.dadosForm.controls['horario'].value;
     //Dados Lider GC
-    this.gc.idMembroResponsavel = this.dados.dadosForm.controls['idMembroResponsavel'].value;
+    this.gc.membroResponsavel = this.dados.dadosForm.controls['idMembroResponsavel'].value;
   }
 }

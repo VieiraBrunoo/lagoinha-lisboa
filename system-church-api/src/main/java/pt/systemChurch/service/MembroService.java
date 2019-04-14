@@ -1,5 +1,6 @@
 package pt.systemChurch.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,30 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 	public List<ResponsePesquisaMembroDetalhadoDto> pesquisarMembroDetalhado(RequestPesquisaMembroDto dto) {
 
 		return MembroCriteria.pesquisarMembroDetalhado(dto, this.entityManager);
+	}
+	
+	
+	public ResponsePesquisaMembroDetalhadoDto pesquisarMembroPorId(long id) throws UnsupportedEncodingException {
+		return MembroCriteria.pesquisarMembroPorId(id, this.entityManager);
+		
+		
+	}
+	
+	public boolean cadastrarMembro(MembroEntity membro) {
+		return MembroCriteria.salvarMembro(membro, entityManager);
+		
+	}
+	
+	
+	public boolean atualizarMembro(MembroEntity membro) {
+		return MembroCriteria.atualizarMembro(membro, this.entityManager);
+		
+	}
+	
+	
+	public String ativarDesativarMembro(long id, String status) {
+
+		return MembroCriteria.ativarDesativarMembro(id, status, this.entityManager, this.membroRepository);
 	}
 	
 

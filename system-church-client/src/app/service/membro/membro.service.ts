@@ -23,13 +23,12 @@ export class MembroService extends GenericService {
   }
 
  
-  saveDocente(arquivo: File, membro: MembroDto): Observable<any> {
-
+  saveMembro( membro: MembroDto,arquivo:File): Observable<any> {
     const formData: any = new FormData();
-    formData.append('fotoPerfil', arquivo);
-    formData.append('membro',  new Blob([JSON.stringify(membro)], {type: "application/json"}));
 
-    return this.http.post(this.url + this.relativePath + "salvarMembro/", formData);
+    formData.append('fotoPerfil', arquivo);
+    formData.append('membro', new Blob([JSON.stringify(membro)], {type: "application/json"}));
+      return this.http.post(this.url + this.relativePath + "salvarMembro/", formData );
   }
 
   public findAll(): Observable<any> {
@@ -45,4 +44,19 @@ export class MembroService extends GenericService {
     return this.http.post(this.url + this.relativePath+"pesquisarMembrosDetalhado", membro);
   }
 
+  findByMembroId( id: number) : Observable<any> {
+    return this.getMethod(this.relativePath+"findByMembroId/"+id);
+  }
+
+  updateMembro( membro: MembroDto,arquivo:File): Observable<any> {
+    const formData: any = new FormData();
+
+    formData.append('fotoPerfil', arquivo);
+    formData.append('membro', new Blob([JSON.stringify(membro)], {type: "application/json"}));
+      return this.http.post(this.url + this.relativePath + "atualizarMembro/", formData );
+  }
+
+  ativarDesativarMembro(id:number, status:string) : Observable<any> {
+    return this.http.get(this.url + this.relativePath+"ativarDesativarMembro/"+ id + "/" + status);
+  }
 }
