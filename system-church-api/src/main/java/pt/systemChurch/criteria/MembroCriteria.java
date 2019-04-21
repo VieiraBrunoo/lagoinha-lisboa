@@ -1,7 +1,6 @@
 package pt.systemChurch.criteria;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +9,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.text.MaskFormatter;
 
-import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +23,7 @@ import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
+import pt.systemChurch.entity.MembroGcEntity;
 import pt.systemChurch.repository.MembroRepository;
 
 @Repository
@@ -32,7 +33,9 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
+		
 		Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
+		Join<MembroEntity, MembroGcEntity> joinMembro = membroRoot.join("membrosGc",JoinType.LEFT);
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		criteriaQuery.distinct(true);
 
@@ -66,27 +69,30 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			criteriaQuery = criteriaQuery.select(membroRoot);
 
 		}
+		int i = 0;
 		TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
 		List<MembroEntity> resultQuery = query.getResultList();
-
+			
+		int count = 0 ; 
 		List<ResponsePesquisaMembroDto> membros = new ArrayList<ResponsePesquisaMembroDto>();
-
 		for (MembroEntity membro : resultQuery) {
 			ResponsePesquisaMembroDto mem = new ResponsePesquisaMembroDto();
-
 			mem.setIdMembro(membro.getId());
 			mem.setNomeMembro(membro.getNome());
-			if(membro.getGc()!=null && membro.getGc().getId()!=0) {
-			mem.setIdGc(membro.getGc().getId());
+			if(count <= i ) {
+			if(membro.getMembrosGc().get(i).getGc().getId()!=0) {
+			mem.setIdGc(membro.getMembrosGc().get(i).getGc().getId());
 			}
 			if (membro.getFlagLiderGc() != null) {
 				if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
-					mem.setNomeGc("Líder - " + membro.getGc().getNome());
+					mem.setNomeGc("Líder - " + membro.getMembrosGc().get(i).getGc().getNome());
 				}
 
 			} else {
-				mem.setNomeGc(membro.getGc().getNome());
+				mem.setNomeGc(membro.getMembrosGc().get(i).getGc().getNome());
 			}
+			count ++;
+		}
 			mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 			mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
 			mem.setSexo(descricaoSexo(membro.getSexo()));
@@ -332,13 +338,13 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 	 }
 	 
-	 public static boolean salvarMembro(MembroEntity membro,EntityManager entityManager) {
+	 public static String salvarMembro(MembroEntity membro,EntityManager entityManager) {
 		 try {
 			 entityManager.persist(membro);
-			 return true;
+			 return "OK";
 			
 		} catch (Exception e) {
-			 return false;
+			 return "NOK";
 	}
 	 }
 	 
@@ -374,5 +380,22 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 		}
 
+	 
+	 public static Boolean verificarMembroCadastrado(String nrDoc,EntityManager entityManager,MembroRepository membroRepository) {
+		 try {
+		
+			 MembroEntity membro = membroRepository.findByNrDocumento(nrDoc);
+			 
+			 return membro.getNrDocumento()!=null;
+				
+		} catch (Exception e) {
+
+			return Boolean.FALSE;
+			
+		}
+		 
+		 
+		 
+	 }
 	 
 }

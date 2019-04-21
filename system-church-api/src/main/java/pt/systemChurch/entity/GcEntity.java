@@ -45,17 +45,19 @@ public class GcEntity {
 	
 	@Transient
 	private long idMembroResponsavel;
-	
+	 /*
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
-	private MembroEntity membroResponsavel;
+	private MembroEntity membroResponsavel; */ 
 
 	@Transient
 	@JsonIgnore
 	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<MembroEntity> membrosGc;
+    private List<MembroGcEntity> membrosGc;
 	
-
+	
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -96,20 +98,20 @@ public class GcEntity {
 		this.zona = zona;
 	}
 
-	
+	/*
 	public MembroEntity getMembroResponsavel() {
 		return membroResponsavel;
 	}
 
 	public void setMembroResponsavel(MembroEntity membroResponsavel) {
 		this.membroResponsavel = membroResponsavel;
-	}
+	} */
 
-	public List<MembroEntity> getMembrosGc() {
+	public List<MembroGcEntity> getMembrosGc() {
 		return membrosGc;
 	}
 
-	public void setMembrosGc(List<MembroEntity> membrosGc) {
+	public void setMembrosGc(List<MembroGcEntity> membrosGc) {
 		this.membrosGc = membrosGc;
 	}
 

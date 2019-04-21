@@ -54,7 +54,7 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		
 	}
 	
-	public boolean cadastrarMembro(MembroEntity membro) {
+	public String cadastrarMembro(MembroEntity membro) {
 		return MembroCriteria.salvarMembro(membro, entityManager);
 		
 	}
@@ -71,5 +71,12 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		return MembroCriteria.ativarDesativarMembro(id, status, this.entityManager, this.membroRepository);
 	}
 	
+	public boolean verificarMembro(String nrDoc) {
+		return MembroCriteria.verificarMembroCadastrado(nrDoc, entityManager,membroRepository);
+		
+	}
 
+	
+	
+	
 }

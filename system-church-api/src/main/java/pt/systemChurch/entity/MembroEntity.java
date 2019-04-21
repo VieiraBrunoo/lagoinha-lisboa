@@ -3,13 +3,16 @@ package pt.systemChurch.entity;
 import java.io.File;
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -93,16 +96,9 @@ public class MembroEntity{
 	@Column(name = "IGREJA_BATISMO")
 	private String igrejaBatismo;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "GC")
-	private GcEntity gc;
-
 	@Column(name = "CELULAR")
 	private String celular;
-	
-	@Column(name = "FLAG_LIDER_GC")
-	private String flagLiderGc;
-	
+		
 	@Column(name = "STATUS")
 	@NotNull
 	private String status;
@@ -120,7 +116,15 @@ public class MembroEntity{
 	private long idGc;
 	
 	@Transient
+	private String flagLiderGc;
+	
+	@Transient
 	private File foto;
+	
+	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<MembroGcEntity> membrosGc;
+	
+	
 	
 		public long getId() {
 		return id;
@@ -282,14 +286,7 @@ public class MembroEntity{
 		this.igrejaBatismo = igrejaBatismo;
 	}
 
-	public GcEntity getGc() {
-		return gc;
-	}
-
-	public void setGc(GcEntity gc) {
-		this.gc = gc;
-	}
-
+	
 	public String getCelular() {
 		return celular;
 	}
@@ -298,13 +295,7 @@ public class MembroEntity{
 		this.celular = celular;
 	}
 
-	public String getFlagLiderGc() {
-		return flagLiderGc;
-	}
 
-	public void setFlagLiderGc(String flagLiderGc) {
-		this.flagLiderGc = flagLiderGc;
-	}
 
 	public String getStatus() {
 		return status;
@@ -346,4 +337,21 @@ public class MembroEntity{
 		this.idGc = idGc;
 	}
 
+	public String getFlagLiderGc() {
+		return flagLiderGc;
+	}
+
+	public void setFlagLiderGc(String flagLiderGc) {
+		this.flagLiderGc = flagLiderGc;
+	}
+
+	public List<MembroGcEntity> getMembrosGc() {
+		return membrosGc;
+	}
+
+	public void setMembrosGc(List<MembroGcEntity> membrosGc) {
+		this.membrosGc = membrosGc;
+	}
+
+	
 }

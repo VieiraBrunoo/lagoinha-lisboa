@@ -86,20 +86,25 @@ export class CadastroMembroComponent implements OnInit {
   }
 
   salvar() {
-//    if (this.dadosPessoais.dadosPessoaisForm.valid && this.dadosBatismos.dadosBatismoForm.valid && this.dadosFamiliares.dadosFamiliaresForm.valid && this.dadosGc.dadosGcForm.valid) {
+    if (this.dadosPessoais.dadosPessoaisForm.valid && this.dadosBatismos.dadosBatismoForm.valid && this.dadosFamiliares.dadosFamiliaresForm.valid && this.dadosGc.dadosGcForm.valid) {
       this.blockUI.start();
       this.createMembro();
       if(this.membro.id==0 || this.membro.id==null){
-      this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
-          if (data==false){
+      this.membroService.saveMembro(this.membro,this.fotoPerfil).map(data => data.json()).subscribe(data => {
+          if (data[0]=='NGC'){
             this.toasterService.pop('error','O GC associado já possui um Lider!');
             this.blockUI.stop();
-          } if(data==true){
+          } 
+          if (data[0]=='NME'){
+            this.toasterService.pop('error','Membro Já Cadastrado');
+            this.blockUI.stop();
+          }
+          if(data[0]=='OK'){
           this.toasterService.pop('success', 'Membro Cadastrado com Sucesso!');
           this.blockUI.stop();
       } 
       }, error => {
-        this.toasterService.pop('error', error.error);
+        this.toasterService.pop('error', 'Todos os Campos com * precisam ser preenchidos');
         this.blockUI.stop();
       });
     } else{
@@ -114,7 +119,7 @@ export class CadastroMembroComponent implements OnInit {
     });
 
     }
-   // }
+    }
   }
 
   private createMembro() {

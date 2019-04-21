@@ -6,38 +6,42 @@
           <mat-form-field class="example-full-width">
             <input matInput [formControl]="dadosPessoaisForm.controls['nome']" [errorStateMatcher]="matcher" name="nome"
               type="text" placeholder="Nome">
-            <mat-error *ngIf="dadosPessoaisForm.controls['nome'].hasError('required')">{{preenchimentoObrigatorio}}</mat-error>
+            <mat-error *ngIf="dadosPessoaisForm.controls['nome'].hasError('required')">Preehnchimento Obrigatório</mat-error>
             </mat-form-field>
             
             <mat-form-field class="example-full-width"> 
               <input matInput [matDatepicker]="picker" [formControl]="dadosPessoaisForm.controls['dtNascimento']" placeholder="Data de Nascimento">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="dadosPessoaisForm.controls['dtNascimento'].hasError('required')">Preenchimento Obrigatório</mat-error>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
               <mat-select placeholder="Nacionalidade" [formControl]="dadosPessoaisForm.controls['nacionalidade']" [errorStateMatcher]="matcher"
                 name="nacionalidade">
-                <mat-option [value]="''">(Selecione)</mat-option>
+                <mat-option [value]="''">Selecione</mat-option>
                 <mat-option *ngFor="let nacionalidade of nacionalidadeList" [value]="nacionalidade.sigla"> 
                 {{nacionalidade.descricao}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="dadosPessoaisForm.controls['nacionalidade'].hasError('required')">Preehnchimento Obrigatório</mat-error>
             </mat-form-field>
 
               <mat-form-field class="example-full-width">
                   <mat-select placeholder="Sexo" [formControl]="dadosPessoaisForm.controls['sexo']" [errorStateMatcher]="matcher"
                     name="sexo">
-                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option [value]="''">Selecione</mat-option>
                     <mat-option *ngFor="let sexo of sexoList" [value]="sexo.sigla">
                      {{sexo.descricao}}
                     </mat-option>
                   </mat-select>
+                  <mat-error *ngIf="dadosPessoaisForm.controls['sexo'].hasError('required')">Preehnchimento Obrigatório</mat-error>
                 </mat-form-field>
          
               <mat-form-field class="example-full-width">
               <input matInput [formControl]="dadosPessoaisForm.controls['nrDocumento']" [errorStateMatcher]="matcher" name="nrDocumento"
                 type="text" placeholder="Nº Doc Identificação">
+                <mat-error *ngIf="dadosPessoaisForm.controls['nrDocumento'].hasError('required')">Preehnchimento Obrigatório</mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -66,12 +70,14 @@
             <input matInput [matDatepicker]="picker2" [formControl]="dadosPessoaisForm.controls['dtValidadeDoc']"  placeholder="Data de Validade">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
+            <mat-error *ngIf="dadosPessoaisForm.controls['dtValidadeDoc'].hasError('required')">Preehnchimento Obrigatório</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <input matInput [formControl]="dadosPessoaisForm.controls['enderecoResidencial']" name="enderecoResidencial" type="text"
               placeholder="Endereço Residencial" >
+              <mat-error *ngIf="dadosPessoaisForm.controls['enderecoResidencial'].hasError('required')">Preehnchimento Obrigatório</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -80,22 +86,24 @@
             <mat-form-field class="example-full-width">
                 <mat-select placeholder="Cidade" [formControl]="dadosPessoaisForm.controls['cidade']" [errorStateMatcher]="matcher"
                   name="cidade">
-                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option [value]="''">Selecione</mat-option>
                   <mat-option *ngFor="let cidade of cidadeList" [value]="cidade.descricao">
                    {{cidade.descricao}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="dadosPessoaisForm.controls['cidade'].hasError('required')">Preehnchimento Obrigatório</mat-error>
               </mat-form-field>  
         </div>
         <div class="col-md-6">
           <mat-form-field class="example-full-width">
             <mat-select placeholder="País" [formControl]="dadosPessoaisForm.controls['pais']" [errorStateMatcher]="matcher"
               name="pais">
-              <mat-option [value]="''">(Selecione)</mat-option>
+              <mat-option [value]="''">Selecione</mat-option>
               <mat-option *ngFor="let pais of paisList" [value]="pais.descricao">
                   {{pais.descricao}}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="dadosPessoaisForm.controls['pais'].hasError('required')">Preehnchimento Obrigatório</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -105,17 +113,19 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Zona" [formControl]="dadosPessoaisForm.controls['zona']" [errorStateMatcher]="matcher"
               name="zona">
-              <mat-option [value]="''">(Selecione)</mat-option>
+              <mat-option [value]="''">Selecione</mat-option>
               <mat-option *ngFor="let zona of zonaList" [value]="zona.descricao">
                   {{zona.descricao}}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="dadosPessoaisForm.controls['pais'].hasError('required')">Preehnchimento Obrigatório</mat-error>
           </mat-form-field>
         </div>
               <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <input matInput name="email" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['email']" placeholder="Email">
-                </mat-form-field>
+                <mat-error *ngIf="dadosPessoaisForm.controls['email'].hasError('required')">Preehnchimento Obrigatório</mat-error>
+              </mat-form-field>
             </div>
       </div>
 
@@ -124,17 +134,19 @@
             <mat-form-field class="example-full-width">
               <input matInput [formControl]="dadosPessoaisForm.controls['celular']" name="celular" type="text"
                 placeholder="Telemovel" mask="000 000 000">
+                <mat-error *ngIf="dadosPessoaisForm.controls['celular'].hasError('required')">Preehnchimento Obrigatório</mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-md-6">
               <mat-form-field class="example-full-width">
                 <mat-select name="flagLiderGc" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['flagLiderGc']" placeholder="Lider GC?">
-                  <mat-option [value]="''">(Selecione)</mat-option>
+                  <mat-option [value]="''">Selecione</mat-option>
                   <mat-option *ngFor="let liderGc of liderGcList" [value]="liderGc.sigla">
                     {{liderGc.descricao}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="dadosPessoaisForm.controls['flagLiderGc'].hasError('required')">Preehnchimento Obrigatório</mat-error>
                </mat-form-field>
             </div>
 
@@ -144,7 +156,7 @@
             <div class="col-md-6">
                 <mat-form-field class="example-full-width">
                   <mat-select name="flagFuncao" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['flagFuncao']" placeholder="Exerce Alguma Funcção na Igreja??">
-                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option [value]="''">Selecione</mat-option>
                     <mat-option *ngFor="let flagFuncao of funcaoList" [value]="flagFuncao.sigla">
                       {{flagFuncao.descricao}}
                     </mat-option>
@@ -155,11 +167,12 @@
                   <div class="col-md-6">
                       <mat-form-field class="example-full-width">
                         <mat-select name="funcaoMembro" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['funcaoMembro']" placeholder="Função?">
-                          <mat-option [value]="''">(Selecione)</mat-option>
+                          <mat-option [value]="''">Selecione</mat-option>
                           <mat-option *ngFor="let funcaoMembro of funcaoMembroList" [value]="funcaoMembro.sigla">
                             {{funcaoMembro.descricao}}
                           </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="dadosPessoaisForm.controls['funcaoMembro'].hasError('required')">Preehnchimento Obrigatório</mat-error>
                        </mat-form-field>
                     </div>
              </ng-container>
@@ -170,11 +183,12 @@
             <div class="col-md-6">
                 <mat-form-field class="example-full-width">
                   <mat-select name="funcaoLevita" [errorStateMatcher]="matcher" [formControl]="dadosPessoaisForm.controls['funcaoLevita']" placeholder="Instrumento">
-                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option [value]="''">Selecione</mat-option>
                     <mat-option *ngFor="let funcaoLevita of funcaoLevitaList" [value]="funcaoLevita.sigla">
                       {{funcaoLevita.descricao}}
                     </mat-option>
                   </mat-select>
+                  <mat-error *ngIf="dadosPessoaisForm.controls['funcaoLevita'].hasError('required')">Preehnchimento Obrigatório</mat-error>
                  </mat-form-field>
               </div>
             </ng-container>
@@ -185,7 +199,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Titulação" [formControl]="dadosPessoaisForm.controls['titulacao']" name="titulacao"
               required>
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="null">Selecione</mat-option>
               <mat-option *ngFor="let titulacao of titulacaoList" [value]="titulacao.valor1">
                 {{titulacao.valor2}}
               </mat-option>
@@ -207,7 +221,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Categoria Profissional" [formControl]="dadosPessoaisForm.controls['categoriaProfissional']"
               required>
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="null">Selecione</mat-option>
               <mat-option *ngFor="let categoria of categoriaList" [value]="categoria.valor1">
                 {{categoria.valor2}}
               </mat-option>
@@ -228,7 +242,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Ramo" [formControl]="dadosPessoaisForm.controls['ramo']" (selectionChange)="getListTribunais($event.value)"
               name="ramo" [(ngModel)]="ramo" required>
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="null">Selecione</mat-option>
               <mat-option *ngFor="let ramo of ramoList" [value]="ramo.valor1">
                 {{ramo.valor2}}
               </mat-option>
@@ -240,7 +254,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Tribunal" [formControl]="dadosPessoaisForm.controls['tribunal']" [disabled]="ramo == null"
               required>
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="null">Selecione</mat-option>
               <mat-option *ngFor="let tribunal of tribunalList" [value]="tribunal.id">
                 {{tribunal.sigla}} - {{tribunal.descricao}}
               </mat-option>
@@ -254,7 +268,7 @@
           <mat-form-field class="example-full-width">
             <mat-select placeholder="Gostaria de Figurar no Banco de Docentes?" name="flagValue" [(ngModel)]="flagValue" [formControl]="dadosPessoaisForm.controls['flagBancoDocentes']"
               (selectionChange)="onChangeFlagBancoDocentes($event.value)" required>
-              <mat-option [value]="null">(Selecione)</mat-option>
+              <mat-option [value]="null">Selecione</mat-option>
               <mat-option *ngFor="let flag of flags" [value]="flag.key">
                 {{flag.value}}
               </mat-option>

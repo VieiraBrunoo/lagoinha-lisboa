@@ -9,11 +9,14 @@
     <div class="col-md-6">
       <mat-form-field class="example-full-width">
         <input matInput  [formControl]="dadosFamiliaresForm.controls['nomePai']" placeholder="Nome do Pai">
+        <mat-error *ngIf="dadosFamiliaresForm.controls['nomePai'].hasError('required')">Preenchimento Obrigatório</mat-error>
       </mat-form-field>
     </div>
     <div class="col-md-6">
         <mat-form-field class="example-full-width">
           <input matInput  [formControl]="dadosFamiliaresForm.controls['nomeMae']" placeholder="Nome da Mãe">
+          <mat-error *ngIf="dadosFamiliaresForm.controls['nomeMae'].hasError('required')">Preenchimento Obrigatório</mat-error>
+
         </mat-form-field>
       </div>
 
@@ -25,18 +28,19 @@
         <mat-form-field class="example-full-width">
         <mat-select placeholder="Estado Civil" [formControl]="dadosFamiliaresForm.controls['estadoCivil']" [errorStateMatcher]="matcher"
         name="estadoCivil">
-        <mat-option [value]="''">(Selecione)</mat-option>
+        <mat-option [value]="''">Selecione</mat-option>
          <mat-option *ngFor="let estadoCivil of estadoCivilList" [value]="estadoCivil.sigla">
          {{estadoCivil.descricao}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="dadosFamiliaresForm.controls['estadoCivil'].hasError('required')">Preenchimento Obrigatório</mat-error>
     </mat-form-field>
     </div>
     <div class="col-md-6">
             <mat-form-field class="example-full-width">
                     <mat-select placeholder="Quantos Filhos?" [formControl]="dadosFamiliaresForm.controls['qtdFilhos']" [errorStateMatcher]="matcher"
                     name="escola">
-                    <mat-option [value]="''">(Selecione)</mat-option>
+                    <mat-option [value]="''">Selecione</mat-option>
                     <mat-option [value]="0">0</mat-option>
                     <mat-option [value]="1">1</mat-option>
                     <mat-option [value]="2">2</mat-option>

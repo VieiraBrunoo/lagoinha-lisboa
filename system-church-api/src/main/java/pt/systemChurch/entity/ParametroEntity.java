@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "PARAMETROS")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class ParametroEntity {
+public class ParametroEntity implements Comparable<ParametroEntity>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,6 +62,12 @@ public class ParametroEntity {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	@Override
+	public int compareTo(ParametroEntity o) {
+
+		return this.descricao.compareTo(o.getDescricao());
 	}
 
 }

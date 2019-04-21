@@ -47,8 +47,10 @@ import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
+import pt.systemChurch.entity.MembroGcEntity;
 import pt.systemChurch.repository.GcRepository;
 import pt.systemChurch.repository.MembroRepository;
+import pt.systemChurch.service.MembroGcService;
 import pt.systemChurch.service.MembroService;
 
 @RestController
@@ -67,28 +69,42 @@ public class MembroController extends BaseController<MembroEntity, MembroService
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private MembroGcService membroGcService;
 
 	@CrossOrigin
 	@PostMapping(value = "/salvarMembro/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public boolean save(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,
+	public String save(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,
 			@RequestPart("membro") MembroEntity membro) {
-
+		String retorno =null;
 		try {
+				boolean membroExistente = this.getService().verificarMembro(membro.getNrDocumento());
 				GcEntity gc = gcRepository.findById(membro.getIdGc());
-				membro.setGc(gc);
-				if(membro.getFlagLiderGc().equalsIgnoreCase("S") && gc.getMembroResponsavel().getId()!=0) {
-				return false;
+			
+				if(membroExistente) {
+					retorno="NME";
+					return retorno ;	
 				}
 				if (arquivo.isPresent()) {
 					byte[] fotoBytes = arquivo.get().getBytes();
 					membro.setFotoPerfil(fotoBytes);
 				}
-				boolean retorno = this.getService().cadastrarMembro(membro);
+						
+				 retorno = this.getService().cadastrarMembro(membro);
+				 
+				 if(membro.getEmail()!=null && !membro.getEmail().isEmpty()) {
+				 enviarMail(membro.getEmail());
+				 }
+				 
+				 if(membro.getIdGc()!= 0) {
+					 MembroEntity m = membroRepository.findByNrDocumento(membro.getNrDocumento());
+					 					 }
+				 
 				return retorno;
 		} catch (Exception ex) {
 			String errorMessage;
 			System.out.println(errorMessage = ex + " <== error");
-			return false;
+				return "NOK";
 		}
 	}
 
@@ -128,7 +144,6 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 			@RequestPart("membro") MembroEntity membro) throws IOException {
 		try {
 			GcEntity gc = gcRepository.findById(membro.getIdGc());
-			membro.setGc(gc);
 			if (arquivo.isPresent()) {
 				byte[] fotoBytes = arquivo.get().getBytes();
 				membro.setFotoPerfil(fotoBytes);
@@ -142,8 +157,7 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 
 	}
 	
-    @RequestMapping(path = "/email-send", method = RequestMethod.GET)
-	 public String sendMail() throws URISyntaxException {
+	 public Boolean enviarMail(String emailMembro) throws URISyntaxException {
     	    	   	
 	        try {
 	            MimeMessage message = emailSender.createMimeMessage();
@@ -151,7 +165,7 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	        	        //Enviar Arquivo Anexo
 	                   /*  MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
 	                     StandardCharsets.UTF_8.name());*/
-	        	   helper.setTo("bruno.vieira@widescope.pt");
+	        	   helper.setTo(emailMembro);
 		             helper.setFrom("Igreja Lagoinha Lisboa <geral@lagoinhalisboa.pt>");
 
 	             helper.addAttachment("lagoinhai.png", new ClassPathResource("lagoinhai.png"));
@@ -162,10 +176,10 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	             helper.addInline("picture", file);
 	          
 	             emailSender.send(message);
-	        	return "OK";
+	        	return Boolean.TRUE;
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            return "Erro ao enviar e-mail";
+	            return Boolean.FALSE;
 	        }
 	    }
     

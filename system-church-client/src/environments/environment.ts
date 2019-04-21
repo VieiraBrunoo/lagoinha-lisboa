@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:8080/lagoinha-api/',
+  url: 'http://localhost:8081/lagoinha-api/',
   packageFile: './../../../../package.json',
   VERSION: require('../../package.json').version
 };

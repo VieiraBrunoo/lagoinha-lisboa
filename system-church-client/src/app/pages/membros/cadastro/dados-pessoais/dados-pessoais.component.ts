@@ -121,6 +121,7 @@ export class DadosPessoaisComponent implements OnInit, AfterViewInit {
     this.parametroService.findByNomeConstante("ZONA ").subscribe(listRetorno => {
       listRetorno.forEach(element => {
         this.zonaList.push(element);
+        this.zonaList.sort();
       });
     });
   }
