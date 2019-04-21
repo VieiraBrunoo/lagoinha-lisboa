@@ -72,26 +72,24 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 		int i = 0;
 		TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
 		List<MembroEntity> resultQuery = query.getResultList();
-			
-		int count = 0 ; 
+		
 		List<ResponsePesquisaMembroDto> membros = new ArrayList<ResponsePesquisaMembroDto>();
+		
 		for (MembroEntity membro : resultQuery) {
 			ResponsePesquisaMembroDto mem = new ResponsePesquisaMembroDto();
 			mem.setIdMembro(membro.getId());
 			mem.setNomeMembro(membro.getNome());
-			if(count <= i ) {
-			if(membro.getMembrosGc().get(i).getGc().getId()!=0) {
-			mem.setIdGc(membro.getMembrosGc().get(i).getGc().getId());
-			}
+
+			for(MembroGcEntity m : membro.getMembrosGc()) {	
+			mem.setIdGc(m.getGc().getId());
 			if (membro.getFlagLiderGc() != null) {
 				if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
-					mem.setNomeGc("Líder - " + membro.getMembrosGc().get(i).getGc().getNome());
+					mem.setNomeGc("Líder - " + m.getGc().getNome());
 				}
 
 			} else {
-				mem.setNomeGc(membro.getMembrosGc().get(i).getGc().getNome());
+				mem.setNomeGc(m.getGc().getNome());
 			}
-			count ++;
 		}
 			mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 			mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
@@ -111,6 +109,7 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
 		Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
+		Join<MembroEntity, MembroGcEntity> joinMembro = membroRoot.join("membrosGc",JoinType.LEFT);
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		criteriaQuery.distinct(true);
 
@@ -155,14 +154,15 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 			mem.setIdMembro(membro.getId());
 			mem.setNomeMembro(membro.getNome());
-			if(membro.getGc()!=null && membro.getGc().getId()!=0) {
-			mem.setIdGc(membro.getGc().getId());
+			
+			for(MembroGcEntity m : membro.getMembrosGc()) {	
+			mem.setIdGc(m.getGc().getId());
 			if (membro.getFlagLiderGc() != null) {
 				if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
-					mem.setNomeGc("Líder - " + membro.getGc().getNome());
+					mem.setNomeGc("Líder - " + m.getGc().getNome());
 			}
 			else {
-				mem.setNomeGc(membro.getGc().getNome());
+				mem.setNomeGc(m.getGc().getNome());
 				}
 			}
 			}
@@ -287,13 +287,14 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 				mem.setIdMembro(membro.getId());
 				mem.setNomeMembro(membro.getNome());
-				if(membro.getGc().getId()!=0) {
-				mem.setIdGc(membro.getGc().getId());
-				mem.setNomeGc(membro.getGc().getNome());
-				mem.setDiaGc(membro.getGc().getDiaSemana());
-				mem.setLiderGc(membro.getGc().getMembroResponsavel().getNome());
+				for(MembroGcEntity m : membro.getMembrosGc()) {	
+				mem.setIdGc(m.getGc().getId());
+				mem.setNomeGc(m.getGc().getNome());
+				mem.setDiaGc(m.getGc().getDiaSemana());
+				if(membro.getFlagLiderGc().equalsIgnoreCase("S")) {
+				mem.setLiderGc(membro.getNome());
 				}
-				membro.getFlagLiderGc().equalsIgnoreCase("S");
+				}
 				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
 				mem.setSexo(descricaoSexo(membro.getSexo()));
@@ -400,16 +401,17 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 				mem.setIdMembro(membro.getId());
 				mem.setNomeMembro(membro.getNome());
-				if(membro.getGc()!=null && membro.getGc().getId()!=0) {
-				mem.setIdGc(membro.getGc().getId());
-				}
+				for(MembroGcEntity m : membro.getMembrosGc()) {	
+				mem.setIdGc(m.getGc().getId());
+				
 				if (membro.getFlagLiderGc() != null) {
 					if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
-						mem.setNomeGc("Líder - " + membro.getGc().getNome());
+						mem.setNomeGc("Líder - " + m.getGc().getNome());
 					}
 
 				} else {
-					mem.setNomeGc(membro.getGc().getNome());
+					mem.setNomeGc(m.getGc().getNome());
+				}
 				}
 				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
