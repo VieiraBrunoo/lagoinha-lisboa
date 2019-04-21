@@ -28,4 +28,8 @@ export class GcService extends GenericService {
   public findById(id:number): Observable<any> {
     return this.getMethod(this.relativePath + "find/"+id);
   }
+
+  findGcByParams( gc: Gc) : Observable<any> {
+    return this.http.post(this.url + this.relativePath+"pesquisaGc", gc);
+  }
 }

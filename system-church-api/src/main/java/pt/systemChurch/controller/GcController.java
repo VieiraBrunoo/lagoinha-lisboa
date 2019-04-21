@@ -3,14 +3,16 @@ package pt.systemChurch.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pt.systemChurch.base.BaseController;
 import pt.systemChurch.dto.ResponseGcDto;
@@ -21,10 +23,10 @@ import pt.systemChurch.repository.MembroRepository;
 import pt.systemChurch.service.GcService;
 
 @RestController
-@RequestMapping("lagoinha-api/gc")
-public class GcController extends BaseController<GcEntity, GcService> {
-	
-	
+@RequestMapping(path = "lagoinha-api/gc", produces = { MediaType.APPLICATION_JSON_VALUE })
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public class GcController extends BaseController<GcEntity, GcService>{
+
 	@Autowired
 	private GcRepository gcRepository;
 	
@@ -39,19 +41,29 @@ public class GcController extends BaseController<GcEntity, GcService> {
 	}
 	
 	@CrossOrigin
-	@PostMapping(value = "/salvarGc/")
-	public ResponseEntity<GcEntity> save(@RequestBody GcEntity gc){
+	@PostMapping(value = "/salvarGc/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean saveGc(@RequestPart("gc") GcEntity gc){
+		
 		try {
+				if(gc.getMembroResponsavel().getId()==0) {
+					return false;
+				}
 			MembroEntity membroResponsavel = membroRepository.findById(gc.getIdMembroResponsavel());
 			gc.setMembroResponsavel(membroResponsavel);
-			GcEntity retorno = gcRepository.save(gc);
-				return ResponseEntity.ok(retorno);
+			boolean retorno = this.getService().salvarGc(gc);
+			return retorno;
 			}
 		 catch (Exception ex) {
 			String errorMessage;
 			System.out.println(errorMessage = ex + " <== error");
-			return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
+			return false;
 		}
-
 }
+	
+	@CrossOrigin
+	@PostMapping(value = "/pesquisaGc")
+	public List<ResponseGcDto> pesquisaGc(@RequestBody GcEntity gc) {
+		List<ResponseGcDto> list = this.getService().pesquisarGc();
+		return list;
+	}
 }

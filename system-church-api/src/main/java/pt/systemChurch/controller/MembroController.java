@@ -190,5 +190,10 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 		 return retorno;
 	}
 	
-	
+    @CrossOrigin
+	@RequestMapping(value = "/pesquisarMembro/", method = RequestMethod.GET)
+	public List<ResponsePesquisaMembroDto> pesquisaMembro() {
+		List<ResponsePesquisaMembroDto> list = this.getService().pesquisarMembro();
+		return list;
+	}
 }

@@ -5,6 +5,7 @@ import { MatStepper, MatTableDataSource, MatPaginator } from '@angular/material'
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { GcService } from 'src/app/service/gc/gc.service';
 import { Gc } from 'src/app/models/gc';
+import { ToasterService } from 'angular2-toaster';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class CadastroGcComponent implements OnInit {
 
   isOptional = false;
   gc: Gc;
+  private toasterService: ToasterService;
 
   constructor(private gcService: GcService) {
   }
@@ -34,8 +36,12 @@ export class CadastroGcComponent implements OnInit {
       this.gcService.save(this.gc).subscribe(data => {
 
         if (data == null) {
-          this.blockUI.stop();
-        }
+          //   console.log("NULL");
+                    this.blockUI.stop();
+                  }
+          
+                  this.toasterService.pop('success', 'Membro cadastrado com sucesso!');
+                  this.blockUI.stop();
   });
    // }
   }

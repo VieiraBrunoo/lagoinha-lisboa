@@ -71,11 +71,19 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		return MembroCriteria.ativarDesativarMembro(id, status, this.entityManager, this.membroRepository);
 	}
 	
+<<<<<<< .mine
 	public boolean verificarMembro(String nrDoc) {
 		return MembroCriteria.verificarMembroCadastrado(nrDoc, entityManager,membroRepository);
 		
 	}
 
+=======
+	public List<ResponsePesquisaMembroDto> pesquisarMembro(){
+		return MembroCriteria.pesquisarMembrosLideresGc(this.entityManager);
+	}
+	
+
+>>>>>>> .theirs
 	
 	
 	
