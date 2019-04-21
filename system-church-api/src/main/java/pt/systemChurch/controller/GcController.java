@@ -48,7 +48,7 @@ public class GcController extends BaseController<GcEntity, GcService>{
 	public boolean saveGc(@RequestPart("gc") GcEntity gc){
 		
 		try {
-			MembroEntity membroResponsavel = membroRepository.findById(gc.getIdMembroResponsavel());
+		MembroEntity membroResponsavel = membroRepository.findById(gc.getIdMembroResponsavel());
 			boolean retorno = this.getService().salvarGc(gc);
 			return retorno;
 			}

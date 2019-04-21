@@ -115,7 +115,7 @@ public class MembroEntity{
 	@Transient
 	private long idGc;
 	
-	@Transient
+	@Column(name = "FLAG_LIDER_GC")
 	private String flagLiderGc;
 	
 	@Transient
