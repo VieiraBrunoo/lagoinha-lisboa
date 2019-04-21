@@ -375,4 +375,47 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 		}
 
 	 
+	 static List<ResponsePesquisaMembroDto> pesquisarMembrosLideresGc(EntityManager entityManager){
+		 	CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
+			Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			criteriaQuery.distinct(true);
+
+			predicates.add(criteriaBuilder.equal(membroRoot.get("flagLiderGc"),"S"));
+			criteriaQuery.select(membroRoot).where(predicates.toArray(new Predicate[] {}));
+			TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
+			List<MembroEntity> resultQuery = query.getResultList();
+
+			List<ResponsePesquisaMembroDto> membros = new ArrayList<ResponsePesquisaMembroDto>();
+
+			for (MembroEntity membro : resultQuery) {
+				ResponsePesquisaMembroDto mem = new ResponsePesquisaMembroDto();
+
+				mem.setIdMembro(membro.getId());
+				mem.setNomeMembro(membro.getNome());
+				if(membro.getGc()!=null && membro.getGc().getId()!=0) {
+				mem.setIdGc(membro.getGc().getId());
+				}
+				if (membro.getFlagLiderGc() != null) {
+					if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
+						mem.setNomeGc("Líder - " + membro.getGc().getNome());
+					}
+
+				} else {
+					mem.setNomeGc(membro.getGc().getNome());
+				}
+				mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
+				mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
+				mem.setSexo(descricaoSexo(membro.getSexo()));
+				mem.setStatus(membro.getStatus());
+
+				membros.add(mem);
+
+			}
+
+			return membros;
+
+	 }
+	 
 }

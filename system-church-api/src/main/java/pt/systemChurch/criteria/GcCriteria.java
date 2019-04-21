@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pt.systemChurch.entity.GcEntity;
+import pt.systemChurch.entity.MembroEntity;
+
 import org.springframework.stereotype.Repository;
 import pt.systemChurch.dto.ResponseGcDto;
 
@@ -39,4 +41,13 @@ public class GcCriteria {
 		return listGc;
 	}
 
+	
+	public static boolean salvarGc(GcEntity gc,EntityManager entityManager) {
+		 try {
+			 entityManager.persist(gc);
+			 return true;
+		} catch (Exception e) {
+			 return false;
+	}
+	 }
 }

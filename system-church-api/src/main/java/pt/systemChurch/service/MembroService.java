@@ -71,5 +71,8 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 		return MembroCriteria.ativarDesativarMembro(id, status, this.entityManager, this.membroRepository);
 	}
 	
-
+	public List<ResponsePesquisaMembroDto> pesquisarMembro(){
+		return MembroCriteria.pesquisarMembrosLideresGc(this.entityManager);
+	}
+	
 }
