@@ -50,8 +50,6 @@ public class GcEntity {
 	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
 	private MembroEntity membroResponsavel; */ 
 
-	@Transient
-	@JsonIgnore
 	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MembroGcEntity> membrosGc;
 	

@@ -1,10 +1,12 @@
 package pt.systemChurch.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pt.systemChurch.base.BaseController;
 import pt.systemChurch.dto.ResponseGcDto;
+import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
 import pt.systemChurch.repository.GcRepository;
@@ -45,11 +48,7 @@ public class GcController extends BaseController<GcEntity, GcService>{
 	public boolean saveGc(@RequestPart("gc") GcEntity gc){
 		
 		try {
-				if(gc.getMembroResponsavel().getId()==0) {
-					return false;
-				}
 			MembroEntity membroResponsavel = membroRepository.findById(gc.getIdMembroResponsavel());
-			gc.setMembroResponsavel(membroResponsavel);
 			boolean retorno = this.getService().salvarGc(gc);
 			return retorno;
 			}
@@ -65,5 +64,16 @@ public class GcController extends BaseController<GcEntity, GcService>{
 	public List<ResponseGcDto> pesquisaGc(@RequestBody GcEntity gc) {
 		List<ResponseGcDto> list = this.getService().pesquisarGc();
 		return list;
+	}
+	
+	
+
+	@CrossOrigin
+	@RequestMapping(value = "/findByGcId/{id}", method = RequestMethod.GET)
+	public ResponseGcDto findByIdGc(@PathVariable("id") long id)
+			throws UnsupportedEncodingException {
+		ResponseGcDto gc = this.getService().pesquisarGcPorId(id);
+
+		return gc;
 	}
 }

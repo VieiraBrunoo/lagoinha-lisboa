@@ -1,32 +1,18 @@
 package pt.systemChurch.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.Transport;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,7 +33,6 @@ import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
-import pt.systemChurch.entity.MembroGcEntity;
 import pt.systemChurch.repository.GcRepository;
 import pt.systemChurch.repository.MembroRepository;
 import pt.systemChurch.service.MembroGcService;

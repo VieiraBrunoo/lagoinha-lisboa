@@ -1,5 +1,6 @@
 package pt.systemChurch.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import pt.systemChurch.base.BaseService;
 import pt.systemChurch.criteria.GcCriteria;
 import pt.systemChurch.criteria.MembroCriteria;
 import pt.systemChurch.dto.ResponseGcDto;
+import pt.systemChurch.dto.ResponsePesquisaMembroDetalhadoDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.repository.GcRepository;
@@ -33,4 +35,8 @@ public class GcService extends BaseService<GcEntity, GcRepository> {
 		public List<ResponseGcDto> pesquisarGc(){
 		return GcCriteria.pesquisarGcs(this.entityManager);
 	}
+		
+		public ResponseGcDto pesquisarGcPorId(long id) throws UnsupportedEncodingException {
+		return GcCriteria.pesquisarGcPorId(id, this.entityManager);	
+		}
 }
