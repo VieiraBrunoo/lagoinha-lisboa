@@ -2,6 +2,9 @@ package pt.systemChurch.dto;
 
 import java.util.List;
 
+import pt.systemChurch.entity.MembroEntity;
+import pt.systemChurch.entity.MembroGcEntity;
+
 public class ResponseGcDto {
 
 	
@@ -10,10 +13,11 @@ public class ResponseGcDto {
 	private String diaSemana;
 	private String endereco;
 	private String horario;
-	private long idLider;
 	private String zona;
 	private String nomeLider;
 	private List<ResponsePesquisaMembroDto> membros;
+	private long idLider;
+
 	
 	
 	

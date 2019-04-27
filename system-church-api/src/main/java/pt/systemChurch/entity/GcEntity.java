@@ -50,7 +50,7 @@ public class GcEntity {
 	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
 	private MembroEntity membroResponsavel; */ 
 
-	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MembroGcEntity> membrosGc;
 	
 	@Column(name="HORARIO")

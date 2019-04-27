@@ -89,9 +89,4 @@ public class MembroService extends BaseService<MembroEntity, MembroRepository>  
 	public List<ResponsePesquisaMembroDto> pesquisarMembro(){
 		return MembroCriteria.pesquisarMembrosLideresGc(this.entityManager);
 	}
-	
-
-	
-	
-	
 }
