@@ -1,52 +1,97 @@
 <div class="container-fluid">
   <form class="example-form">
-    <div class="row">
-      <div class="col-md-12">
         <div class="bordas">
           <div class="row">
 
-            <div class="col-md-12">
-              <div class="col-md-6">
-                <h5 class="text-center">{{gc.nome}}</h5>
+            <div class="col-md-12" align="center">
+              
+               <div class="row">
+                <div class="col-md-12" align="center"> 
+                <h4 class="text-center">{{gc.nome | titlecase}}</h4>
+                <p></p>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" align="center"> 
+                    <p><b>Líder:</b> {{gc.nomeLider | titlecase}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" align="center"> 
+                  <p><b>Dia da Semana:</b> {{gc.diaSemana | titlecase}} </p> 
+                </div>
               </div>
 
-              <div class="col-md-6">
-                  <h5 class="text-center">{{gc.nomeMembroResponsavel}}</h5>
+              <div class="row">
+                  <div class="col-md-12" align="center"> 
+                  <p><b>Horário:</b > {{gc.horario}}</p> 
                 </div>
             </div>
 
-            <div class="col-md-12">
-                <div class="col-md-6" alig="justify">
-                  <h5>Dia da Semana:</h5> 
-                  <p> {{gc.diaSemana}} </p>
+            <div class="row">
+                <div class="col-md-12" align="center"> 
+                    <p><b>Endereco:</b> {{gc.endereco | titlecase}}</p> 
+                 </div>
                 </div>
 
-                <div class="col-md-6" alig="justify">
-                  <h5>Horário:</h5> 
-                  <p> {{gc.horario}} </p>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="col-md-6" alig="justify">
-                    <h5>Endereco:</h5> 
-                    <p> {{gc.logradouro}} </p>
-                  </div>
-  
-                  <div class="col-md-6" alig="justify">
-                    <h5>Zona:</h5> 
-                    <p> {{gc.zona}} </p>
+                <div class="row" align="center">
+                    <div class="col-md-12"> 
+                    <p><b>Zona:</b> {{gc.zona | titlecase}}</p> 
                   </div>
             </div>
-
-
+          </div>
         </div>
+        <br>
+        <h4 class="text-center">Membros GC</h4>
+        <div class="row">
+          <div class="col-md-2" align="center">
+                        
+        </div>
+          <div class="col-md-8" align="center">
+              <div class="table-wrapper">
+            <table mat-table [dataSource]="dataSource">
+        
+            <!-- Position Column --> 
+            <ng-container matColumnDef="Nº">
+              <th mat-header-cell *matHeaderCellDef> Nº. </th>
+              <td mat-cell *matCellDef="let element"> {{element.posicao}} </td>
+            </ng-container> 
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="Nome">
+              <th mat-header-cell *matHeaderCellDef> Nome </th>
+              <td mat-cell *matCellDef="let element"> {{element.nomeMembro | titlecase}} </td>
+            </ng-container>
+        
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Telefone">
+              <th mat-header-cell *matHeaderCellDef> Telefone </th>
+              <td mat-cell *matCellDef="let element"> {{element.celular}} </td>
+            </ng-container>
+        
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Data/Hora Cadastro">
+              <th mat-header-cell *matHeaderCellDef> Data/Hora Cadastro </th>
+              <td mat-cell *matCellDef="let element"> {{element.dataCadastro}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
         <div class="text-center" *ngIf="exibirMsgRegistro">
           <br>
           <h5>Pesquisa Não Retornou Registro</h5>
 
         </div>
       </div>
+
     </div>
+  </div>
   </form>
 </div>

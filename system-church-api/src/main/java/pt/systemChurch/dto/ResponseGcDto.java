@@ -1,5 +1,7 @@
 package pt.systemChurch.dto;
 
+import java.util.List;
+
 public class ResponseGcDto {
 
 	
@@ -9,6 +11,11 @@ public class ResponseGcDto {
 	private String endereco;
 	private String horario;
 	private long idLider;
+	private String zona;
+	private String nomeLider;
+	private List<ResponsePesquisaMembroDto> membros;
+	
+	
 	
 	public long getId() {
 		return id;
@@ -45,6 +52,24 @@ public class ResponseGcDto {
 	}
 	public void setIdLider(long idLider) {
 		this.idLider = idLider;
+	}
+	public String getZona() {
+		return zona;
+	}
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+	public String getNomeLider() {
+		return nomeLider;
+	}
+	public void setNomeLider(String nomeLider) {
+		this.nomeLider = nomeLider;
+	}
+	public List<ResponsePesquisaMembroDto> getMembros() {
+		return membros;
+	}
+	public void setMembros(List<ResponsePesquisaMembroDto> membros) {
+		this.membros = membros;
 	}
 	
 	

@@ -11,6 +11,9 @@ public class ResponsePesquisaMembroDto {
 	private String estadoCivil;
 	private String morada;
 	private String status;
+	private String dataCadastro;
+	private String celular;
+	private int posicao;
 	
 	
 	public long getIdMembro() {
@@ -61,6 +64,25 @@ public class ResponsePesquisaMembroDto {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getDataCadastro() {
+		return dataCadastro;
+	}
+	public void setDataCadastro(String dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+	public String getCelular() {
+		return celular;
+	}
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+	public int getPosicao() {
+		return posicao;
+	}
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
+	}
+	
 	
 	
 	

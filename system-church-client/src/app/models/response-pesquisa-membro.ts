@@ -8,6 +8,7 @@ export class ResponsePesquisaMembros {
     estadoCivil:string;
     morada:string;
     status:string;
+    dataCadastrado:string;
     
     }
     

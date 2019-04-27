@@ -50,13 +50,11 @@ public class GcEntity {
 	@JoinColumn(name = "ID_MEMBRO_RESPONSAVEL")
 	private MembroEntity membroResponsavel; */ 
 
-	@Transient
-	@JsonIgnore
-	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "gc", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MembroGcEntity> membrosGc;
 	
-	
-	
+	@Column(name="HORARIO")
+	private String horario;
 	
 	public long getId() {
 		return id;
@@ -121,6 +119,14 @@ public class GcEntity {
 
 	public void setIdMembroResponsavel(long idMembroResponsavel) {
 		this.idMembroResponsavel = idMembroResponsavel;
+	}
+
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
 	}
 	
 	

@@ -1,12 +1,12 @@
 package pt.systemChurch.criteria;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import pt.systemChurch.entity.MembroGcEntity;
 import pt.systemChurch.repository.MembroGcRepository;
 
 public class MembroGcCriteria {
-	
 	
 	
 	public static Boolean salvarMembroGc(MembroGcEntity membroGc,EntityManager manager) {

@@ -39,3 +39,7 @@
     height: 1px;
     align-items: center;
   }
+
+  table {
+    width: 100%;
+  }

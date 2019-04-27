@@ -1,8 +1,11 @@
 package pt.systemChurch.criteria;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,6 +18,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.swing.text.MaskFormatter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +28,9 @@ import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
 import pt.systemChurch.entity.MembroGcEntity;
+import pt.systemChurch.repository.GcRepository;
 import pt.systemChurch.repository.MembroRepository;
+import pt.systemChurch.service.MembroGcService;
 
 @Repository
 public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
@@ -57,6 +63,8 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 		if (!dto.getStatus().isEmpty() && dto.getStatus() != null) {
 			predicates.add(criteriaBuilder.equal(membroRoot.get("status"), dto.getStatus()));
+		} else {
+			predicates.add(criteriaBuilder.equal(membroRoot.get("status"), "ATIVO"));
 		}
 
 		if (!dto.getFlagLiderGc().isEmpty() && dto.getFlagLiderGc() != null) {
@@ -85,11 +93,11 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			if (membro.getFlagLiderGc() != null) {
 				if (membro.getFlagLiderGc().equalsIgnoreCase("S")) {
 					mem.setNomeGc("Líder - " + m.getGc().getNome());
+				} else {
+					mem.setNomeGc(m.getGc().getNome());
 				}
 
-			} else {
-				mem.setNomeGc(m.getGc().getNome());
-			}
+			} 
 		}
 			mem.setEstadoCivil(descricaoEstadoCivil(membro.getEstadoCivil()));
 			mem.setMorada(membro.getEnderecoResidencial() + " - " + membro.getZona());
@@ -137,7 +145,9 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 			predicates.add(criteriaBuilder.equal(membroRoot.get("flagLiderGc"), dto.getFlagLiderGc()));
 		}
 
+		predicates.add(criteriaBuilder.equal(membroRoot.get("status"), "ATIVO"));
 
+			
 		if (predicates.size() > 0) {
 			criteriaQuery.select(membroRoot).where(predicates.toArray(new Predicate[] {}));
 		} else {
@@ -339,13 +349,45 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 
 	 }
 	 
-	 public static String salvarMembro(MembroEntity membro,EntityManager entityManager) {
+	 public static Integer salvarMembro(MembroEntity membro,EntityManager entityManager,MembroRepository membroRepository,GcRepository gcRepository,
+			   MembroGcService membroGcService) {
+		 boolean retorno = false;
 		 try {
-			 entityManager.persist(membro);
-			 return "OK";
+				Boolean membroExistente = verificarMembroCadastrado(membro.getNrDocumento(), entityManager, membroRepository);
+						
+				GcEntity gc = gcRepository.findById(membro.getIdGc());
+			
+				if(membroExistente) {
+					return 2;
+				}
+				 
+				
+				if("S".equalsIgnoreCase(membro.getFlagLiderGc())) {
+					
+					if(verificarLiderGc(membro, gc, entityManager).size() > 0) {
+						
+						return 3;
+					}
+					
+				}
+				
+				 membro.setDtCadastro(obterDataHora());
+				 entityManager.persist(membro);
+				 
+				if(membro.getIdGc()!= 0) {
+					 MembroEntity m = membroRepository.findByNrDocumento(membro.getNrDocumento());
+					 MembroGcEntity mg = new MembroGcEntity(m,gc);
+					retorno =  membroGcService.salvarMembroGc(mg);
+					
+					if(!retorno)
+						return 4;
+				 }
+			 			 
+			
+			 return 1;
 			
 		} catch (Exception e) {
-			 return "NOK";
+			 return 0;
 	}
 	 }
 	 
@@ -446,4 +488,35 @@ public interface MembroCriteria extends JpaRepository<MembroEntity, Long> {
 		 
 	 }
 	 
+	  static String obterDataHora(){ 
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+			Date date = new Date(); 
+			return dateFormat.format(date); 
+		}
+	 
+	  static List<MembroEntity> verificarLiderGc(MembroEntity membro, GcEntity gc,EntityManager entityManager){ 
+		  
+			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+			CriteriaQuery<MembroEntity> criteriaQuery = criteriaBuilder.createQuery(MembroEntity.class);
+			Root<MembroEntity> membroRoot = criteriaQuery.from(MembroEntity.class);
+			Join<MembroEntity, MembroGcEntity> joinMembro = membroRoot.join("membrosGc",JoinType.LEFT);
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			criteriaQuery.distinct(true);
+			
+			predicates.add(criteriaBuilder.equal(membroRoot.get("flagLiderGc"),"S"));
+			predicates.add(criteriaBuilder.equal(joinMembro.get("gc").get("id"),gc.getId()));
+		
+			criteriaQuery.select(membroRoot).where(predicates.toArray(new Predicate[] {}));
+		
+			TypedQuery<MembroEntity> query = entityManager.createQuery(criteriaQuery);
+		  
+			List<MembroEntity> resultQuery = query.getResultList();
+			
+			return resultQuery;
+		
+		  
+		  
+		}
+
+	  
 }

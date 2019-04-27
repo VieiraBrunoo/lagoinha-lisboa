@@ -57,6 +57,9 @@ import { PesquisaGcComponent } from './pages/gc/pesquisa/pesquisa-gc/pesquisa-gc
 import { PesquisaDetalhadaGcComponent } from './pages/gc/pesquisa/pesquisa-detalhada-gc/pesquisa-detalhada-gc.component';
 import { CadastroGcComponent } from './pages/gc/cadastro/cadastro-gc/cadastro-gc.component';
 import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { DetalharGcComponent} from './pages/gc/detalhar-gc/detalhar-gc.component';
 
 
 
@@ -84,7 +87,8 @@ import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
     CadastroGcComponent,
     DadosComponent,
     PesquisaDetalhadaGcComponent,
-    PesquisaGcComponent
+    PesquisaGcComponent,
+    DetalharGcComponent
  ],
   imports: [
     MatSlideToggleModule,
@@ -106,7 +110,9 @@ import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
     ChartsModule,
     NgxHmCarouselModule,
     RecaptchaModule.forRoot(),
-    ImageCropperModule
+    ImageCropperModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot() // ToastrModule added
   ],
 
   providers: [

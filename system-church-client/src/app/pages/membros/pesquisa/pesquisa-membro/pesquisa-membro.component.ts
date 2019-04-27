@@ -188,8 +188,9 @@ private obterToggleButton(id, status) {
   }
 
   this.membroService.ativarDesativarMembro(id, status).subscribe(list => {
+    this.getMembros();
   });
-   this.toasterService.pop('success', 'Membro' + '' + status + '' + 'com Sucesso!');
+   this.toasterService.pop('success', 'Membro' + ' ' + status + ' ' + 'com Sucesso!');
 
 }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import pt.systemChurch.base.BaseService;
 import pt.systemChurch.criteria.GcCriteria;
 import pt.systemChurch.criteria.MembroCriteria;
+import pt.systemChurch.dto.RequestGcDto;
 import pt.systemChurch.dto.ResponseGcDto;
 import pt.systemChurch.dto.ResponsePesquisaMembroDto;
 import pt.systemChurch.entity.GcEntity;
@@ -33,4 +34,13 @@ public class GcService extends BaseService<GcEntity, GcRepository> {
 		public List<ResponseGcDto> pesquisarGc(){
 		return GcCriteria.pesquisarGcs(this.entityManager);
 	}
+		
+		public List<ResponseGcDto> pesquisaDetalhadaGc(RequestGcDto gc){
+			return GcCriteria.pesquisaDetalhadaGc(gc,this.entityManager);
+		}
+		
+		public ResponseGcDto pesquisaDetalhadaGc(long idGc){
+			return GcCriteria.DetalharGc(idGc,this.entityManager);
+		}
+	
 }

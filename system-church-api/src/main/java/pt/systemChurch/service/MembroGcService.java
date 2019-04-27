@@ -2,6 +2,7 @@ package pt.systemChurch.service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import pt.systemChurch.entity.MembroGcEntity;
 import pt.systemChurch.repository.MembroGcRepository;
 
 @Service
+@Transactional
 public class MembroGcService  extends BaseService<MembroGcEntity, MembroGcRepository>{
 	
 	
@@ -21,7 +23,6 @@ public class MembroGcService  extends BaseService<MembroGcEntity, MembroGcReposi
 	
 	@Autowired
 	MembroGcRepository membroGcRepository;
-	
 	
 	
 	public Boolean salvarMembroGc(MembroGcEntity membroGc) {

@@ -10,15 +10,17 @@ import { DadosGcComponent } from '../dados-gc/dados-gc.component';
 import { MatStepper, MatTableDataSource, MatPaginator } from '@angular/material';
 import { DadosFamiliaresComponent } from '../dados-familiares/dados-familiares.component';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { ToasterService } from 'angular2-toaster';
 import { Documento } from 'src/app/models/documento';
 import { Membro } from 'src/app/models/membro';
 import { MembroService } from 'src/app/service/membro/membro.service';
 import { Gc } from 'src/app/models/gc-cadastro-membro';
 import { runInThisContext } from 'vm';
-import { ActivatedRoute } from '@angular/router';
 import { ResponsePesquisaDetalhadoMembros } from 'src/app/models/response-pesquisa-detalhado-membro';
+import { ToasterModule } from 'angular2-toaster';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 
 @Component({
@@ -35,14 +37,13 @@ export class CadastroMembroComponent implements OnInit {
   @ViewChild('dadosGc') dadosGc: DadosGcComponent;
   @BlockUI() blockUI: NgBlockUI;
 
-  private toasterService: ToasterService;
+  private toasterService: ToastrService;
   isOptional = false;
   idMembro:number;
   membro: MembroDto;
   fotoPerfil: File;
   responseMembro:ResponsePesquisaDetalhadoMembros;
-  router: any;
-  
+  nome:string;
 
   constructor(
     private acaoService: AcaoService,
@@ -50,8 +51,8 @@ export class CadastroMembroComponent implements OnInit {
     private documentoService: DocumentoService,
     private identityStorage: IdentityStorage,
     private route: ActivatedRoute,
-
-    toasterService: ToasterService, ) {
+    public router: Router,
+    toasterService: ToastrService, ) {
     this.toasterService = toasterService;
   }
 
@@ -90,35 +91,49 @@ export class CadastroMembroComponent implements OnInit {
       this.blockUI.start();
       this.createMembro();
       if(this.membro.id==0 || this.membro.id==null){
-      this.membroService.saveMembro(this.membro,this.fotoPerfil).map(data => data.json()).subscribe(data => {
-          if (data[0]=='NGC'){
-            this.toasterService.pop('error','O GC associado já possui um Lider!');
-            this.blockUI.stop();
-          } 
-          if (data[0]=='NME'){
-            this.toasterService.pop('error','Membro Já Cadastrado');
-            this.blockUI.stop();
-          }
-          if(data[0]=='OK'){
-          this.toasterService.pop('success', 'Membro Cadastrado com Sucesso!');
+      this.membroService.saveMembro(this.membro,this.fotoPerfil).subscribe(data => {
+        if(data==1){
+          this.toasterService.success('Membro Cadastrado com Sucesso!');
+          this.router.navigate(['pesquisa/pesquisa-membro']);
           this.blockUI.stop();
-      } 
-      }, error => {
-        this.toasterService.pop('error', 'Todos os Campos com * precisam ser preenchidos');
-        this.blockUI.stop();
-      });
+          }    
+      
+        if (data==2){
+          this.toasterService.warning('Membro Já Cadastrado');
+          this.blockUI.stop();
+        }
+      
+
+        if(data==3){
+          this.toasterService.warning('GC associado já possui um Líder');
+          this.blockUI.stop();
+
+        }
+
+
+      }
+      
+      );
     } else{
+  
       this.membroService.updateMembro(this.membro,this.fotoPerfil).subscribe(data => {
       if(data==true){
-        this.toasterService.pop('success', 'Membro Alterado com Sucesso!');
-       this.blockUI.stop();
-      }
-      }, error => {
-      this.toasterService.pop('error', error.error);
-      this.blockUI.stop();
-    });
+        this.toasterService.success('Membro Alterado com Sucesso!');
+        this.blockUI.stop();
+        this.router.navigate(['pesquisa/pesquisa-membro']);
+      } else {
+        error => {
+          this.toasterService.error(error.error);
+          this.blockUI.stop();
+        }
 
-    }
+      }
+      });
+
+    } 
+    } else{
+    this.toasterService.error('Todos os Campos Obrigatorios * precisam ser preenchidos');
+        this.blockUI.stop();
     }
   }
 
@@ -127,12 +142,6 @@ export class CadastroMembroComponent implements OnInit {
     this.membro = new MembroDto();
 
     //Dados Pessoais
-       
-    if (this.dadosPessoais.fotoPerfil && this.dadosPessoais.fotoPerfil != null) {
-      this.fotoPerfil = this.dadosPessoais.fotoPerfil;
-      } else{
-        this.fotoPerfil=null;
-      }
     this.membro.nome = this.dadosPessoais.dadosPessoaisForm.controls['nome'].value;
     this.membro.dtNascimento = this.dadosPessoais.dadosPessoaisForm.controls['dtNascimento'].value;
     this.membro.nrDocumento = this.dadosPessoais.dadosPessoaisForm.controls['nrDocumento'].value;
@@ -146,10 +155,15 @@ export class CadastroMembroComponent implements OnInit {
     this.membro.email = this.dadosPessoais.dadosPessoaisForm.controls['email'].value;
     this.membro.celular = this.dadosPessoais.dadosPessoaisForm.controls['celular'].value
     this.membro.flagLiderGc=this.dadosPessoais.dadosPessoaisForm.controls['flagLiderGc'].value;
-    this.membro.status='A';
+    this.membro.status='ATIVO';
     this.membro.funcaoMembro=this.dadosPessoais.dadosPessoaisForm.controls['funcaoMembro'].value;
     this.membro.levitaFuncao=this.dadosPessoais.dadosPessoaisForm.controls['funcaoLevita'].value;
     this.membro.id=this.idMembro;
+    if (this.dadosPessoais.fotoPerfil != null) {
+      this.fotoPerfil = new File([this.dadosPessoais.fotoPerfil], this.membro.nome.substring(0, 10),{ type: '.jpg' });
+      } else{
+        this.fotoPerfil=null;
+      }
     //Dados Familiares 
     this.membro.nomePai = this.dadosFamiliares.dadosFamiliaresForm.controls['nomePai'].value;
     this.membro.nomeMae = this.dadosFamiliares.dadosFamiliaresForm.controls['nomeMae'].value;
@@ -168,7 +182,7 @@ export class CadastroMembroComponent implements OnInit {
     this.dadosGc.gc.id= this.dadosGc.dadosGcForm.controls['gc'].value;
     this.membro.gc = this.dadosGc.gc;
     this.membro.idGc=this.dadosGc.dadosGcForm.controls['gc'].value;
-     
+      console.log(this.fotoPerfil);
 
   }
 
@@ -193,12 +207,13 @@ export class CadastroMembroComponent implements OnInit {
     this.dadosPessoais.dadosPessoaisForm.get('funcaoMembro').setValue(responseMembro.funcaoMembro);
     this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(responseMembro.levitaFuncao);
     if (responseMembro.imgPerfil!=null) {
-      this.dadosPessoais.url = ('data:image/jpeg;base64,' + responseMembro.imgPerfil);
-      this.dadosPessoais.fotoPerfil=responseMembro.imgPerfil;
+      this.dadosPessoais.url = ('data:image/jpeg;base64,' +responseMembro.imgPerfil);
+      this.fotoPerfil = new File([responseMembro.imgPerfil], responseMembro.nomeMembro.substring(0, 10),{ type: '.jpg' })
+      this.dadosPessoais.fotoPerfil = this.fotoPerfil ;
       this.dadosPessoais.exibirBotaoRemover = true;
     }
     this.dadosPessoais.dadosPessoaisForm.get('dtNascimento').setValue(responseMembro.dtNasc);
-    if(responseMembro.funcaoMembro!=null){
+    if(responseMembro.funcaoMembro!=null && responseMembro.funcaoMembro!=""){
       this.dadosPessoais.dadosPessoaisForm.get('flagFuncao').setValue('S');
       this.dadosPessoais.dadosPessoaisForm.get('funcaoMembro').setValue(responseMembro.funcaoMembro);
       this.dadosPessoais.dadosPessoaisForm.get('funcaoLevita').setValue(responseMembro.levitaFuncao);
@@ -218,20 +233,23 @@ export class CadastroMembroComponent implements OnInit {
     
     // Dados Batismo
     if(responseMembro.dtBatismo!=null && responseMembro.igrejaBatismo!=null){
-    this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('S')}
-    else{
-      this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('N')}
-  
+    this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('S')
     this.dadosBatismos.dadosBatismoForm.get('dataBatismo').setValue(responseMembro.dtBatismo);
     this.dadosBatismos.dadosBatismoForm.get('igrejaBatismo').setValue(responseMembro.igrejaBatismo);
+     } else{
+     this.dadosBatismos.dadosBatismoForm.get('flagBatizado').setValue('N')
+    }
+  
 
     //Dados GC{
-    if(responseMembro.idGc!= null){
+    if(responseMembro.idGc!= 0){
      this.dadosGc.dadosGcForm.get('flagParticipaGc').setValue('S');
     this.dadosGc.dadosGcForm.get('gc').setValue(responseMembro.idGc);
+  } else {
+    this.dadosGc.dadosGcForm.get('flagParticipaGc').setValue('N');
+
+
   }
-
-
   }
   
 
@@ -268,5 +286,6 @@ export class MembroDto {
   levitaFuncao:string;
   dtNascimento:Date;
   idGc:number;
+  fotoPerfil:String;
 }
 

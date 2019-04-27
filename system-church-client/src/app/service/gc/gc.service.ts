@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IdentityStorage } from 'src/app/auth/_models/identity.storage';
 import { Gc } from 'src/app/models/gc';
+import { GcDto } from 'src/app/pages/gc/pesquisa/pesquisa-gc/pesquisa-gc.component';
 
 
 @Injectable()
@@ -29,7 +30,11 @@ export class GcService extends GenericService {
     return this.getMethod(this.relativePath + "find/"+id);
   }
 
-  findGcByParams( gc: Gc) : Observable<any> {
+  findGcByParams( gc: GcDto) : Observable<any> {
     return this.http.post(this.url + this.relativePath+"pesquisaGc", gc);
+  }
+
+  detalharGc( idGc: number) : Observable<any> {
+    return this.getMethod(this.relativePath+"detalharGc/"+idGc );
   }
 }

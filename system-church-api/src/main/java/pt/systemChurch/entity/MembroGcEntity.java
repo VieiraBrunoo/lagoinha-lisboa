@@ -27,11 +27,11 @@ public class MembroGcEntity {
 	@Column(name = "ID_MEMBRO_GC")
 	private long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_MEMBRO")
 	private MembroEntity membro;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_GC")
 	private GcEntity gc;
 		
@@ -41,6 +41,13 @@ public class MembroGcEntity {
 	}
 
 	
+	public MembroGcEntity(MembroEntity membro, GcEntity gc) {
+		super();
+		this.membro = membro;
+		this.gc = gc;
+	}
+
+
 	public long getId() {
 		return id;
 	}

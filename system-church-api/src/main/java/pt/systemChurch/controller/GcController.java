@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pt.systemChurch.base.BaseController;
+import pt.systemChurch.dto.RequestGcDto;
 import pt.systemChurch.dto.ResponseGcDto;
 import pt.systemChurch.entity.GcEntity;
 import pt.systemChurch.entity.MembroEntity;
@@ -59,8 +61,20 @@ public class GcController extends BaseController<GcEntity, GcService>{
 	
 	@CrossOrigin
 	@PostMapping(value = "/pesquisaGc")
-	public List<ResponseGcDto> pesquisaGc(@RequestBody GcEntity gc) {
-		List<ResponseGcDto> list = this.getService().pesquisarGc();
+	public List<ResponseGcDto> pesquisaGc(@RequestBody RequestGcDto gc) {
+		List<ResponseGcDto> list = this.getService().pesquisaDetalhadaGc(gc);
 		return list;
 	}
+	
+	
+	@CrossOrigin
+	@RequestMapping(value = "/detalharGc/{idGc}", method = RequestMethod.GET)
+	public ResponseGcDto detalharGc(@PathVariable("idGc") long idGc) {
+		ResponseGcDto gc = this.getService().pesquisaDetalhadaGc(idGc);
+		return gc;
+	}
+	
+	
+	
+	
 }

@@ -69,42 +69,31 @@ public class MembroController extends BaseController<MembroEntity, MembroService
     @Autowired
     private JavaMailSender emailSender;
 
-    @Autowired
-    private MembroGcService membroGcService;
+  
 
 	@CrossOrigin
 	@PostMapping(value = "/salvarMembro/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public String save(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,
+	public Integer save(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,
 			@RequestPart("membro") MembroEntity membro) {
-		String retorno =null;
+		Integer retorno = null;
 		try {
-				boolean membroExistente = this.getService().verificarMembro(membro.getNrDocumento());
-				GcEntity gc = gcRepository.findById(membro.getIdGc());
+			if (arquivo.isPresent()) {
+				byte[] fotoBytes = arquivo.get().getBytes();
+				membro.setFotoPerfil(fotoBytes);
+			}
+
+			retorno = this.getService().cadastrarMembro(membro);
 			
-				if(membroExistente) {
-					retorno="NME";
-					return retorno ;	
-				}
-				if (arquivo.isPresent()) {
-					byte[] fotoBytes = arquivo.get().getBytes();
-					membro.setFotoPerfil(fotoBytes);
-				}
-						
-				 retorno = this.getService().cadastrarMembro(membro);
-				 
-				 if(membro.getEmail()!=null && !membro.getEmail().isEmpty()) {
-				 enviarMail(membro.getEmail());
-				 }
-				 
-				 if(membro.getIdGc()!= 0) {
-					 MembroEntity m = membroRepository.findByNrDocumento(membro.getNrDocumento());
-					 					 }
-				 
-				return retorno;
+			if(retorno==1 && membro.getEmail() != null && !membro.getEmail().isEmpty()) {
+			enviarMail(membro.getEmail());
+			
+			}
+			
+			return retorno;
 		} catch (Exception ex) {
 			String errorMessage;
 			System.out.println(errorMessage = ex + " <== error");
-				return "NOK";
+			return 0;
 		}
 	}
 
@@ -140,8 +129,7 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 
 	@CrossOrigin
 	@PostMapping(value = "/atualizarMembro/")
-	public boolean atualizarMebro(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,
-			@RequestPart("membro") MembroEntity membro) throws IOException {
+	public boolean atualizarMebro(@RequestPart("fotoPerfil") Optional<MultipartFile> arquivo,@RequestPart("membro") MembroEntity membro) throws IOException {
 		try {
 			GcEntity gc = gcRepository.findById(membro.getIdGc());
 			if (arquivo.isPresent()) {
@@ -168,11 +156,11 @@ public class MembroController extends BaseController<MembroEntity, MembroService
 	        	   helper.setTo(emailMembro);
 		             helper.setFrom("Igreja Lagoinha Lisboa <geral@lagoinhalisboa.pt>");
 
-	             helper.addAttachment("lagoinhai.png", new ClassPathResource("lagoinhai.png"));
+	             helper.addAttachment("email.jpg", new ClassPathResource("email.jpg"));
 	             helper.setSubject("PNG");
 	             helper.setText("<html><body>TESTE ENVIO EMAIL COM FOTO<br>:<img src='cid:picture' /></body></html>",true);
 	             
-	             FileSystemResource file = new FileSystemResource(new File("src/main/resources/lagoinhai.png"));
+	             FileSystemResource file = new FileSystemResource(new File("src/main/resources/email.jpg"));
 	             helper.addInline("picture", file);
 	          
 	             emailSender.send(message);

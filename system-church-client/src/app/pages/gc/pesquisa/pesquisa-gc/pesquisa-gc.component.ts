@@ -9,6 +9,7 @@ import { MembroService } from 'src/app/service/membro/membro.service';
 import { Gc } from 'src/app/models/gc';
 import { Router } from '@angular/router';
 import { Membro } from 'src/app/models/membro';
+import { ResponsePesquisaMembros } from 'src/app/models/response-pesquisa-membro';
 
 @Component({
   selector: 'app-pesquisa-gc',
@@ -21,9 +22,9 @@ export class PesquisaGcComponent implements OnInit {
   zonaList:Array<any>;
   horarioGcList:Array<any>;
   membroList:Array<any>;
-  resultadoPesquisaGc:Gc;
+  resultadoPesquisaGc:ResponseGcDto;
   displayedColumns: string[] = ['nome', 'logradouro', 'zona', 'horario', 'responsavel','button'];
-  gcList:Array<Gc>;
+  gcList:Array<ResponseGcDto>;
   dataSource = new MatTableDataSource<any>();
   color = 'accent';
   checkedList:any[];
@@ -35,7 +36,7 @@ export class PesquisaGcComponent implements OnInit {
   pesquisaGcForm: any;
   parametroAtuacaoList: any;
 
-  pesquisaGc:Gc;
+  pesquisaGc:GcDto;
   constructor(
     private _formBuilder: FormBuilder,
     private parametroService: ParametroService,
@@ -50,8 +51,8 @@ export class PesquisaGcComponent implements OnInit {
 
   ngOnInit() {
     this.creatForm();
-    this.resultadoPesquisaGc = new Gc();
-    this.gcList = new Array<Gc>();
+    this.resultadoPesquisaGc = new ResponseGcDto();
+    this.gcList = new Array<ResponseGcDto>();
     this.dataSource.paginator = this.paginator;
     this.getListZona();
     this.getListHorarioGc();
@@ -108,13 +109,12 @@ export class PesquisaGcComponent implements OnInit {
 
   private obterFiltroGc(){
 
-    this.pesquisaGc = new Gc();
+    this.pesquisaGc = new GcDto();
 
-    this.pesquisaGc.nome= this.pesquisaGcForm.controls['nome'].value;
-    this.pesquisaGc.logradouro= this.pesquisaGcForm.controls['logradouro'].value;
+    this.pesquisaGc.nomeGc= this.pesquisaGcForm.controls['nome'].value;
     this.pesquisaGc.zona= this.pesquisaGcForm.controls['zona'].value;
     this.pesquisaGc.horario= this.pesquisaGcForm.controls['horario'].value;
-    this.pesquisaGc.membroResponsavel.id= this.pesquisaGcForm.controls['idMembroResponsavel'].value;
+   this.pesquisaGc.idLider= this.pesquisaGcForm.controls['idMembroResponsavel'].value;
   }
 
 
@@ -128,7 +128,7 @@ export class PesquisaGcComponent implements OnInit {
         this.resultadoPesquisa=false;
       }
       listRetorno.forEach(element => {
-        this.gcList= new Array<Gc>();
+        this.gcList= new Array<ResponseGcDto>();
         this.dataSource.data=listRetorno;
         this.gcList.push(element);
               });
@@ -148,8 +148,8 @@ export class PesquisaGcComponent implements OnInit {
     });
   }
 
-  private detalharGc(id){
-  this.router.navigate(['detalhar-gc/detalhar'],{queryParams:{id}});
+  private detalharGc(idGc){
+  this.router.navigate(['detalhar-gc'],{queryParams:{idGc}});
   }
 
 
@@ -159,3 +159,22 @@ export class PesquisaGcComponent implements OnInit {
   }
 
  }
+
+
+ export class GcDto {
+  nomeGc:string;
+  zona:string;
+  horario:string;
+  idLider:number
+}
+
+export class ResponseGcDto {
+  nome:string;
+  diaSemana:string;
+  endereco:string;
+  idLider:number
+  horario:string;
+  zona: string;
+  nomeLider:string;
+  membros:Array<ResponsePesquisaMembros>;
+}

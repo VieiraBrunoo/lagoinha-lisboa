@@ -101,7 +101,7 @@ export class PesquisaDetalhadaGcComponent implements OnInit {
     this.pesquisaGc = new Gc();
 
     this.pesquisaGc.nome= this.pesquisaGcForm.controls['nome'].value;
-    this.pesquisaGc.membroResponsavel.id= this.pesquisaGcForm.controls['idMembroResponsavel'].value;
+    //this.pesquisaGc.membroResponsavel.id= this.pesquisaGcForm.controls['idMembroResponsavel'].value;
     this.pesquisaGc.zona= this.pesquisaGcForm.controls['zona'].value;
     this.pesquisaGc.logradouro= this.pesquisaGcForm.controls['logradouro'].value;
     this.pesquisaGc.horario= this.pesquisaGcForm.controls['horario'].value;

@@ -124,6 +124,9 @@ public class MembroEntity{
 	@OneToMany(mappedBy = "membro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<MembroGcEntity> membrosGc;
 	
+	@Column(name = "DATA_CADASTRO")
+	private String dtCadastro;
+	
 	
 	
 		public long getId() {
@@ -353,5 +356,16 @@ public class MembroEntity{
 		this.membrosGc = membrosGc;
 	}
 
+	public String getDtCadastro() {
+		return dtCadastro;
+	}
+
+	public void setDtCadastro(String dtCadastro) {
+		this.dtCadastro = dtCadastro;
+	}
+
+	
+	
+	
 	
 }

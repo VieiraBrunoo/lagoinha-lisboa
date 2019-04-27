@@ -11,6 +11,8 @@ import { PesquisaGcComponent } from './pages/gc/pesquisa/pesquisa-gc/pesquisa-gc
 import { PesquisaDetalhadaGcComponent } from './pages/gc/pesquisa/pesquisa-detalhada-gc/pesquisa-detalhada-gc.component';
 import { CadastroGcComponent } from './pages/gc/cadastro/cadastro-gc/cadastro-gc.component';
 import { DadosComponent } from './pages/gc/cadastro/dados/dados.component';
+import { DetalharGcComponent} from './pages/gc/detalhar-gc/detalhar-gc.component';
+ 
 
 const routes: Routes = [
   // Padrão para telas com base no perfil
@@ -23,6 +25,7 @@ const routes: Routes = [
   { path: 'cadastro-gc', component: CadastroGcComponent},
   { path: 'pesquisa/pesquisa-gc', component: PesquisaGcComponent},
   { path: 'pesquisa/pesquisa-gc-detalhada', component: PesquisaDetalhadaGcComponent},
+  { path: 'detalhar-gc', component: DetalharGcComponent},
   { path: '**', redirectTo: 'login' }
 ];
 

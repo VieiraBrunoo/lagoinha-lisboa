@@ -139,7 +139,8 @@ export class PesquisaDetalhadaMembroComponent implements OnInit {
     this.membroService.findByMembroDetalhado(this.pesquisaMembros).subscribe(listRetorno => {
       listRetorno.forEach((element:ResponsePesquisaDetalhadoMembros) => {
         if (element.imgPerfil != null) {
-          element.fotoUrl = ('data:image/jpeg;base64,' + element.imgPerfil)
+          element.fotoUrl = ('data:image/jpeg;base64,'+element.imgPerfil)
+          console.log(element.fotoUrl);
         }
         this.membroList.push(element);
               });
