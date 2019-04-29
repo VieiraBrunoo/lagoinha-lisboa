@@ -33,23 +33,21 @@ public class GcService extends BaseService<GcEntity, GcRepository> {
 	public boolean salvarGc(GcEntity gc) {
 		return GcCriteria.salvarGc(gc, entityManager);
 	}
-		public List<ResponseGcDto> pesquisarGc(){
+
+	public List<ResponseGcDto> pesquisarGc() {
 		return GcCriteria.pesquisarGcs(this.entityManager);
 	}
-		
-		
-		public ResponseGcDto pesquisarGcPorId(long id) throws UnsupportedEncodingException {
-			return GcCriteria.pesquisarGcPorId(id, this.entityManager);	
-			}	
-		
-		
-		public List<ResponseGcDto> pesquisaDetalhadaGc(RequestGcDto gc){
-			return GcCriteria.pesquisaDetalhadaGc(gc,this.entityManager);
-		}
-		
-		public ResponseGcDto pesquisaDetalhadaGc(long idGc){
-			return GcCriteria.DetalharGc(idGc,this.entityManager);
-		}
-	
+
+	public ResponseGcDto pesquisarGcPorId(long id) throws UnsupportedEncodingException {
+		return GcCriteria.pesquisarGcPorId(id, this.entityManager);
+	}
+
+	public List<ResponseGcDto> pesquisaDetalhadaGc(RequestGcDto gc) {
+		return GcCriteria.pesquisaDetalhadaGc(gc, this.entityManager);
+	}
+
+	public ResponseGcDto pesquisaDetalhadaGc(long idGc) {
+		return GcCriteria.DetalharGc(idGc, this.entityManager);
+	}
 
 }
